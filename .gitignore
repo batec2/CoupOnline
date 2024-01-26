@@ -21,3 +21,13 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# OS-specific files
+Thumbs.db
+.AppleDouble
+.LSOverride
+
+# Visual Studio Code specific files
+.vscode/
+*.code-workspace
+.history/

@@ -1,7 +1,36 @@
-# Getting Started with Create React App
+# CoupOnline
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Must Haves
+- Gameplay (<a href="https://www.qugs.org/rules/r131357.pdf">rules</a>)
+  - Game is consistent with the rules of the card game Coup, and has all the 
+    features usually available to the players.
+- Rooms 
+  - Players can enter a room code and connect to the same room as their friends
+- Saved Games
+  - Games are saved into the database to be accessed at the later time
+- Usernames
+  - When the player first enters the game then they are able to select a custom
+    username.
+- Publishing Games
+  - Once a game is finished the results are published to the database
 
+## Nice To Haves
+- Leader Board
+- Player Accounts/Profiles
+- Game Chat
+- Public Lobbies
+- Matchmaking
+- Custom Visuals (Animations, Card images, profile pics, room)
+- Suspend/resume game
+- Stepwise replay previous games
+- Ready status
+
+## Technologies
+- NodeJS
+- React
+- SQL
+- SocketIO
+- ExpressJS
 ## Available Scripts
 
 In the project directory, you can run:
