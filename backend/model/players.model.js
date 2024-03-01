@@ -1,18 +1,18 @@
 import mongoose from "mongoose";
 
-const StudentSchema = new mongoose.Schema({
+const PlayerSchema = new mongoose.Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   email: { type: String, required: true },
   age: Number,
-  courses: [
+  games: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "courses",
+      ref: "games",
     },
   ],
 });
 
-const Student = mongoose.model("students", StudentSchema);
+const Player = mongoose.model("players", PlayerSchema);
 
-export default Student;
+export default Player;
