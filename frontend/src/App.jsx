@@ -1,7 +1,10 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import RoomPage from "./pages/room.page";
+import RoomPage from "./pages/room/room.page";
+import GamePage from "./pages/game/game.page";
+import StatsPage from "./pages/stats/stats.page";
+import ProfilePage from "./pages/profile/profile.page";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -17,7 +20,10 @@ function App() {
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <Routes>
-          <Route path="/" element={<RoomPage />}></Route>
+          <Route path="/room" element={<RoomPage />}></Route>
+          <Route path="/game" element={<GamePage />}></Route>
+          <Route path="/stats" element={<StatsPage />}></Route>
+          <Route path="/profile" element={<ProfilePage />}></Route>
         </Routes>
       </QueryClientProvider>
     </BrowserRouter>
