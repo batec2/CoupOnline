@@ -3,6 +3,10 @@ import cors from "cors";
 import morgan from "morgan";
 import dotenv from "dotenv";
 import { Server } from "socket.io";
+import route from "./route/route.js";
+import { connectDB } from "./database/database.js";
+
+connectDB();
 dotenv.config();
 
 const app = express();
@@ -15,6 +19,7 @@ app.use(
   })
 );
 
+app.use("/", route);
 app.use(morgan("dev")); //console loging
 app.use(express.json()); //body parsing
 app.use(express.urlencoded({ extended: true })); //query string
