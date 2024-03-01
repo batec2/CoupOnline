@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { io } from "socket.io-client";
 
+/**
+ * Page for joining a game Room
+ * @returns
+ */
 const RoomPage = () => {
   const [currentRoom, setRoom] = useState("");
   const socket = io("http://localhost:8080");
