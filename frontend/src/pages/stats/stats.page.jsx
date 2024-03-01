@@ -4,7 +4,11 @@
  * @returns Stats/Leader Board
  */
 const StatsPage = () => {
-  return <div></div>;
+  return (
+    <div>
+      <h1>Stats Page</h1>
+    </div>
+  );
 };
 
 export default StatsPage;
