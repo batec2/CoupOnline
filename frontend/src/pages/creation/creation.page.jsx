@@ -22,7 +22,7 @@ const CreationPage = () => {
 
   useEffect(() => {
     const makeNewCookie  = async () =>  {
-      const response = await axios.post("http://localhost:8080/player",
+      const response = await axios.post("http://localhost:8080/players",
         {body: {firstName: FirstName, lastName: LastName, email: Email, age: Age}},
         {headers: {
             Accept: "application/json",
@@ -30,7 +30,7 @@ const CreationPage = () => {
             },})
       cookies.set("PersonalCookie", response.data)
     }
-    if(CreatedCookie === false && currentCookie === undefined){
+    if(CreatedCookie === true && currentCookie === undefined){
       makeNewCookie()
     }
   }, [Age, CreatedCookie, Email, FirstName, LastName, currentCookie]);
