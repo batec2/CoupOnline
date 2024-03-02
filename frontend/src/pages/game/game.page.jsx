@@ -5,7 +5,7 @@
 const GamePage = () => {
   return (
     <div>
-      <h1>Game page</h1>
+      <h1>Game Page</h1>
     </div>
   );
 };
