@@ -18,10 +18,7 @@ const CreationPage = () => {
   const createAccount = () => {
     setCreatedCookie(true)
   }
-
   useEffect(() => {
-    console.log(CurrentCookie)
-
     const makeNewCookie  = async () =>  {
       const response = await axios.post("http://localhost:8080/players",
         {firstName: FirstName, lastName: LastName, email: Email, age: Age},
@@ -31,7 +28,6 @@ const CreationPage = () => {
             },})
       cookies.set("PersonalCookie", response.data)
       setCurrentCookie(cookies.get("PersonalCookie"))
-      console.log(CurrentCookie)
     }
     if(CreatedCookie === true && CurrentCookie === undefined){
       makeNewCookie()
