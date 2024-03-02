@@ -1,6 +1,7 @@
 import Cookies from "universal-cookie";
 import {io} from "socket.io-client";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import axios from "axios";
 
 const cookies = new Cookies()
 
@@ -9,16 +10,30 @@ const cookies = new Cookies()
  * @returns Game Page
  */
 const CreationPage = () => {
-  const socket = io("http://localhost:8080");
-  const newCookie = cookies.get("PersonalCookie");
   const [FirstName, setFirstName] = useState("")
+  const currentCookie = cookies.get("PersonalCookie")
   const [LastName, setLastName] = useState("")
   const [Email, setEmail] = useState("")
   const [Age, setAge] = useState(0)
+  const [CreatedCookie, setCreatedCookie] = useState(false)
   const createAccount = () => {
-
+    setCreatedCookie(true)
   }
 
+  useEffect(() => {
+    const makeNewCookie  = async () =>  {
+      const response = await axios.post("http://localhost:8080/player",
+        {body: {firstName: FirstName, lastName: LastName, email: Email, age: Age}},
+        {headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json;charset=UTF-8",
+            },})
+      cookies.set("PersonalCookie", response.data)
+    }
+    if(CreatedCookie === false && currentCookie === undefined){
+      makeNewCookie()
+    }
+  }, [Age, CreatedCookie, Email, FirstName, LastName, currentCookie]);
 
 
 
