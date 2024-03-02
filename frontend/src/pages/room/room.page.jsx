@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { io } from "socket.io-client";
+import TextField from "../../components/textfield/textfield.component";
 
 /**
  * Page for joining a game Room
@@ -13,11 +14,10 @@ const RoomPage = () => {
   };
   return (
     <div>
-      <input
-        type="text"
+      <TextField
         onChange={(e) => setRoom(e)}
         placeholder="Room Number"
-      ></input>
+      />
       <button onClick={() => handleJoin()}>Join</button>
     </div>
   );
