@@ -39,8 +39,11 @@ const io = new Server(httpServer, { cors: { origin: "*" } });
 
 io.on("connection", (socket) => {
   console.log(socket.id);
-});
-
-io.on("join-room", (room) => {
-  console.log(room);
+  socket.on("join-room", async (message) => {
+    socket.join(message.currentRoom);
+    io.to(socket.id).emit("give-id", { id: socket.id });
+    // const players = await io.in(message.currentRoom).fetchSockets();
+    // console.log(players);
+    io.to(socket).emit("Current-Users", socket.id);
+  });
 });
