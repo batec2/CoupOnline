@@ -5,14 +5,14 @@ import tombstone from './tombstone32.png'
 import './playerList.styles.css'
 
 /**
- * 
+ * Player Overview for list of players
  * @param {String} player Player object, containing player name and number of cards 
- * @returns PlayerCard React component
+ * @returns PlayerItem React component
  */
-const PlayerCard = ({ player }) => {
+const PlayerItem = ({ player }) => {
   if (player.cards == 2) {
     return(
-      <div className="playerCard">
+      <div className="playerItem">
         <text className="textPName">{player.name}</text>
         <img className="imgCard" src={card} alt="card" />
         <img className="imgCard" src={card} alt="card" />
@@ -20,14 +20,14 @@ const PlayerCard = ({ player }) => {
     )
   } else if (player.cards == 1) {
     return(
-      <div className="playerCard">
+      <div className="playerItem">
         <text className="textPName">{player.name}</text>
         <img className="imgCard" src={card} alt="card" />
       </div>
     )
   } else {
     return(
-      <div className="playerCard">
+      <div className="playerItem">
         <text className="textPName">{player.name}</text>
         <img className="imgCard" src={tombstone} alt="dead" />
       </div>
@@ -36,4 +36,4 @@ const PlayerCard = ({ player }) => {
 }
   
 
-export default PlayerCard;
+export default PlayerItem;
