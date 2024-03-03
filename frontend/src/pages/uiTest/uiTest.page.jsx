@@ -1,4 +1,5 @@
-import PlayerList from "../../components/playerlist/playerList.component";
+import ActionLegend from "../../components/actionLegend/actionLegend.component";
+import PlayerList from "../../components/playerList/playerList.component";
 
 const TestPage = () => {
     const players = [
@@ -13,6 +14,7 @@ const TestPage = () => {
       <div>
         <h1>Test Page</h1>
         <PlayerList playerList={players} />
+        <ActionLegend />
       </div>
     );
   };
