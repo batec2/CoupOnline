@@ -1,0 +1,12 @@
+.tableActions {
+    text-align: center;
+    white-space: pre-line;
+    border-style: solid;
+    border-collapse: collapse;
+}
+
+.tableActionsElement {
+    border-style: solid;
+    border-width: 1px;
+    padding: 5px;
+}

@@ -1,0 +1,50 @@
+[
+    { 
+        "character": "",
+        "action-name": "Income",
+        "action-effect": "Take 1 coin",
+        "counteraction": ""
+    },
+    { 
+        "character": "",
+        "action-name": "Foreign Aid",
+        "action-effect": "Take 2 coins",
+        "counteraction": ""
+    },
+    { 
+        "character": "",
+        "action-name": "Coup",
+        "action-effect": "Pay 7 coins \nChoose player to lose influence",
+        "counteraction": ""
+    },
+    {
+        "character": "Duke",
+        "action-name" : "Tax",
+        "action-effect": "Take 3 coins",
+        "counteraction": "Block foreign aid"
+    },
+    {
+        "character": "Assassin",
+        "action-name": "Assassinate",
+        "action-effect": "Pay 3 coins \nChoose player to lose influence",
+        "counteraction": ""
+    },
+    {
+        "character": "Ambassador",
+        "action-name": "Exchange",
+        "action-effect": "Exchange cards with court deck",
+        "counteraction": "Blocks stealing"
+    },
+    {
+        "character": "Captain",
+        "action-name": "Steal",
+        "action-effect": "Take 2 coins from another player",
+        "counteraction": "Block stealing"
+    },
+    {
+        "character": "Contessa",
+        "action-name": "",
+        "action-effect": "",
+        "counteraction": "Block assassination"
+    }
+]
