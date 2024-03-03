@@ -9,6 +9,7 @@ import { io } from "socket.io-client";
 import SocketContext from "./context/socketContext";
 import LoginPage from "./pages/login/login.page";
 import CreationPage from "./pages/creation/creation.page.jsx";
+import TestPage from "./pages/uiTest/uiTest.page.jsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -34,6 +35,7 @@ function App() {
             <Route path="game" element={<GamePage />}></Route>
             <Route path="stats" element={<StatsPage />}></Route>
             <Route path="profile" element={<ProfilePage />}></Route>
+<Route path="test" element={<TestPage />} />
           </Routes>
         </SocketContext.Provider>
       </QueryClientProvider>

@@ -1,3 +1,4 @@
+import express from "express";
 import {
   getAllGames,
   getGame,
@@ -6,6 +7,7 @@ import {
   createGame,
 } from "../controller/gameController.js";
 
+const router = express.Router();
 // Game Routes
 router.get("/", getAllGames);
 router.get("/:id", getGame);
