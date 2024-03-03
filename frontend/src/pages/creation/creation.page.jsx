@@ -15,9 +15,7 @@ const CreationPage = () => {
   const [screenName, setScreenName] = useState("")
   const [Email, setEmail] = useState("")
   const [CreatedCookie, setCreatedCookie] = useState(false)
-  const createAccount = () => {
-    setCreatedCookie(true)
-  }
+
   useEffect(() => {
     if(CreatedCookie === true){
       verifyAccount(userName).then((res) => {
@@ -25,7 +23,6 @@ const CreationPage = () => {
             window.alert("Account with this username already exists.")
             return
           }
-
           if (screenName === ""){
             window.alert("Input a ScreenName.")
             return
@@ -50,11 +47,7 @@ const CreationPage = () => {
         if(CreatedCookie === true){
           makeNewAccount()
         }
-
         })
-
-
-
     setCreatedCookie(false)
   }}, [CreatedCookie, Email, userName, screenName, CurrentCookie]);
 
@@ -66,7 +59,7 @@ const CreationPage = () => {
       <p>User Name</p><input type="text" onChange={(e) => setUserName(e.target.value)}/><br/>
       <p>Screen Name</p><input type="text" onChange={(e) => setScreenName(e.target.value)}/><br/>
       <p>Email</p><input type="email" onChange={(e) => setEmail(e.target.value)}/><br/>
-      <button onClick={createAccount}>Create Account</button>
+      <button onClick={() => {setCreatedCookie(true)}}>Create Account</button>
     </div>
   );
 };
