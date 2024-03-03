@@ -5,7 +5,7 @@ import gamesRoute from "./route/games.route.js";
 import { connectDB } from "./database/database.js";
 import middleware from "./middleware/middleware.js";
 
-// connectDB();
+connectDB();
 dotenv.config();
 
 const PORT = 8080;

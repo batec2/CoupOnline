@@ -5,6 +5,7 @@ import {
   updatePlayer,
   deletePlayer,
   createPlayer,
+  getPlayerByUsername,
 } from "../controller/playerController.js";
 
 const router = express.Router();
