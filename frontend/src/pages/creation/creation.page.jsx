@@ -43,19 +43,19 @@ const CreationPage = () => {
                     },
                   })
 
-            cookies.set("PersonalCookie", response.data)
+            cookies.set("PersonalCookie", response.data._id)
             setCurrentCookie(cookies.get("PersonalCookie"))
           }
 
         if(CreatedCookie === true){
           makeNewAccount()
         }
-        setCreatedCookie(false)
+
         })
 
 
 
-
+    setCreatedCookie(false)
   }}, [CreatedCookie, Email, userName, screenName, CurrentCookie]);
 
 
