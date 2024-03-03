@@ -1,0 +1,17 @@
+.playerList {
+    display: flex;
+    flex-direction: column;
+    width: 8%;
+}
+
+.playerCard {
+    display: grid;
+    grid-template-columns: 8fr 3fr 3fr;
+    align-items: center;
+}
+
+.textPName {
+    align-items: center;
+    padding: 10px;
+    text-align: right;
+}

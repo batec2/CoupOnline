@@ -1,6 +1,8 @@
 import React from "react"
 import PlayerCard from "./playerCard.component";
 
+import './playerList.styles.css'
+
 /**
  * List of players and remaining cards
  * @param {String} placeholder - The placeholder text 
@@ -8,7 +10,7 @@ import PlayerCard from "./playerCard.component";
  */
 const PlayerList = ({ playerList }) => {
   return(
-    <div>
+    <div className="playerList">
       {playerList.map(player => (
         <PlayerCard player={player}></PlayerCard> 
       ))}

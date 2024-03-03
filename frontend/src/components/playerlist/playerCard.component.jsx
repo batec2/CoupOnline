@@ -5,15 +5,15 @@ import tombstone from './tombstone32.png'
 import './playerList.styles.css'
 
 /**
- * List of players and remaining cards
- * @param {String} placeholder - The placeholder text 
- * @returns Textfield
+ * 
+ * @param {String} player Player object, containing player name and number of cards 
+ * @returns PlayerCard React component
  */
 const PlayerCard = ({ player }) => {
   if (player.cards == 2) {
     return(
       <div className="playerCard">
-        <text>{player.name}</text>
+        <text className="textPName">{player.name}</text>
         <img className="imgCard" src={card} alt="card" />
         <img className="imgCard" src={card} alt="card" />
       </div>
@@ -21,14 +21,14 @@ const PlayerCard = ({ player }) => {
   } else if (player.cards == 1) {
     return(
       <div className="playerCard">
-        <text>{player.name}</text>
+        <text className="textPName">{player.name}</text>
         <img className="imgCard" src={card} alt="card" />
       </div>
     )
   } else {
     return(
       <div className="playerCard">
-        <text>{player.name}</text>
+        <text className="textPName">{player.name}</text>
         <img className="imgCard" src={tombstone} alt="dead" />
       </div>
     )
