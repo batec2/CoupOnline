@@ -7,6 +7,7 @@ import {
   createPlayer,
   getPlayerByUsername
 } from "../controller/playerController.js";
+import checkForNeededPlayerFields from "../middleware/checkForValidPlayer.js";
 
 const router = express.Router();
 
@@ -17,6 +18,6 @@ router.get("/byName/:username", getPlayerByUsername);
 router.get("/:id", getPlayer);
 router.put("/:id", updatePlayer);
 router.delete("/:id", deletePlayer);
-router.post("/", createPlayer);
+router.post("/",checkForNeededPlayerFields, createPlayer);
 
 export default router;
