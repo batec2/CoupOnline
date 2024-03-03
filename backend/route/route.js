@@ -2,6 +2,7 @@ import express from 'express';
 import { getPlayers, getPlayer, updatePlayer, deletePlayer, createPlayer, 
     getPlayerByUsername } from '../controller/playerController.js';
 import { getAllGames, getGame, updateGame, deleteGame, createGame} from '../controller/gameController.js';
+import checkForNeededPlayerFields from "../middleware/checkForValidPlayer.js";
 
 const router = express.Router();
 
@@ -11,7 +12,7 @@ router.get('/players/byId/:id', getPlayer);
 router.get('/players/byName/:username', getPlayerByUsername);
 router.put('/players/:id', updatePlayer);
 router.delete('/players/:id', deletePlayer);
-router.post('/players', createPlayer);
+router.post('/players', checkForNeededPlayerFields, createPlayer);
 
 // Game Routes
 router.get('/games', getAllGames);
