@@ -23,6 +23,16 @@ const CreationPage = () => {
       verifyAccount(userName).then((res) => {
           if (res === true){
             window.alert("Account with this username already exists.")
+            return
+          }
+
+          if (screenName === ""){
+            window.alert("Input a ScreenName.")
+            return
+          }
+          if (Email === ""){
+            window.alert("Input an Email.")
+            return
           }
           const makeNewAccount  = async () =>  {
             const response = await axios.post("http://localhost:8080/players",
