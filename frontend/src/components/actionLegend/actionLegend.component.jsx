@@ -31,7 +31,7 @@ const ActionLegend = () => {
             {action['counteraction']=="" ? "-" : action['counteraction']}
           </td>
         </tr>
-        ))}
+      ))}
     </table>
   )
 };

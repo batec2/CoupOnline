@@ -1,5 +1,6 @@
 import ActionLegend from "../../components/actionLegend/actionLegend.component";
 import PlayerList from "../../components/playerList/playerList.component";
+import Card from "../../components/card/card.component";
 
 const TestPage = () => {
     const players = [
@@ -10,11 +11,19 @@ const TestPage = () => {
         {"name": "Morgan", "cards": 0},
         {"name": "Dwayne", "cards": 2}
     ]
+    const card = {
+      "character": "Assassin",
+      "action-name": "Assassinate",
+      "action-effect": "Pay 3 coins \nChoose player to lose influence",
+      "counteraction": ""
+    }
+
     return (
       <div>
         <h1>Test Page</h1>
         <PlayerList playerList={players} />
         <ActionLegend />
+        <Card card={card} />
       </div>
     );
   };

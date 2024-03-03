@@ -1,5 +1,5 @@
 import React from "react"
-import PlayerCard from "./playerCard.component";
+import PlayerItem from "./playerItem.component";
 
 import './playerList.styles.css'
 
@@ -12,7 +12,7 @@ const PlayerList = ({ playerList }) => {
   return(
     <div className="playerList">
       {playerList.map(player => (
-        <PlayerCard player={player}></PlayerCard> 
+        <PlayerItem player={player} /> 
       ))}
     </div>
   )
