@@ -18,6 +18,10 @@ const CreationPage = () => {
 
   useEffect(() => {
     if(CreatedCookie === true){
+      if (userName === ""){
+        window.alert("Input a Username.")
+        return
+      }
       verifyAccount(userName).then((res) => {
           if (res === true){
             window.alert("Account with this username already exists.")
@@ -30,6 +34,12 @@ const CreationPage = () => {
           if (Email === ""){
             window.alert("Input an Email.")
             return
+          }
+          // src: https://www.simplilearn.com/tutorials/javascript-tutorial/email-validation-in-javascript
+          const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+          if (!emailRegex.test(Email)){
+            window.alert("Not a Valid Email Address, Input a Valid Email.")
+            return;
           }
           const makeNewAccount  = async () =>  {
             const response = await axios.post("http://localhost:8080/players",
