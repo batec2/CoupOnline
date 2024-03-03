@@ -1,7 +1,7 @@
 .playerList {
     display: flex;
     flex-direction: column;
-    width: 8%;
+    width: 150px;
 }
 
 .playerItem {

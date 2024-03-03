@@ -1,5 +1,5 @@
 import ActionLegend from "../../components/actionLegend/actionLegend.component";
-import PlayerList from "../../components/playerList/playerList.component";
+import PlayerList from "../../components/playerlist/playerList.component";
 import Card from "../../components/card/card.component";
 
 const TestPage = () => {
