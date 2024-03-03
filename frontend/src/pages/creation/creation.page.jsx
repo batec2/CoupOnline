@@ -1,6 +1,7 @@
 import Cookies from "universal-cookie";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import verifyAccount from "../../actions/verifyAccount.js";
 
 const cookies = new Cookies()
 
@@ -18,20 +19,34 @@ const CreationPage = () => {
     setCreatedCookie(true)
   }
   useEffect(() => {
-    const makeNewCookie  = async () =>  {
-      const response = await axios.post("http://localhost:8080/players",
-        {userName: userName, screenName: screenName, email: Email},
-        {headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json;charset=UTF-8",
-            },})
-      cookies.set("PersonalCookie", response.data)
-      setCurrentCookie(cookies.get("PersonalCookie"))
-    }
-    if(CreatedCookie === true && CurrentCookie === undefined){
-      makeNewCookie()
-    }
-  }, [CreatedCookie, Email, userName, screenName, CurrentCookie]);
+    if(CreatedCookie === true){
+      verifyAccount(userName).then((res) => {
+          if (res === true){
+            window.alert("Account with this username already exists.")
+          }
+          const makeNewAccount  = async () =>  {
+            const response = await axios.post("http://localhost:8080/players",
+            {userName: userName, screenName: screenName, email: Email},
+           {headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json;charset=UTF-8",
+                    },
+                  })
+
+            cookies.set("PersonalCookie", response.data)
+            setCurrentCookie(cookies.get("PersonalCookie"))
+          }
+
+        if(CreatedCookie === true){
+          makeNewAccount()
+        }
+        setCreatedCookie(false)
+        })
+
+
+
+
+  }}, [CreatedCookie, Email, userName, screenName, CurrentCookie]);
 
 
 
