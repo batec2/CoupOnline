@@ -19,14 +19,6 @@ const queryClient = new QueryClient({
 
 const Socket = io("http://localhost:8080");
 
-Socket.on("Current-Users", (socket) => {
-  console.log(socket);
-});
-
-Socket.on("give-id", (id) => {
-  console.log(id.id);
-});
-
 function App() {
   // const Socket = io("http://localhost:8080", { autoConnect: false });
   return (
