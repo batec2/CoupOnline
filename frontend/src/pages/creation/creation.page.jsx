@@ -9,11 +9,10 @@ const cookies = new Cookies()
  * @returns Game Page
  */
 const CreationPage = () => {
-  const [FirstName, setFirstName] = useState("")
+  const [userName, setUserName] = useState("")
   const [CurrentCookie, setCurrentCookie] = useState(cookies.get("PersonalCookie"))
-  const [LastName, setLastName] = useState("")
+  const [screenName, setScreenName] = useState("")
   const [Email, setEmail] = useState("")
-  const [Age, setAge] = useState(0)
   const [CreatedCookie, setCreatedCookie] = useState(false)
   const createAccount = () => {
     setCreatedCookie(true)
@@ -21,7 +20,7 @@ const CreationPage = () => {
   useEffect(() => {
     const makeNewCookie  = async () =>  {
       const response = await axios.post("http://localhost:8080/players",
-        {firstName: FirstName, lastName: LastName, email: Email, age: Age},
+        {userName: userName, screenName: screenName, email: Email},
         {headers: {
             Accept: "application/json",
             "Content-Type": "application/json;charset=UTF-8",
@@ -32,17 +31,16 @@ const CreationPage = () => {
     if(CreatedCookie === true && CurrentCookie === undefined){
       makeNewCookie()
     }
-  }, [Age, CreatedCookie, Email, FirstName, LastName, CurrentCookie]);
+  }, [CreatedCookie, Email, userName, screenName, CurrentCookie]);
 
 
 
   return (
     <div>
       <h1>Creation Page</h1>
-      <p>First Name</p><input type="text" onChange={(e) => setFirstName(e.target.value)}/><br/>
-      <p>Last Name</p><input type="text" onChange={(e) => setLastName(e.target.value)}/><br/>
+      <p>User Name</p><input type="text" onChange={(e) => setUserName(e.target.value)}/><br/>
+      <p>Screen Name</p><input type="text" onChange={(e) => setScreenName(e.target.value)}/><br/>
       <p>Email</p><input type="email" onChange={(e) => setEmail(e.target.value)}/><br/>
-      <p>Age</p><input type="number" onChange={(e) => setAge(e.target.value)}/><br/>
       <button onClick={createAccount}>Create Account</button>
     </div>
   );
