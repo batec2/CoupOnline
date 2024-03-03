@@ -1,12 +1,14 @@
 import express from 'express';
-import { getPlayers, getPlayer, updatePlayer, deletePlayer, createPlayer} from '../controller/playerController.js';
+import { getPlayers, getPlayer, updatePlayer, deletePlayer, createPlayer, 
+    getPlayerByUsername } from '../controller/playerController.js';
 import { getAllGames, getGame, updateGame, deleteGame, createGame} from '../controller/gameController.js';
 
 const router = express.Router();
 
 // Player Routes
 router.get('/players', getPlayers);
-router.get('/players/:id', getPlayer);
+router.get('/players/byId/:id', getPlayer);
+router.get('/players/byName/:username', getPlayerByUsername);
 router.put('/players/:id', updatePlayer);
 router.delete('/players/:id', deletePlayer);
 router.post('/players', createPlayer);

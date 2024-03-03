@@ -9,28 +9,24 @@ mongoose.connect("mongodb://localhost:27017/couponline", {
 // Create fake player data
 const players = [
   {
-    firstName: "John",
-    lastName: "Doe",
+    userName: "John",
+    screenName: "Doe",
     email: "john@example.com",
-    age: 25,
   },
   {
-    firstName: "Jane",
-    lastName: "Smith",
+    userName: "Jane",
+    screenName: "Smith",
     email: "jane@example.com",
-    age: 30,
   },
   {
-    firstName: "Alice",
-    lastName: "Johnson",
+    userName: "Alice",
+    screenName: "Johnson",
     email: "alice@example.com",
-    age: 28,
   },
   {
-    firstName: "Todd",
-    lastName: "Travis",
+    userName: "Todd",
+    screenName: "Travis",
     email: "Todd@example.com",
-    age: 25,
   },
 ];
 

@@ -33,6 +33,7 @@ export const getPlayers = async (req, res) => {
  */
 export const getPlayer = async (req, res) => {
     const { id } = req.params; 
+    console.log(id)
     try {
       const player = await getPlayerFromRepo({ _id: id }); 
       if (!player) {
@@ -45,6 +46,26 @@ export const getPlayer = async (req, res) => {
     }
 };
 
+/**
+ * Retrieve a player by username from the repository
+ * 
+ * @param {Request} req The request object
+ * @param {Response} res The response object
+ */
+const getPlayerByUsername = async (req, res) => {
+  const { username } = req.params;
+  console.log(username)
+  try {
+    const user = await getPlayerFromRepo({ userName: username });
+    if (user) {
+      res.status(200).send(user);
+    } else {
+      handlePlayerNotFound(res, username);
+    }
+  } catch (error) {
+    handleError(res, 500, `Failed to fetch player ${username}: ${error.message}`);
+  }
+}
 /**
  * Updates a single player by ID in the database.
  * 
@@ -109,3 +130,5 @@ export const createPlayer = async (req, res) => {
       handleError(res, 500, `Failed to create player: ${e.message}`);
     }
 };
+
+export { getPlayerByUsername };
