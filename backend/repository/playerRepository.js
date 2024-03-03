@@ -23,6 +23,7 @@ export const getPlayersFromRepo = async (query) => {
  */
 export const getPlayerFromRepo = async (query) => {
     try {
+      console.log(query)
       const player = await Player.findOne(query);
       return player;
     } catch (e) {

@@ -11,6 +11,8 @@ const router = express.Router();
 
 // Player Routes
 router.get("/", getPlayers);
+router.get("/byId/:id", getPlayer);
+router.get("/byName/:username", getPlayerByUsername);
 router.get("/:id", getPlayer);
 router.put("/:id", updatePlayer);
 router.delete("/:id", deletePlayer);
