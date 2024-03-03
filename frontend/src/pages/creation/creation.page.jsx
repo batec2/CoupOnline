@@ -1,6 +1,7 @@
 import Cookies from "universal-cookie";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import verifyAccount from "../../actions/verifyAccount.js";
 
 const cookies = new Cookies()
 
@@ -14,24 +15,41 @@ const CreationPage = () => {
   const [screenName, setScreenName] = useState("")
   const [Email, setEmail] = useState("")
   const [CreatedCookie, setCreatedCookie] = useState(false)
-  const createAccount = () => {
-    setCreatedCookie(true)
-  }
+
   useEffect(() => {
-    const makeNewCookie  = async () =>  {
-      const response = await axios.post("http://localhost:8080/players",
-        {userName: userName, screenName: screenName, email: Email},
-        {headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json;charset=UTF-8",
-            },})
-      cookies.set("PersonalCookie", response.data)
-      setCurrentCookie(cookies.get("PersonalCookie"))
-    }
-    if(CreatedCookie === true && CurrentCookie === undefined){
-      makeNewCookie()
-    }
-  }, [CreatedCookie, Email, userName, screenName, CurrentCookie]);
+    if(CreatedCookie === true){
+      verifyAccount(userName).then((res) => {
+          if (res === true){
+            window.alert("Account with this username already exists.")
+            return
+          }
+          if (screenName === ""){
+            window.alert("Input a ScreenName.")
+            return
+          }
+          if (Email === ""){
+            window.alert("Input an Email.")
+            return
+          }
+          const makeNewAccount  = async () =>  {
+            const response = await axios.post("http://localhost:8080/players",
+            {userName: userName, screenName: screenName, email: Email},
+           {headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json;charset=UTF-8",
+                    },
+                  })
+
+            cookies.set("PersonalCookie", response.data._id)
+            setCurrentCookie(cookies.get("PersonalCookie"))
+          }
+
+        if(CreatedCookie === true){
+          makeNewAccount()
+        }
+        })
+    setCreatedCookie(false)
+  }}, [CreatedCookie, Email, userName, screenName, CurrentCookie]);
 
 
 
@@ -41,7 +59,7 @@ const CreationPage = () => {
       <p>User Name</p><input type="text" onChange={(e) => setUserName(e.target.value)}/><br/>
       <p>Screen Name</p><input type="text" onChange={(e) => setScreenName(e.target.value)}/><br/>
       <p>Email</p><input type="email" onChange={(e) => setEmail(e.target.value)}/><br/>
-      <button onClick={createAccount}>Create Account</button>
+      <button onClick={() => {setCreatedCookie(true)}}>Create Account</button>
     </div>
   );
 };
