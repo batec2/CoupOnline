@@ -6,6 +6,7 @@ import TextField from "../../components/textfield/textfield.component";
 import verifyAccount from "../../actions/verifyAccount";
 import Cookies from "universal-cookie";
 import retrieveAccountById from "../../actions/retrieveAccountById.js";
+import retrieveAccountByName from "../../actions/retrieveAccountByName.js";
 
 const cookies = new Cookies()
 
@@ -31,6 +32,9 @@ const LoginPage = () => {
       const verif = await verifyAccount(username, setVerified);
       terminal.log(verif)
       if (verif) {
+        retrieveAccountByName(username).then((res) => {
+          cookies.set("PersonalCookie", res.data._id)
+        })
         navigate("/room");
       };
     };
