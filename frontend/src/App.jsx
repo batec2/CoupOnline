@@ -21,6 +21,10 @@ const queryClient = new QueryClient({
 
 const Socket = io("http://localhost:8080");
 
+Socket.onAny((event, ...args) => {
+  console.log(event, args);
+});
+
 function App() {
   // const Socket = io("http://localhost:8080", { autoConnect: false });
   return (
