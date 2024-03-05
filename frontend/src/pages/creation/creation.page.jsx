@@ -2,6 +2,7 @@ import Cookies from "universal-cookie";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import verifyAccount from "../../actions/verifyAccount.js";
+import {useNavigate} from "react-router-dom";
 
 const cookies = new Cookies()
 
@@ -10,6 +11,7 @@ const cookies = new Cookies()
  * @returns Game Page
  */
 const CreationPage = () => {
+  const navigate = useNavigate()
   const [userName, setUserName] = useState("")
   const [CurrentCookie, setCurrentCookie] = useState(cookies.get("PersonalCookie"))
   const [screenName, setScreenName] = useState("")
@@ -56,6 +58,7 @@ const CreationPage = () => {
 
         if(CreatedCookie === true){
           makeNewAccount()
+          navigate("/room");
         }
         })
     setCreatedCookie(false)

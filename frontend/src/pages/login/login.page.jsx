@@ -36,6 +36,8 @@ const LoginPage = () => {
           cookies.set("PersonalCookie", res.data._id)
         })
         navigate("/room");
+      }else{
+        window.alert("Account Does not Exist.")
       };
     };
 
