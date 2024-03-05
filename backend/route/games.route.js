@@ -8,10 +8,6 @@ import {
 } from "../controller/gameController.js";
 
 const router = express.Router();
-<<<<<<< HEAD
-
-=======
->>>>>>> 954d47bdfc41448509dc1e9011318c8b5b9543ab
 // Game Routes
 router.get("/", getAllGames);
 router.get("/:id", getGame);

@@ -5,11 +5,7 @@ import {
   updatePlayer,
   deletePlayer,
   createPlayer,
-<<<<<<< HEAD
   getPlayerByUsername,
-=======
-  getPlayerByUsername
->>>>>>> 954d47bdfc41448509dc1e9011318c8b5b9543ab
 } from "../controller/playerController.js";
 
 const router = express.Router();
