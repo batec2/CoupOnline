@@ -26,7 +26,7 @@ function App() {
   // const Socket = io("http://localhost:8080", { autoConnect: false });
   return (
     <BrowserRouter>
-      <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={queryClient} contextSharing={true}>
         <SocketContext.Provider value={Socket}>
           <Routes>
             <Route path="login" element={<LoginPage />}></Route>
@@ -35,7 +35,7 @@ function App() {
             <Route path="game" element={<GamePage />}></Route>
             <Route path="stats" element={<StatsPage />}></Route>
             <Route path="profile" element={<ProfilePage />}></Route>
-<Route path="test" element={<TestPage />} />
+            <Route path="test" element={<TestPage />} />
           </Routes>
         </SocketContext.Provider>
       </QueryClientProvider>
