@@ -40,7 +40,7 @@ export const getPlayerFromRepo = async (query) => {
  */
 export const updatePlayerInRepo = async (id, update) => {
     try {
-      const player = await Player.findOneAndUpdate({ id: id }, { ...update }, { new: true }).lean();
+      const player = await Player.findOneAndUpdate({ _id: id }, { ...update }, { new: true }).lean();
       return player;
     } catch (e) {
       throw new Error(`Error while updating player: ${id}`);
@@ -73,6 +73,7 @@ export const createPlayerInRepo = async (payload) => {
       const savedPlayer = await new Player({ ...payload }).save();
       return savedPlayer;
     } catch (e) {
+      console.log(e)
       throw new Error("Error while creating a player");
     }
 };

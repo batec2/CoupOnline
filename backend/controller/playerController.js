@@ -52,7 +52,7 @@ export const getPlayer = async (req, res) => {
  * @param {Request} req The request object
  * @param {Response} res The response object
  */
-const getPlayerByUsername = async (req, res) => {
+export const getPlayerByUsername = async (req, res) => {
   const { username } = req.params;
   console.log(username)
   try {
@@ -130,5 +130,3 @@ export const createPlayer = async (req, res) => {
       handleError(res, 500, `Failed to create player: ${e.message}`);
     }
 };
-
-export { getPlayerByUsername };

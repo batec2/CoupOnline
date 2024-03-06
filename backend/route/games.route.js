@@ -11,7 +11,7 @@ const router = express.Router();
 // Game Routes
 router.get("/", getAllGames);
 router.get("/:id", getGame);
-router.put("/:id", updateGame);
+router.patch("/:id", updateGame);
 router.delete("/:id", deleteGame);
 router.post("/", createGame);
 

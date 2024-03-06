@@ -15,7 +15,7 @@ router.get("/", getPlayers);
 router.get("/byId/:id", getPlayer);
 router.get("/byName/:username", getPlayerByUsername);
 router.get("/:id", getPlayer);
-router.put("/:id", updatePlayer);
+router.patch("/:id", updatePlayer);
 router.delete("/:id", deletePlayer);
 router.post("/", createPlayer);
 
