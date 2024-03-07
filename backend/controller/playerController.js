@@ -143,5 +143,3 @@ export const createPlayer = async (req, res) => {
     handleError(res, 500, `Failed to create player: ${e.message}`);
   }
 };
-
-export { getPlayerByUsername };
