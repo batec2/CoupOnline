@@ -2,6 +2,8 @@ import Cookies from "universal-cookie";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import verifyAccount from "../../actions/verifyAccount.js";
+import { useNavigate } from "react-router-dom";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Input } from "@/components/ui/input.jsx";
 import { Button } from "@/components/ui/button.jsx";
 
@@ -12,6 +14,7 @@ const cookies = new Cookies();
  * @returns Game Page
  */
 const CreationPage = () => {
+  const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [CurrentCookie, setCurrentCookie] = useState(
     cookies.get("PersonalCookie")
@@ -22,6 +25,10 @@ const CreationPage = () => {
 
   useEffect(() => {
     if (CreatedCookie === true) {
+      if (userName === "") {
+        window.alert("Input a Username.");
+        return;
+      }
       verifyAccount(userName).then((res) => {
         if (res === true) {
           window.alert("Account with this username already exists.");
@@ -33,6 +40,13 @@ const CreationPage = () => {
         }
         if (Email === "") {
           window.alert("Input an Email.");
+          return;
+        }
+        // src: https://www.simplilearn.com/tutorials/javascript-tutorial/email-validation-in-javascript
+        const emailRegex =
+          /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        if (!emailRegex.test(Email)) {
+          window.alert("Not a Valid Email Address, Input a Valid Email.");
           return;
         }
         const makeNewAccount = async () => {
@@ -53,6 +67,7 @@ const CreationPage = () => {
 
         if (CreatedCookie === true) {
           makeNewAccount();
+          navigate("/room");
         }
       });
       setCreatedCookie(false);

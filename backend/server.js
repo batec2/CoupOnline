@@ -26,6 +26,7 @@ const httpServer = middleware.listen(PORT, () => {
 //Both express and socket io on the same port
 const io = new Server(httpServer, { cors: { origin: "*" } });
 
+
 io.on("connection", (socket) => {
   console.log(`${socket.id} connected`);
   socket.on("join-room", async (message, callback) => {
@@ -63,3 +64,5 @@ io.on("connection", (socket) => {
     console.log(`${socket.id} has disconnected`);
   });
 });
+
+

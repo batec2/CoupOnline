@@ -40,12 +40,16 @@ export const getPlayerFromRepo = async (query) => {
  * @throws {Error} Throws an error if there's an issue updating the player
  */
 export const updatePlayerInRepo = async (id, update) => {
-    try {
-      const player = await Player.findOneAndUpdate({ _id: id }, { ...update }, { new: true }).lean();
-      return player;
-    } catch (e) {
-      throw new Error(`Error while updating player: ${id}`);
-    }
+  try {
+    const player = await Player.findOneAndUpdate(
+      { _id: id },
+      { ...update },
+      { new: true }
+    ).lean();
+    return player;
+  } catch (e) {
+    throw new Error(`Error while updating player: ${id}`);
+  }
 };
 
 /**
@@ -70,21 +74,11 @@ export const deletePlayerInRepo = async (query) => {
  * @throws {Error} Throws an error if there's an issue creating the player
  */
 export const createPlayerInRepo = async (payload) => {
-<<<<<<< HEAD
   try {
     const savedPlayer = await new Player({ ...payload }).save();
     return savedPlayer;
   } catch (e) {
+    console.log(e);
     throw new Error("Error while creating a player");
   }
 };
-=======
-    try {
-      const savedPlayer = await new Player({ ...payload }).save();
-      return savedPlayer;
-    } catch (e) {
-      console.log(e)
-      throw new Error("Error while creating a player");
-    }
-};
->>>>>>> b95a292df81ed688db045a0bc2c9b1531a6150f2
