@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { terminal } from "virtual:terminal";
 
@@ -7,6 +7,8 @@ import verifyAccount from "../../actions/verifyAccount";
 import Cookies from "universal-cookie";
 import retrieveAccountById from "../../actions/retrieveAccountById.js";
 import retrieveAccountByName from "../../actions/retrieveAccountByName.js";
+import { Button } from "@/components/ui/button.jsx";
+import { Input } from "@/components/ui/input.jsx";
 
 const cookies = new Cookies();
 
@@ -16,12 +18,14 @@ const cookies = new Cookies();
  */
 const LoginPage = () => {
   const navigate = useNavigate();
+  const username = useRef();
   const [LocalCookie, setLocalCookie] = useState(cookies.get("PersonalCookie"));
-  const [username, setUsername] = useState([]);
+  // const [username, setUsername] = useState([]);
   const [verified, setVerified] = useState(false);
 
   const handleUsernameInput = (e) => {
-    setUsername(e.target.value);
+    // setUsername(e.target.value);
+    username.current = e.target.value;
   };
 
   const handleCreateClick = () => {
@@ -42,7 +46,8 @@ const LoginPage = () => {
   useEffect(() => {
     if (LocalCookie !== undefined) {
       retrieveAccountById(LocalCookie).then((res) => {
-        setUsername(res.data.username);
+        // setUsername(res.data.username);
+        username.current = res.data.username;
         navigate("/room");
       });
     }
@@ -52,10 +57,14 @@ const LoginPage = () => {
     <div>
       <h1>Welcome to Super Couper</h1>
       <h2>Enter your username:</h2>
-      <TextField placeholder="Username" onChange={handleUsernameInput} />
-      <button onClick={handleLoginClick}>Login</button>
+      <Input
+        type="username"
+        placeholder="Username"
+        onChange={handleUsernameInput}
+      ></Input>
+      <Button onClick={handleLoginClick}>Login</Button>
       <h2>No account?</h2>
-      <button onClick={handleCreateClick}>Create an account</button>
+      <Button onClick={handleCreateClick}>Create an account</Button>
     </div>
   );
 };
