@@ -61,6 +61,7 @@ const LoginPage = () => {
         type="username"
         placeholder="Username"
         onChange={handleUsernameInput}
+        className="w-200"
       ></Input>
       <Button onClick={handleLoginClick}>Login</Button>
       <h2>No account?</h2>

@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -20,14 +21,15 @@ const RoomPage = () => {
   return (
     <div>
       <div>
-        <input
+        <Input
           type="text"
           onChange={(e) => {
             room.current = e.target.value;
           }}
           placeholder="Room Number"
           disabled={room.current ? true : false}
-        ></input>
+          className="w-200"
+        ></Input>
       </div>
       <Button onClick={handleJoin}>
         {room.current ? "Leave Room" : "Join Room"}
