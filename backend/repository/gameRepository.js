@@ -39,7 +39,7 @@ export const getGameFromRepo = async (query) => {
  */
 export const updateGameInRepo = async (id, update) => {
     try {
-      const game = await Game.findOneAndUpdate({ id: id }, { ...update }, { new: true }).lean();
+      const game = await Game.findOneAndUpdate({ _id: id }, { ...update }, { new: true }).lean();
       return game;
     } catch (e) {
       throw new Error(`Error while updating game: ${id}`);

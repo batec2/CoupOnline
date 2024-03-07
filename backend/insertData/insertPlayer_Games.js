@@ -9,24 +9,20 @@ mongoose.connect("mongodb://localhost:27017/couponline", {
 // Create fake player data
 const players = [
   {
-    userName: "John",
-    screenName: "Doe",
-    email: "john@example.com",
+    userName: "Johnny12",
+    screenName: "John",
   },
   {
-    userName: "Jane",
-    screenName: "Smith",
-    email: "jane@example.com",
+    userName: "JaneSin19",
+    screenName: "Jane",
   },
   {
-    userName: "Alice",
-    screenName: "Johnson",
-    email: "alice@example.com",
+    userName: "XxAlicexX",
+    screenName: "Alice",
   },
   {
-    userName: "Todd",
-    screenName: "Travis",
-    email: "Todd@example.com",
+    userName: "XxtoddxX",
+    screenName: "Todd",
   },
 ];
 
@@ -55,15 +51,13 @@ async function createPlayersAndGames() {
     const createdPlayers = await Player.create(players);
 
     // Assign players to games
-    for (let i = 0; i < games.length; i++) {
-      for (let j = 0; j < players.length; j++) {
-        games[i].players.push({
-          player: createdPlayers[j]._id,
-          cardOne: 1,
-          cardTwo: 2,
-        });
-      }
-    }
+    games.forEach((game) => {
+      game.players = createdPlayers.map((player) => ({
+        player: player._id,
+        cardOne: 1,
+        cardTwo: 2,
+      }));
+    });
 
     // Create games
     await Game.create(games);
