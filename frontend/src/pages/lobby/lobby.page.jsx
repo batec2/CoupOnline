@@ -2,6 +2,7 @@ import "./lobby.styles.css";
 import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import SocketContext from "../../context/socketContext";
+import { Button } from "@/components/ui/button";
 
 const LobbyPage = () => {
   const { roomId } = useParams();
@@ -28,7 +29,7 @@ const LobbyPage = () => {
   return (
     <div>
       <h1>Your Current Room: {roomId}</h1>
-      <button onClick={() => handleLeave()}>Leave Room</button>
+      <Button onClick={handleLeave}>Leave Room</Button>
     </div>
   );
 };

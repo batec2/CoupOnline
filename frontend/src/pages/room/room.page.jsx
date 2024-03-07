@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -28,9 +29,9 @@ const RoomPage = () => {
           disabled={room.current ? true : false}
         ></input>
       </div>
-      <button onClick={() => handleJoin()}>
+      <Button onClick={handleJoin}>
         {room.current ? "Leave Room" : "Join Room"}
-      </button>
+      </Button>
     </div>
   );
 };
