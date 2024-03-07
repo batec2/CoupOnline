@@ -28,12 +28,17 @@ const io = new Server(httpServer, { cors: { origin: "*" } });
 
 
 io.on("connection", (socket) => {
+  console.log(`${socket.id} connected`);
   socket.on("join-room", async (message, callback) => {
+    if (!message || !message.roomId) {
+      return;
+    }
     try {
-      socket.join(message.roomName);
-      console.log(`${socket.id} joined room ${message.roomName}`);
-      const sockets = await io.in(message.roomName).fetchSockets();
-      console.log(sockets);
+      const { roomId } = message;
+      socket.join(roomId);
+      console.log(`${socket.id} joined room ${roomId}`);
+      // const sockets = await io.in(roomId).fetchSockets();
+      // console.log(sockets);
       callback({ status: 200 });
     } catch (e) {
       console.log(e);
@@ -41,14 +46,22 @@ io.on("connection", (socket) => {
     }
   });
   socket.on("leave-room", async (message, callback) => {
+    if (!message || !message.roomId) {
+      return;
+    }
     try {
-      socket.leave(message.roomName);
-      console.log(`${socket.id} left room ${message.roomName}`);
+      const { roomId } = message;
+      socket.leave(roomId);
+      console.log(`${socket.id} left room ${roomId}`);
       callback({ status: 200 });
     } catch (e) {
       console.log(e);
       callback({ status: 500 });
     }
+  });
+
+  socket.on("disconnection", (socket) => {
+    console.log(`${socket.id} has disconnected`);
   });
 });
 
