@@ -34,7 +34,7 @@ function App() {
       <QueryClientProvider client={queryClient} contextSharing={true}>
         <SocketContext.Provider value={Socket}>
           <Routes>
-            <Route path="login" element={<LoginPage />}></Route>
+            <Route path="/" element={<LoginPage />}></Route>
             <Route path="creation" element={<CreationPage />}></Route>
             <Route path="room" element={<RoomPage />}></Route>
             <Route path="room/:roomId" element={<LobbyPage />}></Route>

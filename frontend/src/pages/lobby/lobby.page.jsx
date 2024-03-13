@@ -7,7 +7,16 @@ import { Button } from "@/components/ui/button";
 const LobbyPage = () => {
   const { roomId } = useParams();
   const socket = useContext(SocketContext);
+  const [currentLobbyMembers, setLobbyMembers] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    socket.emit("join-room", { roomId: roomId, userId: "user1" }, handleStatus);
+  }, [roomId, socket]);
+
+  socket.on("lobby-members", ({ lobby }) => {
+    setLobbyMembers(lobby);
+  });
 
   const handleStatus = ({ status }) => {
     if (!status) {
@@ -18,18 +27,26 @@ const LobbyPage = () => {
   };
 
   const handleLeave = () => {
-    socket.emit("leave-room", { roomId: roomId }, handleStatus);
+    socket.emit(
+      "leave-room",
+      { roomId: roomId, userId: "user1" },
+      handleStatus
+    );
     navigate("/room");
   };
 
-  useEffect(() => {
-    socket.emit("join-room", { roomId: roomId }, handleStatus);
-  }, [roomId, socket]);
+  const handleStartGame = () => {
+    navigate(`/game`);
+  };
 
   return (
     <div>
       <h1>Your Current Room: {roomId}</h1>
-      <Button onClick={handleLeave}>Leave Room</Button>
+      <Button onClick={() => handleLeave()}>Leave Room</Button>
+      <Button onClick={() => handleStartGame()}>Start Game</Button>
+      <div>
+        <p>{currentLobbyMembers ? JSON.stringify(currentLobbyMembers) : ""}</p>
+      </div>
     </div>
   );
 };
