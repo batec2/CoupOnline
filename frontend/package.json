@@ -22,7 +22,6 @@
     "react-dom": "^18.2.0",
     "react-query": "^3.39.3",
     "react-router-dom": "^6.22.0",
-    "semantic-ui-react": "^2.1.5",
     "socket.io-client": "^4.7.4",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
