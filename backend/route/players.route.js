@@ -18,6 +18,6 @@ router.get("/byName/:username", getPlayerByUsername);
 router.get("/:id", getPlayer);
 router.patch("/:id", updatePlayer);
 router.delete("/:id", deletePlayer);
-router.post("/",checkForNeededPlayerFields, createPlayer);
+router.post("/", checkForNeededPlayerFields, createPlayer);
 
 export default router;
