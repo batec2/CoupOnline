@@ -2,13 +2,15 @@ import "./lobby.styles.css";
 import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import SocketContext from "../../context/socketContext";
-import { Button } from "@/components/ui/button";
 import { handleStartGame } from "@/actions/socketActions";
+import LobbyComponent from "@/components/lobby/lobby.component";
+import GameComponent from "@/components/game/game.component";
 
 const LobbyPage = () => {
   const { roomId } = useParams();
   const socket = useContext(SocketContext);
   const [currentLobbyMembers, setLobbyMembers] = useState(null);
+  const [gameStart, setGameStart] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,6 +19,11 @@ const LobbyPage = () => {
 
   socket.on("lobby-members", ({ lobby }) => {
     setLobbyMembers(lobby);
+  });
+
+  socket.on("start-game", () => {
+    setGameStart(true);
+    console.log("start-game");
   });
 
   const handleStatus = ({ status }) => {
@@ -40,16 +47,21 @@ const LobbyPage = () => {
     handleStartGame(socket, roomId);
   };
 
-  return (
-    <div>
-      <h1>Your Current Room: {roomId}</h1>
-      <Button onClick={() => handleLeave()}>Leave Room</Button>
-      <Button onClick={() => handleStart()}>Start Game</Button>
-      <div>
-        <p>{currentLobbyMembers ? JSON.stringify(currentLobbyMembers) : ""}</p>
-      </div>
-    </div>
-  );
+  const handleUi = () => {
+    if (gameStart) {
+      return <GameComponent socket={socket}></GameComponent>;
+    }
+    return (
+      <LobbyComponent
+        roomId={roomId}
+        handleLeave={handleLeave}
+        handleStart={handleStart}
+        currentLobbyMembers={currentLobbyMembers}
+      ></LobbyComponent>
+    );
+  };
+
+  return handleUi();
 };
 
 export default LobbyPage;

@@ -53,6 +53,7 @@ export const registerLobbyHandlers = (io, socket, rooms) => {
       room.state = new GameState(ids);
       callback({ status: 200 });
       console.log(rooms);
+      io.to(roomId).emit("start-game");
       return;
     }
     callback({ status: 500 });
