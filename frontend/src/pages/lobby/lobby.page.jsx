@@ -3,6 +3,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import SocketContext from "../../context/socketContext";
 import { Button } from "@/components/ui/button";
+import { handleStartGame } from "@/actions/socketActions";
 
 const LobbyPage = () => {
   const { roomId } = useParams();
@@ -35,15 +36,15 @@ const LobbyPage = () => {
     navigate("/room");
   };
 
-  const handleStartGame = () => {
-    navigate(`/game`);
+  const handleStart = () => {
+    handleStartGame(socket, roomId);
   };
 
   return (
     <div>
       <h1>Your Current Room: {roomId}</h1>
       <Button onClick={() => handleLeave()}>Leave Room</Button>
-      <Button onClick={() => handleStartGame()}>Start Game</Button>
+      <Button onClick={() => handleStart()}>Start Game</Button>
       <div>
         <p>{currentLobbyMembers ? JSON.stringify(currentLobbyMembers) : ""}</p>
       </div>

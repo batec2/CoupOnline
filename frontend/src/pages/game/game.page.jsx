@@ -9,7 +9,7 @@ import {
   handleSwap,
   handleIncome,
   handleTaxes,
-} from "./socketActions";
+} from "../../actions/socketActions";
 /**
  * Page for playing game and interacting with game state
  * @returns Game Page
