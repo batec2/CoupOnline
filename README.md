@@ -1,5 +1,7 @@
 # CoupOnline
 
+A web application version of the card game Coup.  Created using vite react frontend, express node.js backend, and mongoDB database.
+
 ## Must Haves
 - Gameplay (<a href="https://www.qugs.org/rules/r131357.pdf">rules</a>)
   - Game is consistent with the rules of the card game Coup, and has all the 
