@@ -41,7 +41,7 @@ export const registerLobbyHandlers = (io, socket, rooms) => {
     }
   });
 
-  socket.on("start-game", ({ roomId }, callback) => {
+  socket.on("start-game", async ({ roomId }, callback) => {
     console.log(roomId);
     console.log("start-game");
     if (!rooms[roomId]) {
@@ -51,11 +51,27 @@ export const registerLobbyHandlers = (io, socket, rooms) => {
     const ids = Object.keys(room.players);
     if (ids.length > 1 && !room.state) {
       room.state = new GameState(ids);
-      callback({ status: 200 });
-      console.log(room.state);
-      io.to(roomId).emit("start-game", {
-        turnId: room.state.currentTurnId,
-      });
+
+      io.in(roomId)
+        .fetchSockets()
+        .then((sockets) => {
+          // Sends sends each player their cards when game starts
+          sockets.forEach((socket) => {
+            const socketId = socket.id;
+            console.log(socketId);
+            io.to(socketId).emit("game-cards", {
+              cards: room.state.getPlayersCards(socketId),
+            });
+            // Starts the game for players and sends player id of first turn
+            io.to(roomId).emit("start-game", {
+              turnId: room.state.currentTurnId,
+            });
+            callback({ status: 200 });
+          });
+        })
+        .catch((e) => {
+          console.log(e);
+        });
       return;
     }
     callback({ status: 500 });

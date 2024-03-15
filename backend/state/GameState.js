@@ -1,13 +1,17 @@
 export class GameState {
+  //3 of each Duke,Assassin,Captain,Ambassador,Contessa
   currentPlayer = 0;
   playerCount = 0;
   players = [];
+  playerCards = {};
+  deck = [3, 3, 3, 3, 3];
   roundNumber = 0;
   round = {};
 
   constructor(players) {
     this.playerCount = players.length;
     this.players = players;
+    this.generateCardsForAll();
   }
 
   get currentPlayer() {
@@ -25,9 +29,20 @@ export class GameState {
   get round() {
     return this.round;
   }
+  get deck() {
+    return this.deck;
+  }
 
   get currentTurnId() {
     return this.players[this.currentPlayer];
+  }
+
+  get playerCards() {
+    return this.playerCards;
+  }
+
+  getPlayersCards(player) {
+    return this.playerCards[player];
   }
 
   addRound(round) {
@@ -45,5 +60,29 @@ export class GameState {
     } else {
       this.currentPlayer += 1;
     }
+  }
+
+  generateCardsForAll() {
+    this.players.forEach((player) => {
+      this.playerCards[player] = this.generateCards();
+    });
+  }
+
+  generateCards() {
+    const cards = {};
+    // Generates 2 cards
+    for (let i = 0; i < 2; i++) {
+      //Select card
+      while (true) {
+        const index = Math.floor(Math.random() * this.deck.length);
+        // if there is still a card left in deck
+        if (this.deck[index] != 0) {
+          this.deck[index] -= 1;
+          cards[i] = index;
+          break;
+        }
+      }
+    }
+    return cards;
   }
 }
