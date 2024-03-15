@@ -1,5 +1,5 @@
 import "./lobby.styles.css";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import SocketContext from "../../context/socketContext";
 import { handleStartGame } from "@/actions/socketActions";
@@ -11,6 +11,8 @@ const LobbyPage = () => {
   const socket = useContext(SocketContext);
   const [currentLobbyMembers, setLobbyMembers] = useState(null);
   const [gameStart, setGameStart] = useState(false);
+  const [currentTurnId, setTurnId] = useState(null);
+  const [responseAction, setResponseAction] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,9 +23,13 @@ const LobbyPage = () => {
     setLobbyMembers(lobby);
   });
 
-  socket.on("start-game", () => {
+  socket.on("start-game", ({ turnId }) => {
     setGameStart(true);
-    console.log("start-game");
+    setTurnId(turnId);
+  });
+
+  socket.on("player-choice", ({ responseAction }) => {
+    setResponseAction(responseAction);
   });
 
   const handleStatus = ({ status }) => {
@@ -47,9 +53,17 @@ const LobbyPage = () => {
     handleStartGame(socket, roomId);
   };
 
-  const handleUi = () => {
+  const handleUi = (turnId, roomId) => {
+    console.log(turnId);
     if (gameStart) {
-      return <GameComponent socket={socket}></GameComponent>;
+      return (
+        <GameComponent
+          socket={socket}
+          turnId={turnId}
+          roomId={roomId}
+          responseAction={responseAction}
+        ></GameComponent>
+      );
     }
     return (
       <LobbyComponent
@@ -61,7 +75,7 @@ const LobbyPage = () => {
     );
   };
 
-  return handleUi();
+  return handleUi(currentTurnId, roomId);
 };
 
 export default LobbyPage;

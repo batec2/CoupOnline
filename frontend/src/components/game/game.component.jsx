@@ -1,28 +1,25 @@
-import {
-  handleSteal,
-  handleAid,
-  handleAssassinate,
-  handleCoup,
-  handleSwap,
-  handleIncome,
-  handleTaxes,
-} from "../../actions/socketActions";
+import NormalActions from "../gameActions/normalActions";
+import ResponseActions from "../gameActions/responseActions";
 
-import { Button } from "../ui/button";
-
-const GameComponent = ({ socket }) => {
+const GameComponent = ({ socket, turnId, roomId, responseAction }) => {
+  const handleTurn = (turnId) => {
+    if (socket.id === turnId) {
+      return <NormalActions socket={socket} roomId={roomId}></NormalActions>;
+    } else if (responseAction) {
+      return (
+        <ResponseActions
+          socket={socket}
+          roomId={roomId}
+          responseAction={responseAction}
+        ></ResponseActions>
+      );
+    }
+    return <h2>Not your turn bro</h2>;
+  };
   return (
     <div>
-      <h1>Gamee</h1>
-      <div>
-        <Button onClick={() => handleIncome(socket)}>Income</Button>
-        <Button onClick={() => handleAid(socket)}>Foreign Aid</Button>
-        <Button onClick={() => handleCoup(socket)}>Coup</Button>
-        <Button onClick={() => handleTaxes(socket)}>Taxes</Button>
-        <Button onClick={() => handleAssassinate(socket)}>Assassinate</Button>
-        <Button onClick={() => handleSteal(socket)}>Steal</Button>
-        <Button onClick={() => handleSwap(socket)}>Swap Influence</Button>
-      </div>
+      <h1>Game</h1>
+      {handleTurn(turnId)}
     </div>
   );
 };

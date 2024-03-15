@@ -52,8 +52,10 @@ export const registerLobbyHandlers = (io, socket, rooms) => {
     if (ids.length > 1 && !room.state) {
       room.state = new GameState(ids);
       callback({ status: 200 });
-      console.log(rooms);
-      io.to(roomId).emit("start-game");
+      console.log(room.state);
+      io.to(roomId).emit("start-game", {
+        turnId: room.state.currentTurnId,
+      });
       return;
     }
     callback({ status: 500 });

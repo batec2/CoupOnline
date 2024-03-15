@@ -26,6 +26,10 @@ export class GameState {
     return this.round;
   }
 
+  get currentTurnId() {
+    return this.players[this.currentPlayer];
+  }
+
   addRound(round) {
     this.round[this.roundNumber] = round;
     this.roundNumber += 1;

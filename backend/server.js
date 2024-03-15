@@ -29,7 +29,6 @@ const httpServer = middleware.listen(PORT, () => {
  * Object to contained rooms and the users currently in the rooms
  */
 const rooms = {};
-const Gamestate = { currentPlayer: 0, roundNumber: 0, players: [], rounds: [] };
 
 //Socket io
 //Both express and socket io on the same port
@@ -37,7 +36,7 @@ const io = createSocketIO(httpServer, rooms);
 
 const onConnection = (socket) => {
   registerLobbyHandlers(io, socket, rooms);
-  registerGameHandlers(io, socket);
+  registerGameHandlers(io, socket, rooms);
   console.log(`${socket.id} connected`);
 };
 
