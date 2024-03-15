@@ -16,6 +16,8 @@ export const createSocketIO = (httpServer, rooms) => {
   io.of("/").adapter.on("create-room", (room) => {
     console.log("Room: " + room + " was created by server");
     rooms[room] = {};
+    rooms[room].players = {};
+    rooms[room].state = null;
   });
 
   io.of("/").adapter.on("join-room", (room, id) => {
@@ -23,6 +25,9 @@ export const createSocketIO = (httpServer, rooms) => {
   });
 
   io.of("/").adapter.on("leave-room", (room, id) => {
+    if (rooms[room]) {
+      delete rooms[room].players[id];
+    }
     console.log(`${id} has left Room: ${room}`);
   });
 

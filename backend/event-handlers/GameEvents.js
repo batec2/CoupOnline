@@ -1,23 +1,15 @@
-export const registerGameHandlers = (io, socket) => {
-  socket.on("Assassinate", () => {
-    console.log("Assassinate");
+export const registerGameHandlers = (io, socket, rooms) => {
+  socket.on("normal-action", ({ roomId, userId, action }) => {
+    broadcastResponseRequest(socket, roomId, userId, action);
+    console.log(action);
   });
-  socket.on("Steal", () => {
-    console.log("Steal");
-  });
-  socket.on("Coup", () => {
-    console.log("Coup");
-  });
-  socket.on("Swap", () => {
-    console.log("Swap");
-  });
-  socket.on("Aid", () => {
-    console.log("Aid");
-  });
-  socket.on("Income", () => {
-    console.log("Income");
-  });
-  socket.on("Taxes", () => {
-    console.log("Taxes");
+};
+
+const broadcastResponseRequest = (socket, roomId, userId, choice) => {
+  socket.to(roomId).emit("player-choice", {
+    responseAction: {
+      userId: userId,
+      choice: choice,
+    },
   });
 };

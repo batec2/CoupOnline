@@ -36,7 +36,7 @@ const io = createSocketIO(httpServer, rooms);
 
 const onConnection = (socket) => {
   registerLobbyHandlers(io, socket, rooms);
-  registerGameHandlers(io, socket);
+  registerGameHandlers(io, socket, rooms);
   console.log(`${socket.id} connected`);
 };
 
