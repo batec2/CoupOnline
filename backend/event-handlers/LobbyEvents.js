@@ -52,6 +52,7 @@ export const registerLobbyHandlers = (io, socket, rooms) => {
     if (ids.length > 1 && !room.state) {
       room.state = new GameState(ids);
 
+      // Sends each player their cards and starts the game
       io.in(roomId)
         .fetchSockets()
         .then((sockets) => {

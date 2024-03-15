@@ -12,6 +12,7 @@ const LobbyPage = () => {
   const [currentLobbyMembers, setLobbyMembers] = useState(null);
   const [gameStart, setGameStart] = useState(false);
   const [currentTurnId, setTurnId] = useState(null);
+  const [gameCards, setGameCards] = useState(null);
   const [responseAction, setResponseAction] = useState(null);
   const navigate = useNavigate();
 
@@ -21,6 +22,11 @@ const LobbyPage = () => {
 
   socket.on("lobby-members", ({ lobby }) => {
     setLobbyMembers(lobby);
+  });
+
+  socket.on("game-cards", ({ cards }) => {
+    console.log(cards);
+    setGameCards(cards);
   });
 
   socket.on("start-game", ({ turnId }) => {
@@ -61,6 +67,7 @@ const LobbyPage = () => {
           socket={socket}
           turnId={turnId}
           roomId={roomId}
+          cards={gameCards}
           responseAction={responseAction}
         ></GameComponent>
       );
