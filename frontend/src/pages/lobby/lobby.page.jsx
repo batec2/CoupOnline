@@ -5,6 +5,7 @@ import SocketContext from "../../context/socketContext";
 import { handleStartGame } from "@/actions/socketActions";
 import LobbyComponent from "@/components/lobby/lobby.component";
 import GameComponent from "@/components/game/game.component";
+import { StateProvider } from "@/context/StateContext";
 
 const LobbyPage = () => {
   const { roomId } = useParams();
@@ -35,6 +36,14 @@ const LobbyPage = () => {
   });
 
   socket.on("player-choice", ({ responseAction }) => {
+    setResponseAction(responseAction);
+  });
+
+  socket.on("called-out", ({ responseAction }) => {
+    setResponseAction(responseAction);
+  });
+
+  socket.on("block", ({ responseAction }) => {
     setResponseAction(responseAction);
   });
 
@@ -82,7 +91,7 @@ const LobbyPage = () => {
     );
   };
 
-  return handleUi(currentTurnId, roomId);
+  return <StateProvider>{handleUi(currentTurnId, roomId)}</StateProvider>;
 };
 
 export default LobbyPage;
