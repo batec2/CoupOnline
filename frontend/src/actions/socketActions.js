@@ -6,10 +6,10 @@ export const handleNormalAction = (socket, roomId, action) => {
   });
 };
 
-export const handleResponseAction = (socket, roomId, action) => {
+export const handleResponseAction = (socket, roomId, requestId, action) => {
   socket.emit("response-action", {
     roomId: roomId,
-    userId: socket.id,
+    requestId: requestId,
     action: action,
   });
 };

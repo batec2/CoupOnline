@@ -23,6 +23,7 @@ const GameComponent = ({ socket, turnId, roomId, cards, responseAction }) => {
     }
     return <div>You have no cards</div>;
   };
+
   return (
     <div>
       <h1>Game</h1>
