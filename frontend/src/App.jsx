@@ -10,7 +10,7 @@ import LoginPage from "./pages/login/login.page";
 import CreationPage from "./pages/creation/creation.page.jsx";
 import TestPage from "./pages/uiTest/uiTest.page.jsx";
 import LobbyPage from "./pages/lobby/lobby.page.jsx";
-import NavMenu from "./components/navmenu/navmenu";
+import DropDownMenu from "./components/dropDownMenu/dropdownmenu.component";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -31,7 +31,7 @@ function App() {
   // const Socket = io("http://localhost:8080", { autoConnect: false });
   return (
     <BrowserRouter>
-      <NavMenu />
+      <DropDownMenu />
       <QueryClientProvider client={queryClient} contextSharing={true}>
         <SocketContext.Provider value={Socket}>
           <Routes>
