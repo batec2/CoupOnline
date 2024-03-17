@@ -3,7 +3,7 @@ import NormalActions from "../gameActions/normalActions";
 import ResponseActions from "../gameActions/responseActions";
 import CalledOutActions from "../gameActions/calledOutActions";
 
-const GameComponent = ({ socket, turnId, roomId, cards, responseAction }) => {
+const Game = ({ socket, turnId, roomId, cards, responseAction }) => {
   console.log(responseAction);
   const handleTurn = (turnId) => {
     if (socket.id === turnId) {
@@ -50,4 +50,4 @@ const GameComponent = ({ socket, turnId, roomId, cards, responseAction }) => {
   );
 };
 
-export default GameComponent;
+export default Game;

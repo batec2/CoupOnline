@@ -24,7 +24,7 @@ export const registerLobbyHandlers = (io, socket, rooms) => {
    * Event for if client manually leaves room removes socket from the
    * rooms data structure and the internal rooms
    */
-  socket.on("leave-room", ({ roomId, userId }, callback) => {
+  socket.on("leave-room", ({ roomId }, callback) => {
     try {
       socket.leave(roomId);
 
