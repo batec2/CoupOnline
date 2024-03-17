@@ -22,6 +22,7 @@ const broadcastResponseRequest = (io, socket, rooms, recv) => {
   if (action === Income) {
     room.state.incrementTurn();
     emitNextTurn(io, roomId, room.state.currentTurnId);
+    return;
   }
 
   socket.to(roomId).emit("player-choice", {
