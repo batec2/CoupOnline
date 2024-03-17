@@ -20,11 +20,12 @@ const broadcastResponseRequest = (io, socket, rooms, recv) => {
   const { roomId, userId, action } = recv;
   const room = rooms[roomId];
   if (action === Income) {
+    room.state.increasePlayerMoney(1);
     room.state.incrementTurn();
     emitNextTurn(io, roomId, room.state.currentTurnId);
+    console.log(room.state);
     return;
   }
-
   socket.to(roomId).emit("player-choice", {
     responseAction: {
       userId: userId,

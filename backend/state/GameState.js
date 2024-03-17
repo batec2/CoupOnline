@@ -4,6 +4,7 @@ export class GameState {
   playerCount = 0;
   players = [];
   playerCards = {};
+  playerMoney = {};
   deck = [3, 3, 3, 3, 3];
   roundNumber = 0;
   round = {};
@@ -12,6 +13,7 @@ export class GameState {
     this.playerCount = players.length;
     this.players = players;
     this.generateCardsForAll();
+    this.initMoney();
   }
 
   get currentPlayer() {
@@ -60,6 +62,16 @@ export class GameState {
     } else {
       this.currentPlayer += 1;
     }
+  }
+
+  initMoney() {
+    for (let i = 0; i < this.players.length; i++) {
+      this.playerMoney[i] = 2;
+    }
+  }
+
+  increasePlayerMoney(amount) {
+    this.playerMoney[this.currentPlayer] += amount;
   }
 
   generateCardsForAll() {
