@@ -1,4 +1,5 @@
-import { Button } from "../ui/button";
+import useGameContext from "@/context/useGameContext";
+import { Button } from "../../ui/button";
 
 const Cards = (card) => {
   if (card) {
@@ -6,13 +7,14 @@ const Cards = (card) => {
   } else return;
 };
 
-const CalledOutActions = ({ socket, roomId, cards }) => {
+const CalledOutActions = () => {
+  const { gameCards } = useGameContext();
   return (
     <div>
       <h1>You Have Been Called-out Choose a Card to show</h1>
       <div>
-        <Cards card={cards[0]}></Cards>
-        <Cards card={cards[1]}></Cards>
+        <Cards card={gameCards[0]}></Cards>
+        <Cards card={gameCards[1]}></Cards>
       </div>
     </div>
   );

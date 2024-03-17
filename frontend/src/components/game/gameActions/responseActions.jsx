@@ -1,14 +1,15 @@
 import GameActions from "@/lib/actionEnum.js";
-import { handleResponseAction } from "../../actions/socketActions.js";
-import { Button } from "../ui/button";
-import BlockButtons from "../blockButtons/blockButtons.jsx";
+import BlockButtons from "../../blockButtons/blockButtons.jsx";
+import useGameContext from "@/context/useGameContext.js";
 
 /**
  *
  * @param {*} param0
  * @returns
  */
-const ResponseActions = ({ socket, roomId, responseAction }) => {
+const ResponseActions = () => {
+  const { socket, roomId, responseAction } = useGameContext();
+
   const handleDisplayedAction = (action) => {
     switch (action) {
       case GameActions.Assassinate: {

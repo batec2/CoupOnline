@@ -1,4 +1,5 @@
 import { GameState } from "../state/GameState.js";
+import { emitCards, emitNextTurn } from "./GameEmitters.js";
 
 export const registerLobbyHandlers = (io, socket, rooms) => {
   /**
@@ -41,13 +42,14 @@ export const registerLobbyHandlers = (io, socket, rooms) => {
     }
   });
 
-  socket.on("start-game", async ({ roomId }, callback) => {
+  socket.on("start-game", ({ roomId }, callback) => {
     console.log(roomId);
     console.log("start-game");
     if (!rooms[roomId]) {
       return;
     }
-    const room = rooms[roomId];
+    let room = rooms[roomId];
+
     const ids = Object.keys(room.players);
     if (ids.length > 1 && !room.state) {
       room.state = new GameState(ids);
@@ -59,21 +61,18 @@ export const registerLobbyHandlers = (io, socket, rooms) => {
           // Sends sends each player their cards when game starts
           sockets.forEach((socket) => {
             const socketId = socket.id;
-            console.log(socketId);
-            io.to(socketId).emit("game-cards", {
-              cards: room.state.getPlayersCards(socketId),
-            });
+            const gameCards = room.state.getPlayersCards(socketId);
+            // Sends players cards
+            emitCards(io, socketId, gameCards);
             // Starts the game for players and sends player id of first turn
-            io.to(roomId).emit("start-game", {
-              turnId: room.state.currentTurnId,
-            });
-            callback({ status: 200 });
           });
+          emitNextTurn(io, roomId, room.state.currentTurnId);
+          callback({ status: 200 });
         })
         .catch((e) => {
           console.log(e);
+          callback({ status: 500 });
         });
-      return;
     }
     callback({ status: 500 });
   });

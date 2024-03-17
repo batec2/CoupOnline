@@ -69,7 +69,7 @@ export class GameState {
   }
 
   generateCards() {
-    const cards = {};
+    const gameCards = {};
     // Generates 2 cards
     for (let i = 0; i < 2; i++) {
       //Select card
@@ -78,11 +78,11 @@ export class GameState {
         // if there is still a card left in deck
         if (this.deck[index] != 0) {
           this.deck[index] -= 1;
-          cards[i] = index;
+          gameCards[i] = index;
           break;
         }
       }
     }
-    return cards;
+    return gameCards;
   }
 }

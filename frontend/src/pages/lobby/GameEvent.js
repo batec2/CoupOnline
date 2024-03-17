@@ -16,8 +16,8 @@ export const useGameEvents = (gameState) => {
     const onLobbyEvent = ({ lobby }) => {
       setLobbyMembers(lobby);
     };
-    const onCardsEvent = ({ cards }) => {
-      setGameCards(cards);
+    const onCardsEvent = ({ gameCards }) => {
+      setGameCards(gameCards);
     };
     const onStartEvent = ({ turnId }) => {
       setGameStart(true);
@@ -38,12 +38,12 @@ export const useGameEvents = (gameState) => {
 
     // Removes all event listeners when component is removed
     return () => {
-      socket.on("lobby-members", onLobbyEvent);
-      socket.on("game-cards", onCardsEvent);
-      socket.on("start-game", onStartEvent);
-      socket.on("player-choice", onActionEvent);
-      socket.on("called-out", onActionEvent);
-      socket.on("block", onActionEvent);
+      socket.off("lobby-members", onLobbyEvent);
+      socket.off("game-cards", onCardsEvent);
+      socket.off("start-game", onStartEvent);
+      socket.off("player-choice", onActionEvent);
+      socket.off("called-out", onActionEvent);
+      socket.off("block", onActionEvent);
       socket.disconnect();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps

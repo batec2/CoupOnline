@@ -1,18 +1,49 @@
 import GameActions from "../lib/actionEnum.js";
+import { emitNextTurn } from "./GameEmitters.js";
+
+const {
+  Income,
+  Aid,
+  Coup,
+  Taxes,
+  Assassinate,
+  Exchange,
+  Steal,
+  BlockAid,
+  BlockStealAsAmbass,
+  BlockStealAsCaptain,
+  BlockAssassinate,
+  CalloutLie,
+} = GameActions;
+
+const broadcastResponseRequest = (io, socket, rooms, recv) => {
+  const { roomId, userId, action } = recv;
+  const room = rooms[roomId];
+  if (action === Income) {
+    room.state.incrementTurn();
+    emitNextTurn(io, roomId, room.state.currentTurnId);
+  }
+
+  socket.to(roomId).emit("player-choice", {
+    responseAction: {
+      userId: userId,
+      action: action,
+    },
+  });
+};
 
 export const registerGameHandlers = (io, socket, rooms) => {
-  socket.on("normal-action", ({ roomId, userId, action }) => {
-    broadcastResponseRequest(socket, roomId, userId, action);
-    console.log(action);
+  socket.on("normal-action", (recv) => {
+    broadcastResponseRequest(io, socket, rooms, recv);
   });
 
   socket.on("response-action", ({ roomId, requestId, action }) => {
     console.log(requestId + " " + action);
     if (
-      action === GameActions.BlockAssassinate ||
-      action === GameActions.BlockAid ||
-      action === GameActions.BlockStealAsCaptain ||
-      action === GameActions.BlockStealAsAmbass
+      action === BlockAssassinate ||
+      action === BlockAid ||
+      action === BlockStealAsCaptain ||
+      action === BlockStealAsAmbass
     ) {
       io.to(requestId).emit("block", {
         responseAction: {
@@ -20,7 +51,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
           action: action,
         },
       });
-    } else if (action === GameActions.CalloutLie) {
+    } else if (action === CalloutLie) {
       console.log("Callout Lie");
       io.to(requestId).emit("called-out", {
         responseAction: {
@@ -29,14 +60,5 @@ export const registerGameHandlers = (io, socket, rooms) => {
         },
       });
     }
-  });
-};
-
-const broadcastResponseRequest = (socket, roomId, userId, action) => {
-  socket.to(roomId).emit("player-choice", {
-    responseAction: {
-      userId: userId,
-      action: action,
-    },
   });
 };

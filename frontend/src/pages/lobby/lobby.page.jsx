@@ -9,7 +9,7 @@ const LobbyPage = () => {
   const gameState = useGameState();
   useGameEvents(gameState);
 
-  const handleUi = () => {
+  const displayUI = () => {
     if (gameState.gameStart) {
       return <Game></Game>;
     }
@@ -18,7 +18,7 @@ const LobbyPage = () => {
 
   return (
     <GameStateContext.Provider value={gameState}>
-      {handleUi()}
+      {displayUI()}
     </GameStateContext.Provider>
   );
 };
