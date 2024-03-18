@@ -16,6 +16,14 @@ const {
   CalloutLie,
 } = GameActions;
 
+/**
+ *
+ * @param {*} io
+ * @param {*} socket
+ * @param {*} rooms
+ * @param {*} recv
+ * @returns
+ */
 const broadcastResponseRequest = (io, socket, rooms, recv) => {
   const { roomId, userId, action } = recv;
   const room = rooms[roomId];
@@ -34,7 +42,15 @@ const broadcastResponseRequest = (io, socket, rooms, recv) => {
   });
 };
 
-const onResponseAction = (io, roomId, requestId, action) => {
+/**
+ *
+ * @param {*} io
+ * @param {*} roomId
+ * @param {*} requestId
+ * @param {*} action
+ */
+const onResponseAction = (io, recv) => {
+  const { roomId, requestId, action } = recv;
   console.log(requestId + " " + action);
   if (
     action === BlockAssassinate ||
@@ -59,8 +75,11 @@ const onResponseAction = (io, roomId, requestId, action) => {
   }
 };
 
-const onTargetAction = (io, socket, roomId, action, targetId) => {
-  console.log(roomId, action, targetId);
+const onTargetAction = (io, socket, rooms, recv) => {
+  const { roomId, action, targetId } = recv;
+  const room = rooms[roomId];
+  const state = room.state;
+  console.log(io, socket, rooms, recv);
 };
 
 export const registerGameHandlers = (io, socket, rooms) => {
@@ -68,11 +87,11 @@ export const registerGameHandlers = (io, socket, rooms) => {
     broadcastResponseRequest(io, socket, rooms, recv);
   });
 
-  socket.on("response-action", ({ roomId, requestId, action }) => {
-    onResponseAction(io, roomId, requestId, action);
+  socket.on("response-action", (recv) => {
+    onResponseAction(io, recv);
   });
 
-  socket.on("target-action", ({ socket, roomId, action, targetId }) => {
-    onTargetAction(io, socket, roomId, action, targetId);
+  socket.on("target-action", (recv) => {
+    onTargetAction(io, socket, rooms, recv);
   });
 };
