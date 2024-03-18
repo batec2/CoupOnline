@@ -2,6 +2,26 @@ import { useState, useContext } from "react";
 import SocketContext from "@/context/socketContext";
 import { useParams } from "react-router-dom";
 
+/**
+ * @typedef {Object} GameState
+ * @property {Object} currentLobbyMembers
+ * @property {function} setLobbyMembers
+ * @property {boolean} gameStart
+ * @property {function} setGameStart
+ * @property {Object} currentTurnId
+ * @property {function} setTurnId
+ * @property {Object} gameCards
+ * @property {function} setGameCards
+ * @property {Object} responseAction
+ * @property {function} setResponseAction
+ * @property {Object} socket
+ * @property {string} roomId
+ */
+
+/**
+ *
+ * @returns {GameState}
+ */
 export const useGameState = () => {
   const [currentLobbyMembers, setLobbyMembers] = useState(null);
   const [gameStart, setGameStart] = useState(false);

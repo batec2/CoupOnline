@@ -1,6 +1,10 @@
 import { useEffect } from "react";
 import handleStatus from "@/lib/handleStatus";
 
+/**
+ * Sets up socket listeners for gamestate variables
+ * @param {*} gameState
+ */
 export const useGameEvents = (gameState) => {
   const {
     socket,

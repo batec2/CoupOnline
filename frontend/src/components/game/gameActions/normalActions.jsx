@@ -8,6 +8,7 @@ import { useState } from "react";
 const NormalActions = () => {
   const { socket, roomId } = useGameContext();
   const [showTarget, setShowTarget] = useState(false);
+  const [currentAction, setAction] = useState(null);
 
   return (
     <div className="space-y-2">
@@ -16,6 +17,7 @@ const NormalActions = () => {
           onClick={() => {
             handleNormalAction(socket, roomId, GameActions.Income);
             setShowTarget(false);
+            setAction(GameActions.Income);
           }}
         >
           Income
@@ -25,6 +27,7 @@ const NormalActions = () => {
           onClick={() => {
             handleNormalAction(socket, roomId, GameActions.Coup);
             setShowTarget(true);
+            setAction(GameActions.Coup);
           }}
         >
           Coup
@@ -33,7 +36,10 @@ const NormalActions = () => {
 
       <div className="space-x-4">
         <Button
-          onClick={() => handleNormalAction(socket, roomId, GameActions.Taxes)}
+          onClick={() => {
+            handleNormalAction(socket, roomId, GameActions.Taxes);
+            setAction(GameActions.Taxes);
+          }}
         >
           Taxes
         </Button>
@@ -41,6 +47,7 @@ const NormalActions = () => {
           onClick={() => {
             handleNormalAction(socket, roomId, GameActions.Exchange);
             setShowTarget(false);
+            setAction(GameActions.Exchange);
           }}
         >
           Exchange Influence
@@ -52,6 +59,7 @@ const NormalActions = () => {
           onClick={() => {
             handleNormalAction(socket, roomId, GameActions.Aid);
             setShowTarget(false);
+            setAction(GameActions.Aid);
           }}
         >
           Foreign Aid
@@ -61,6 +69,7 @@ const NormalActions = () => {
           onClick={() => {
             handleNormalAction(socket, roomId, GameActions.Assassinate);
             setShowTarget(true);
+            setAction(GameActions.Assassinate);
           }}
         >
           Assassinate
@@ -69,12 +78,16 @@ const NormalActions = () => {
           onClick={() => {
             handleNormalAction(socket, roomId, GameActions.Steal);
             setShowTarget(true);
+            setAction(GameActions.Steal);
           }}
         >
           Steal
         </Button>
       </div>
-      <TargetAction showTarget={showTarget}></TargetAction>
+      <TargetAction
+        showTarget={showTarget}
+        action={currentAction}
+      ></TargetAction>
     </div>
   );
 };

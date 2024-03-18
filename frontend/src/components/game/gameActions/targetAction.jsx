@@ -1,11 +1,19 @@
 import { Button } from "@/components/ui/button";
 import useGameContext from "@/context/useGameContext";
+import { handleTargetAction } from "@/actions/socketActions";
 
-const TargetAction = ({ showTarget }) => {
-  const { currentLobbyMembers } = useGameContext();
+const TargetAction = ({ showTarget, action }) => {
+  const { socket, roomId, currentLobbyMembers } = useGameContext();
   const buttons = [];
   Object.keys(currentLobbyMembers).forEach((member) => {
-    buttons.push(<Button key={member}>{member}</Button>);
+    buttons.push(
+      <Button
+        onClick={() => handleTargetAction(socket, roomId, action, member)}
+        key={member}
+      >
+        {member}
+      </Button>
+    );
   });
 
   return showTarget ? (

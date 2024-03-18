@@ -34,33 +34,45 @@ const broadcastResponseRequest = (io, socket, rooms, recv) => {
   });
 };
 
+const onResponseAction = (io, roomId, requestId, action) => {
+  console.log(requestId + " " + action);
+  if (
+    action === BlockAssassinate ||
+    action === BlockAid ||
+    action === BlockStealAsCaptain ||
+    action === BlockStealAsAmbass
+  ) {
+    io.to(requestId).emit("block", {
+      responseAction: {
+        userId: socket.id,
+        action: action,
+      },
+    });
+  } else if (action === CalloutLie) {
+    console.log("Callout Lie");
+    io.to(requestId).emit("called-out", {
+      responseAction: {
+        userId: socket.id,
+        action: action,
+      },
+    });
+  }
+};
+
+const onTargetAction = (io, socket, roomId, action, targetId) => {
+  console.log(roomId, action, targetId);
+};
+
 export const registerGameHandlers = (io, socket, rooms) => {
   socket.on("normal-action", (recv) => {
     broadcastResponseRequest(io, socket, rooms, recv);
   });
 
   socket.on("response-action", ({ roomId, requestId, action }) => {
-    console.log(requestId + " " + action);
-    if (
-      action === BlockAssassinate ||
-      action === BlockAid ||
-      action === BlockStealAsCaptain ||
-      action === BlockStealAsAmbass
-    ) {
-      io.to(requestId).emit("block", {
-        responseAction: {
-          userId: socket.id,
-          action: action,
-        },
-      });
-    } else if (action === CalloutLie) {
-      console.log("Callout Lie");
-      io.to(requestId).emit("called-out", {
-        responseAction: {
-          userId: socket.id,
-          action: action,
-        },
-      });
-    }
+    onResponseAction(io, roomId, requestId, action);
+  });
+
+  socket.on("target-action", ({ socket, roomId, action, targetId }) => {
+    onTargetAction(io, socket, roomId, action, targetId);
   });
 };
