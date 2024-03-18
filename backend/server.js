@@ -1,5 +1,4 @@
 import dotenv from "dotenv";
-
 import playersRoute from "./route/players.route.js";
 import gamesRoute from "./route/games.route.js";
 import { connectDB } from "./database/database.js";

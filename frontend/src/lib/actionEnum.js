@@ -7,9 +7,10 @@ const GameActions = {
   Exchange: 5,
   Steal: 6,
   BlockAid: 7,
-  BlockSteal: 8,
-  BlockAssassinate: 9,
-  CalloutLie: 10,
+  BlockStealAsAmbass: 8,
+  BlockStealAsCaptain: 9,
+  BlockAssassinate: 10,
+  CalloutLie: 11,
 };
 
 export default GameActions;

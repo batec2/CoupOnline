@@ -1,4 +1,5 @@
 import { GameState } from "../state/GameState.js";
+import { emitCards, emitNextTurn } from "./GameEmitters.js";
 
 export const registerLobbyHandlers = (io, socket, rooms) => {
   /**
@@ -24,7 +25,7 @@ export const registerLobbyHandlers = (io, socket, rooms) => {
    * Event for if client manually leaves room removes socket from the
    * rooms data structure and the internal rooms
    */
-  socket.on("leave-room", ({ roomId, userId }, callback) => {
+  socket.on("leave-room", ({ roomId }, callback) => {
     try {
       socket.leave(roomId);
 
@@ -47,16 +48,31 @@ export const registerLobbyHandlers = (io, socket, rooms) => {
     if (!rooms[roomId]) {
       return;
     }
-    const room = rooms[roomId];
+    let room = rooms[roomId];
+
     const ids = Object.keys(room.players);
     if (ids.length > 1 && !room.state) {
       room.state = new GameState(ids);
-      callback({ status: 200 });
-      console.log(room.state);
-      io.to(roomId).emit("start-game", {
-        turnId: room.state.currentTurnId,
-      });
-      return;
+
+      // Sends each player their cards and starts the game
+      io.in(roomId)
+        .fetchSockets()
+        .then((sockets) => {
+          // Sends sends each player their cards when game starts
+          sockets.forEach((socket) => {
+            const socketId = socket.id;
+            const gameCards = room.state.getPlayersCards(socketId);
+            // Sends players cards
+            emitCards(io, socketId, gameCards);
+            // Starts the game for players and sends player id of first turn
+          });
+          emitNextTurn(io, roomId, room.state.currentTurnId);
+          callback({ status: 200 });
+        })
+        .catch((e) => {
+          console.log(e);
+          callback({ status: 500 });
+        });
     }
     callback({ status: 500 });
   });

@@ -1,81 +1,26 @@
 import "./lobby.styles.css";
-import { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import SocketContext from "../../context/socketContext";
-import { handleStartGame } from "@/actions/socketActions";
 import LobbyComponent from "@/components/lobby/lobby.component";
-import GameComponent from "@/components/game/game.component";
+import Game from "@/components/game/game.component";
+import { GameStateContext } from "@/context/GameStateContext";
+import { useGameEvents } from "./GameEvent";
+import { useGameState } from "./GameState";
 
 const LobbyPage = () => {
-  const { roomId } = useParams();
-  const socket = useContext(SocketContext);
-  const [currentLobbyMembers, setLobbyMembers] = useState(null);
-  const [gameStart, setGameStart] = useState(false);
-  const [currentTurnId, setTurnId] = useState(null);
-  const [responseAction, setResponseAction] = useState(null);
-  const navigate = useNavigate();
+  const gameState = useGameState();
+  useGameEvents(gameState);
 
-  useEffect(() => {
-    socket.emit("join-room", { roomId: roomId, userId: "user1" }, handleStatus);
-  }, [roomId, socket]);
-
-  socket.on("lobby-members", ({ lobby }) => {
-    setLobbyMembers(lobby);
-  });
-
-  socket.on("start-game", ({ turnId }) => {
-    setGameStart(true);
-    setTurnId(turnId);
-  });
-
-  socket.on("player-choice", ({ responseAction }) => {
-    setResponseAction(responseAction);
-  });
-
-  const handleStatus = ({ status }) => {
-    if (!status) {
-      console.log("Error: No status received");
-      return;
+  const displayUI = () => {
+    if (gameState.gameStart) {
+      return <Game></Game>;
     }
-    console.log(status);
+    return <LobbyComponent></LobbyComponent>;
   };
 
-  const handleLeave = () => {
-    socket.emit(
-      "leave-room",
-      { roomId: roomId, userId: "user1" },
-      handleStatus
-    );
-    navigate("/room");
-  };
-
-  const handleStart = () => {
-    handleStartGame(socket, roomId);
-  };
-
-  const handleUi = (turnId, roomId) => {
-    console.log(turnId);
-    if (gameStart) {
-      return (
-        <GameComponent
-          socket={socket}
-          turnId={turnId}
-          roomId={roomId}
-          responseAction={responseAction}
-        ></GameComponent>
-      );
-    }
-    return (
-      <LobbyComponent
-        roomId={roomId}
-        handleLeave={handleLeave}
-        handleStart={handleStart}
-        currentLobbyMembers={currentLobbyMembers}
-      ></LobbyComponent>
-    );
-  };
-
-  return handleUi(currentTurnId, roomId);
+  return (
+    <GameStateContext.Provider value={gameState}>
+      {displayUI()}
+    </GameStateContext.Provider>
+  );
 };
 
 export default LobbyPage;

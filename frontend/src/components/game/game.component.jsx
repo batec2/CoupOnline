@@ -1,27 +1,22 @@
-import NormalActions from "../gameActions/normalActions";
-import ResponseActions from "../gameActions/responseActions";
+import useGameContext from "@/context/useGameContext";
+import Actions from "./gameActions/actions";
 
-const GameComponent = ({ socket, turnId, roomId, responseAction }) => {
-  const handleTurn = (turnId) => {
-    if (socket.id === turnId) {
-      return <NormalActions socket={socket} roomId={roomId}></NormalActions>;
-    } else if (responseAction) {
-      return (
-        <ResponseActions
-          socket={socket}
-          roomId={roomId}
-          responseAction={responseAction}
-        ></ResponseActions>
-      );
+const Game = () => {
+  const { gameCards } = useGameContext();
+  const displayCards = () => {
+    if (gameCards) {
+      return <div>Your Cards are {JSON.stringify(gameCards)}</div>;
     }
-    return <h2>Not your turn bro</h2>;
+    return <div>You have no cards</div>;
   };
+
   return (
     <div>
       <h1>Game</h1>
-      {handleTurn(turnId)}
+      <Actions></Actions>
+      {displayCards()}
     </div>
   );
 };
 
-export default GameComponent;
+export default Game;
