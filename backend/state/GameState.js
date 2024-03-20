@@ -1,3 +1,5 @@
+import GameCard from "../lib/cardEnum.js";
+
 export class GameState {
   //3 of each Duke,Assassin,Captain,Ambassador,Contessa
   currentPlayer = 0;
@@ -41,6 +43,10 @@ export class GameState {
 
   get playerCards() {
     return this.playerCards;
+  }
+
+  loseCard(player, card) {
+    this.playerCards[player][card] = GameCard.Eliminated;
   }
 
   getPlayersCards(player) {
