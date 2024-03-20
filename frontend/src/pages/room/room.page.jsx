@@ -19,8 +19,8 @@ const RoomPage = () => {
   };
 
   return (
-    <div>
-      <div>
+    <div className="flex flex-col items-center justify-center h-screen">
+      <div className="mb-4">
         <Input
           type="text"
           onChange={(e) => {
@@ -28,10 +28,13 @@ const RoomPage = () => {
           }}
           placeholder="Room Number"
           disabled={room.current ? true : false}
-          className="w-200"
-        ></Input>
+          className="w-64 px-4 py-2 border rounded-md"
+        />
       </div>
-      <Button onClick={handleJoin}>
+      <Button
+        onClick={handleJoin}
+        className="bg-blue-500 text-white px-4 py-2 rounded-md"
+      >
         {room.current ? "Leave Room" : "Join Room"}
       </Button>
     </div>
