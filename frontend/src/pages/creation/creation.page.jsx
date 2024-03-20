@@ -76,7 +76,7 @@ const CreationPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <h1 className="text-3xl font-bold mb-4">Creation Page</h1>
+      <h1 className="text-3xl font-bold mb-4">Account Creation Page</h1>
       <label className="text-xl mb-2">User Name</label>
       <Input
         type="username"
