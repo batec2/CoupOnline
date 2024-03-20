@@ -15,6 +15,7 @@ export const useGameEvents = (gameState) => {
     setTurnId,
     setResponseAction,
     setIsTarget,
+    setCoins,
   } = gameState;
 
   useEffect(() => {
@@ -40,10 +41,12 @@ export const useGameEvents = (gameState) => {
       console.log(userId + "is Couping" + targetId);
     };
 
-    const onUpdateState = ({ gameCards, turnId }) => {
+    const onUpdateState = ({ gameCards, turnId, coins }) => {
+      console.log(coins);
       setGameCards(gameCards);
       setTurnId(turnId);
       setIsTarget(false);
+      setCoins(coins);
     };
 
     socket.connect();

@@ -6,7 +6,7 @@ import TargetAction from "./targetAction";
 import { useState } from "react";
 
 const NormalActions = () => {
-  const { socket, roomId } = useGameContext();
+  const { socket, roomId, coins } = useGameContext();
   const [showTarget, setShowTarget] = useState(false);
   const [currentAction, setAction] = useState(null);
 
@@ -26,8 +26,10 @@ const NormalActions = () => {
         <Button
           onClick={() => {
             // handleNormalAction(socket, roomId, GameActions.Coup);
-            setShowTarget(true);
-            setAction(GameActions.Coup);
+            if (coins > 6) {
+              setShowTarget(true);
+              setAction(GameActions.Coup);
+            }
           }}
         >
           Coup

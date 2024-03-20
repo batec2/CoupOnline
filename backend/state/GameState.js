@@ -5,8 +5,7 @@ export class GameState {
   currentPlayer = 0;
   playerCount = 0;
   players = [];
-  playerCards = {};
-  playerMoney = {};
+  playerState = {};
   deck = [3, 3, 3, 3, 3];
   roundNumber = 0;
   round = {};
@@ -14,8 +13,7 @@ export class GameState {
   constructor(players) {
     this.playerCount = players.length;
     this.players = players;
-    this.generateCardsForAll();
-    this.initMoney();
+    this.initPlayers();
   }
 
   get currentPlayer() {
@@ -42,15 +40,15 @@ export class GameState {
   }
 
   get playerCards() {
-    return this.playerCards;
+    return this.playerState;
   }
 
   loseCard(player, card) {
-    this.playerCards[player][card] = GameCard.Eliminated;
+    this.playerState[player].gameCards[card] = GameCard.Eliminated;
   }
 
-  getPlayersCards(player) {
-    return this.playerCards[player];
+  getPlayer(player) {
+    return this.playerState[player];
   }
 
   addRound(round) {
@@ -70,19 +68,18 @@ export class GameState {
     }
   }
 
-  initMoney() {
-    for (let i = 0; i < this.players.length; i++) {
-      this.playerMoney[i] = 2;
-    }
+  increasePlayerMoney(userId, amount) {
+    this.playerState[userId].coins += amount;
+  }
+  decreasePlayerMoney(userId, amount) {
+    this.playerState[userId].coins -= amount;
   }
 
-  increasePlayerMoney(amount) {
-    this.playerMoney[this.currentPlayer] += amount;
-  }
-
-  generateCardsForAll() {
+  initPlayers() {
     this.players.forEach((player) => {
-      this.playerCards[player] = this.generateCards();
+      this.playerState[player] = { gameCards: {}, coins: 0 };
+      this.playerState[player].gameCards = this.generateCards();
+      this.playerState[player].coins = 2;
     });
   }
 

@@ -28,7 +28,7 @@ const broadcastResponseRequest = (io, socket, rooms, recv) => {
   const { roomId, userId, action } = recv;
   const room = rooms[roomId];
   if (action === Income) {
-    room.state.increasePlayerMoney(1);
+    room.state.increasePlayerMoney(userId, 1);
     room.state.incrementTurn();
     emitUpdate(io, room);
     return;
@@ -80,6 +80,7 @@ const onTargetAction = (io, socket, rooms, recv) => {
   const state = room.state;
   console.log(io, socket, rooms, recv);
   if (action === GameActions.Coup) {
+    state.decreasePlayerMoney(socket.id, 7);
     io.to(roomId).emit("coup", { userId: socket.id, targetId: targetId });
   }
 };
