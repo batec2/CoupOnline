@@ -58,6 +58,13 @@ export const handleStartGame = (socket, roomId) => {
   );
 };
 
+export const handleLoseCard = (socket, roomId, card, isTarget) => {
+  if (!isTarget) {
+    return;
+  }
+  socket.emit("lose-card", { roomId: roomId, userId: socket.id, card: card });
+};
+
 export const handleLeave = (socket, roomId) => {
   socket.emit("leave-room", { roomId: roomId }, handleStatus);
 };

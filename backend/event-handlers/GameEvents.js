@@ -1,5 +1,5 @@
 import GameActions from "../lib/actionEnum.js";
-import { emitNextTurn } from "./GameEmitters.js";
+import { emitUpdate } from "./GameEmitters.js";
 
 const {
   Income,
@@ -30,8 +30,7 @@ const broadcastResponseRequest = (io, socket, rooms, recv) => {
   if (action === Income) {
     room.state.increasePlayerMoney(1);
     room.state.incrementTurn();
-    emitNextTurn(io, roomId, room.state.currentTurnId);
-    console.log(room.state);
+    emitUpdate(io, room);
     return;
   }
   socket.to(roomId).emit("player-choice", {
@@ -49,7 +48,7 @@ const broadcastResponseRequest = (io, socket, rooms, recv) => {
  * @param {*} requestId
  * @param {*} action
  */
-const onResponseAction = (io, recv) => {
+const onResponseAction = (io, socket, recv) => {
   const { roomId, requestId, action } = recv;
   console.log(requestId + " " + action);
   if (
@@ -80,6 +79,19 @@ const onTargetAction = (io, socket, rooms, recv) => {
   const room = rooms[roomId];
   const state = room.state;
   console.log(io, socket, rooms, recv);
+  if (action === GameActions.Coup) {
+    io.to(roomId).emit("coup", { userId: socket.id, targetId: targetId });
+  }
+};
+
+const onLoseCard = (io, socket, rooms, recv) => {
+  const { roomId, userId, card } = recv;
+  const room = rooms[roomId];
+  const state = room.state;
+
+  state.loseCard(userId, card);
+  state.incrementTurn();
+  emitUpdate(io, room);
 };
 
 export const registerGameHandlers = (io, socket, rooms) => {
@@ -88,10 +100,14 @@ export const registerGameHandlers = (io, socket, rooms) => {
   });
 
   socket.on("response-action", (recv) => {
-    onResponseAction(io, recv);
+    onResponseAction(io, socket, recv);
   });
 
   socket.on("target-action", (recv) => {
     onTargetAction(io, socket, rooms, recv);
+  });
+
+  socket.on("lose-card", (recv) => {
+    onLoseCard(io, socket, rooms, recv);
   });
 };

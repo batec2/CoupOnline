@@ -25,7 +25,7 @@ const NormalActions = () => {
 
         <Button
           onClick={() => {
-            handleNormalAction(socket, roomId, GameActions.Coup);
+            // handleNormalAction(socket, roomId, GameActions.Coup);
             setShowTarget(true);
             setAction(GameActions.Coup);
           }}
@@ -34,7 +34,7 @@ const NormalActions = () => {
         </Button>
       </div>
 
-      <div className="space-x-4">
+      {/* <div className="space-x-4">
         <Button
           onClick={() => {
             handleNormalAction(socket, roomId, GameActions.Taxes);
@@ -84,6 +84,7 @@ const NormalActions = () => {
           Steal
         </Button>
       </div>
+        */}
       <TargetAction
         showTarget={showTarget}
         action={currentAction}

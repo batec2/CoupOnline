@@ -1,5 +1,5 @@
 import { GameState } from "../state/GameState.js";
-import { emitCards, emitNextTurn } from "./GameEmitters.js";
+import { emitStartGame, emitUpdate } from "./GameEmitters.js";
 
 export const registerLobbyHandlers = (io, socket, rooms) => {
   /**
@@ -53,26 +53,11 @@ export const registerLobbyHandlers = (io, socket, rooms) => {
     const ids = Object.keys(room.players);
     if (ids.length > 1 && !room.state) {
       room.state = new GameState(ids);
-
-      // Sends each player their cards and starts the game
-      io.in(roomId)
-        .fetchSockets()
-        .then((sockets) => {
-          // Sends sends each player their cards when game starts
-          sockets.forEach((socket) => {
-            const socketId = socket.id;
-            const gameCards = room.state.getPlayersCards(socketId);
-            // Sends players cards
-            emitCards(io, socketId, gameCards);
-            // Starts the game for players and sends player id of first turn
-          });
-          emitNextTurn(io, roomId, room.state.currentTurnId);
-          callback({ status: 200 });
-        })
-        .catch((e) => {
-          console.log(e);
-          callback({ status: 500 });
-        });
+      // Sends sends each player their cards when game starts and the current
+      // Player whos turn it is
+      emitUpdate(io, room);
+      emitStartGame(io, roomId);
+      callback({ status: 200 });
     }
     callback({ status: 500 });
   });

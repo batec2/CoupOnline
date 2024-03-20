@@ -1,11 +1,16 @@
-export const emitNextTurn = (io, roomId, currentTurnId) => {
-  io.to(roomId).emit("start-game", {
-    turnId: currentTurnId,
-  });
+export const emitStartGame = (io, roomId) => {
+  io.to(roomId).emit("start-game");
 };
 
-export const emitCards = (io, socketId, gameCards) => {
-  io.to(socketId).emit("game-cards", {
-    gameCards: gameCards,
+export const emitUpdate = (io, room) => {
+  const { players, state } = room;
+  Object.keys(players).forEach((player) => {
+    const gameCards = state.getPlayersCards(player);
+    // Sends players cards
+    // Starts the game for players and sends player id of first turn\
+    io.to(player).emit("update-state", {
+      gameCards: gameCards,
+      turnId: state.currentTurnId,
+    });
   });
 };

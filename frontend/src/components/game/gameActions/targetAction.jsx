@@ -6,6 +6,9 @@ const TargetAction = ({ showTarget, action }) => {
   const { socket, roomId, currentLobbyMembers } = useGameContext();
   const buttons = [];
   Object.keys(currentLobbyMembers).forEach((member) => {
+    if (member === socket.id) {
+      return;
+    }
     buttons.push(
       <Button
         onClick={() => handleTargetAction(socket, roomId, action, member)}

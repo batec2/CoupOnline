@@ -28,6 +28,7 @@ export const useGameState = () => {
   const [currentTurnId, setTurnId] = useState(null);
   const [gameCards, setGameCards] = useState(null);
   const [responseAction, setResponseAction] = useState(null);
+  const [isTarget, setIsTarget] = useState(false);
   const socket = useContext(SocketContext);
   const { roomId } = useParams();
 
@@ -42,6 +43,8 @@ export const useGameState = () => {
     setGameCards: setGameCards,
     responseAction: responseAction,
     setResponseAction: setResponseAction,
+    isTarget: isTarget,
+    setIsTarget: setIsTarget,
     socket: socket,
     roomId: roomId,
   };
