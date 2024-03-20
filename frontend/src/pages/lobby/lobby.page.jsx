@@ -1,4 +1,3 @@
-import "./lobby.styles.css";
 import LobbyComponent from "@/components/lobby/lobby.component";
 import Game from "@/components/game/game.component";
 import { GameStateContext } from "@/context/GameStateContext";
