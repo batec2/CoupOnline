@@ -75,27 +75,32 @@ const CreationPage = () => {
   }, [CreatedCookie, Email, userName, screenName, CurrentCookie]);
 
   return (
-    <div>
-      <h1>Creation Page</h1>
-      <p>User Name</p>
+    <div className="flex flex-col items-center justify-center h-screen">
+      <h1 className="text-3xl font-bold mb-4">Creation Page</h1>
+      <label className="text-xl mb-2">User Name</label>
       <Input
         type="username"
+        placeholder="User Name"
         onChange={(e) => setUserName(e.target.value)}
-      ></Input>
-      <br />
-      <p>Screen Name</p>
+        className="w-64 px-4 py-2 border rounded-md mb-2"
+      />
+      <label className="text-xl mb-2">Screen Name</label>
       <Input
         type="screenname"
+        placeholder="Screen Name"
         onChange={(e) => setScreenName(e.target.value)}
-      ></Input>
-      <br />
-      <p>Email</p>
-      <Input type="email" onChange={(e) => setEmail(e.target.value)}></Input>
-      <br />
+        className="w-64 px-4 py-2 border rounded-md mb-2"
+      />
+      <label className="text-xl mb-2">Email</label>
+      <Input
+        type="email"
+        placeholder="Email"
+        onChange={(e) => setEmail(e.target.value)}
+        className="w-64 px-4 py-2 border rounded-md mb-4"
+      />
       <Button
-        onClick={() => {
-          setCreatedCookie(true);
-        }}
+        onClick={() => setCreatedCookie(true)}
+        className="bg-blue-500 text-white px-4 py-2 rounded-md"
       >
         Create Account
       </Button>
