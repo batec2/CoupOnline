@@ -32,6 +32,7 @@ export const useGameState = () => {
   const [currentTurnId, setTurnId] = useState(null);
   const [gameCards, setGameCards] = useState(null);
   const [responseAction, setResponseAction] = useState(null);
+  const [requestAction, setRequestAction] = useState(null);
   const [isTarget, setIsTarget] = useState(false);
   const [coins, setCoins] = useState(0);
   const socket = useContext(SocketContext);
@@ -48,6 +49,8 @@ export const useGameState = () => {
     setGameCards: setGameCards,
     responseAction: responseAction,
     setResponseAction: setResponseAction,
+    requestAction: requestAction,
+    setRequestAction: setRequestAction,
     isTarget: isTarget,
     setIsTarget: setIsTarget,
     coins: coins,

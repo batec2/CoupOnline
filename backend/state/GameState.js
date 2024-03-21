@@ -1,3 +1,5 @@
+import CardInfo from "../lib/CardInfo.js";
+import GameActions from "../lib/actionEnum.js";
 import GameCard from "../lib/cardEnum.js";
 
 export class GameState {
@@ -47,6 +49,20 @@ export class GameState {
     return this.passCount;
   }
 
+  /**
+   *
+   * @param {*} userId - player called out
+   * @param {*} card - card shown
+   * @param {*} action - action being called out
+   */
+  checkCard(userId, card, action) {
+    const playerCard = this.playerState[userId].gameCards[card];
+    if (CardInfo[playerCard].validActions.includes(action)) {
+      return true;
+    }
+    return false;
+  }
+
   loseCard(player, card) {
     this.playerState[player].gameCards[card] = GameCard.Eliminated;
   }
@@ -91,7 +107,7 @@ export class GameState {
     this.players.forEach((player) => {
       this.playerState[player] = { gameCards: {}, coins: 0 };
       this.playerState[player].gameCards = this.generateCards();
-      this.playerState[player].coins = 2;
+      this.playerState[player].coins = 8;
     });
   }
 

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import handleStatus from "@/lib/handleStatus";
+import GameActions from "@/lib/actionEnum";
 
 /**
  * Sets up socket listeners for gamestate variables
@@ -16,6 +17,7 @@ export const useGameEvents = (gameState) => {
     setResponseAction,
     setIsTarget,
     setCoins,
+    setRequestAction,
   } = gameState;
 
   useEffect(() => {
@@ -31,14 +33,13 @@ export const useGameEvents = (gameState) => {
       setResponseAction(responseAction);
     };
 
-    const onCoupEvent = ({ userId, targetId }) => {
+    const onChooseCardEvent = ({ userId, targetId, requestAction }) => {
       setTurnId(targetId);
+      setRequestAction(requestAction);
       if (targetId === socket.id) {
-        console.log(`you're being couped by ${userId}`);
         setIsTarget(true);
         return;
       }
-      console.log(userId + "is Couping" + targetId);
     };
 
     const onUpdateState = ({ gameCards, turnId, coins }) => {
@@ -51,13 +52,11 @@ export const useGameEvents = (gameState) => {
 
     socket.connect();
     socket.emit("join-room", { roomId: roomId, userId: "user1" }, handleStatus);
-
     socket.on("lobby-members", onLobbyEvent);
     socket.on("start-game", onStartEvent);
     socket.on("player-choice", onActionEvent);
-    socket.on("called-out", onActionEvent);
     socket.on("block", onActionEvent);
-    socket.on("coup", onCoupEvent);
+    socket.on("choose-card", onChooseCardEvent);
     socket.on("update-state", onUpdateState);
 
     // Removes all event listeners when component is removed
@@ -67,7 +66,7 @@ export const useGameEvents = (gameState) => {
       socket.off("player-choice", onActionEvent);
       socket.off("called-out", onActionEvent);
       socket.off("block", onActionEvent);
-      socket.off("coup", onCoupEvent);
+      socket.off("choose-card", onChooseCardEvent);
       socket.off("update-state", onUpdateState);
       socket.disconnect();
     };

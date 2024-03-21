@@ -1,5 +1,6 @@
 import GameActions from "../lib/actionEnum.js";
 import { emitUpdate } from "./GameEmitters.js";
+import ChooseCard from "../lib/chooseCardEnum.js";
 
 const {
   Income,
@@ -18,7 +19,7 @@ const {
 } = GameActions;
 
 /**
- *
+ * For asking players for block/callout actions
  * @param {*} io
  * @param {*} socket
  * @param {*} rooms
@@ -41,7 +42,7 @@ const broadcastResponseRequest = (io, socket, rooms, recv) => {
 };
 
 /**
- *
+ * For receiving response actions
  * @param {*} io
  * @param {*} roomId
  * @param {*} requestId - Id of the player being blocked/responded
@@ -66,11 +67,11 @@ const onResponseAction = (io, socket, rooms, recv) => {
     });
   } else if (action === CalloutLie) {
     console.log("Callout Lie");
-    io.to(requestId).emit("called-out", {
-      responseAction: {
-        userId: socket.id,
-        action: action,
-      },
+    // Tells the person being called out to select a card to show
+    io.to(requestId).emit("choose-card", {
+      userId: socket.id,
+      targetId: requestId,
+      requestAction: GameActions.CalloutLie,
     });
   } else if (action === Pass) {
     state.incrementPassCount();
@@ -104,19 +105,41 @@ const onTargetAction = (io, socket, rooms, recv) => {
   const room = rooms[roomId];
   const state = room.state;
   console.log(io, socket, rooms, recv);
+
+  // Coup
   if (action === GameActions.Coup) {
     state.decreasePlayerMoney(socket.id, 7);
-    io.to(roomId).emit("coup", { userId: socket.id, targetId: targetId });
+    io.to(roomId).emit("choose-card", {
+      userId: socket.id,
+      targetId: targetId,
+      requestAction: GameActions.Coup,
+    });
   }
 };
 
-const onLoseCard = (io, socket, rooms, recv) => {
-  const { roomId, userId, card } = recv;
+const onChooseCard = (io, socket, rooms, recv) => {
+  const { roomId, userId, card, action } = recv;
   const room = rooms[roomId];
   const state = room.state;
-
-  state.loseCard(userId, card);
-  state.incrementTurn();
+  switch (action) {
+    case ChooseCard.Loose: {
+      state.loseCard(userId, card);
+      break;
+    }
+    case ChooseCard.Exchange: {
+      break;
+    }
+    case ChooseCard.Show: {
+      // card shown gets checked
+      if (state.checkCard(userId, card, action)) {
+        io.to(roomId).emit("choose-card", {
+          userId: socket.id,
+          targetId: targetId,
+          requestAction: GameActions.LooseCallout,
+        });
+      }
+    }
+  }
   emitUpdate(io, room);
 };
 
@@ -133,7 +156,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
     onTargetAction(io, socket, rooms, recv);
   });
 
-  socket.on("lose-card", (recv) => {
-    onLoseCard(io, socket, rooms, recv);
+  socket.on("choose-card", (recv) => {
+    onChooseCard(io, socket, rooms, recv);
   });
 };

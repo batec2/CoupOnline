@@ -64,13 +64,19 @@ const ResponseActions = () => {
       <h1>{JSON.stringify(responseAction)}</h1>
       <div>
         {handleDisplayedAction(responseAction.action)}
-        <BlockButtons
-          text={"Callout Lie"}
-          socket={socket}
-          roomId={roomId}
-          userId={responseAction.userId}
-          action={GameActions.CalloutLie}
-        ></BlockButtons>
+        <Button
+          onClick={() =>
+            handleResponseAction(
+              socket,
+              roomId,
+              responseAction.userId,
+              responseAction.action,
+              GameActions.CalloutLie
+            )
+          }
+        >
+          Callout Lie
+        </Button>
         <Button
           onClick={() =>
             handleResponseAction(

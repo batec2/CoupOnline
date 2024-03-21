@@ -12,6 +12,7 @@ const GameActions = {
   BlockAssassinate: 10,
   CalloutLie: 11,
   Pass: 12,
+  LooseCallout: 13,
 };
 
 export default GameActions;

@@ -1,3 +1,4 @@
+import ChooseCard from "@/lib/chooseCardEnum";
 import handleStatus from "@/lib/handleStatus";
 
 /**
@@ -65,11 +66,16 @@ export const handleStartGame = (socket, roomId) => {
   );
 };
 
-export const handleLoseCard = (socket, roomId, card, isTarget) => {
+export const handleChooseCard = (socket, roomId, card, isTarget, action) => {
   if (!isTarget) {
     return;
   }
-  socket.emit("lose-card", { roomId: roomId, userId: socket.id, card: card });
+  socket.emit("choose-card", {
+    roomId: roomId,
+    userId: socket.id,
+    card: card,
+    action: action,
+  });
 };
 
 export const handleLeave = (socket, roomId) => {
