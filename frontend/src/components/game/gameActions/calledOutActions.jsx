@@ -11,7 +11,7 @@ const CalledOutActions = () => {
   const { gameCards } = useGameContext();
   return (
     <div>
-      <h1>You Have Been Called-out Choose a Card to show</h1>
+      <h1>You Have Been Called-out. Choose a Card to show</h1>
       <div>
         <Cards card={gameCards[0]}></Cards>
         <Cards card={gameCards[1]}></Cards>

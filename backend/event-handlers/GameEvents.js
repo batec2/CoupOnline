@@ -1,5 +1,6 @@
 import GameActions from "../lib/actionEnum.js";
 import { emitUpdate } from "./GameEmitters.js";
+import ChooseCard from "../lib/chooseCardEnum.js";
 
 const {
   Income,
@@ -14,10 +15,11 @@ const {
   BlockStealAsCaptain,
   BlockAssassinate,
   CalloutLie,
+  Pass,
 } = GameActions;
 
 /**
- *
+ * For asking players for block/callout actions
  * @param {*} io
  * @param {*} socket
  * @param {*} rooms
@@ -28,9 +30,7 @@ const broadcastResponseRequest = (io, socket, rooms, recv) => {
   const { roomId, userId, action } = recv;
   const room = rooms[roomId];
   if (action === Income) {
-    room.state.increasePlayerMoney(1);
-    room.state.incrementTurn();
-    emitUpdate(io, room);
+    handleAction(io, room, userId, action);
     return;
   }
   socket.to(roomId).emit("player-choice", {
@@ -42,14 +42,16 @@ const broadcastResponseRequest = (io, socket, rooms, recv) => {
 };
 
 /**
- *
+ * For receiving response actions
  * @param {*} io
  * @param {*} roomId
- * @param {*} requestId
+ * @param {*} requestId - Id of the player being blocked/responded
  * @param {*} action
  */
-const onResponseAction = (io, socket, recv) => {
-  const { roomId, requestId, action } = recv;
+const onResponseAction = (io, socket, rooms, recv) => {
+  const { roomId, requestId, requestAction, action } = recv;
+  const room = rooms[roomId];
+  const state = room.state;
   console.log(requestId + " " + action);
   if (
     action === BlockAssassinate ||
@@ -65,13 +67,37 @@ const onResponseAction = (io, socket, recv) => {
     });
   } else if (action === CalloutLie) {
     console.log("Callout Lie");
-    io.to(requestId).emit("called-out", {
-      responseAction: {
-        userId: socket.id,
-        action: action,
-      },
+    // Tells the person being called out to select a card to show
+    io.to(requestId).emit("choose-card", {
+      userId: socket.id,
+      targetId: requestId,
+      requestAction: GameActions.CalloutLie,
     });
+  } else if (action === Pass) {
+    state.incrementPassCount();
+    //if all players pass
+    if (state.passCount === state.playerCount - 1) {
+      handleAction(io, room, requestId, requestAction);
+      state.resetPassCount();
+    }
   }
+};
+
+const handleAction = (io, room, userId, action) => {
+  console.log(action);
+  const state = room.state;
+  switch (action) {
+    case Income: {
+      state.increasePlayerMoney(userId, 1);
+      break;
+    }
+    case Taxes: {
+      state.increasePlayerMoney(userId, 3);
+      break;
+    }
+  }
+  state.incrementTurn();
+  emitUpdate(io, room);
 };
 
 const onTargetAction = (io, socket, rooms, recv) => {
@@ -79,18 +105,41 @@ const onTargetAction = (io, socket, rooms, recv) => {
   const room = rooms[roomId];
   const state = room.state;
   console.log(io, socket, rooms, recv);
+
+  // Coup
   if (action === GameActions.Coup) {
-    io.to(roomId).emit("coup", { userId: socket.id, targetId: targetId });
+    state.decreasePlayerMoney(socket.id, 7);
+    io.to(roomId).emit("choose-card", {
+      userId: socket.id,
+      targetId: targetId,
+      requestAction: GameActions.Coup,
+    });
   }
 };
 
-const onLoseCard = (io, socket, rooms, recv) => {
-  const { roomId, userId, card } = recv;
+const onChooseCard = (io, socket, rooms, recv) => {
+  const { roomId, userId, card, action } = recv;
   const room = rooms[roomId];
   const state = room.state;
-
-  state.loseCard(userId, card);
-  state.incrementTurn();
+  switch (action) {
+    case ChooseCard.Loose: {
+      state.loseCard(userId, card);
+      break;
+    }
+    case ChooseCard.Exchange: {
+      break;
+    }
+    case ChooseCard.Show: {
+      // card shown gets checked
+      if (state.checkCard(userId, card, action)) {
+        io.to(roomId).emit("choose-card", {
+          userId: socket.id,
+          targetId: targetId,
+          requestAction: GameActions.LooseCallout,
+        });
+      }
+    }
+  }
   emitUpdate(io, room);
 };
 
@@ -100,14 +149,14 @@ export const registerGameHandlers = (io, socket, rooms) => {
   });
 
   socket.on("response-action", (recv) => {
-    onResponseAction(io, socket, recv);
+    onResponseAction(io, socket, rooms, recv);
   });
 
   socket.on("target-action", (recv) => {
     onTargetAction(io, socket, rooms, recv);
   });
 
-  socket.on("lose-card", (recv) => {
-    onLoseCard(io, socket, rooms, recv);
+  socket.on("choose-card", (recv) => {
+    onChooseCard(io, socket, rooms, recv);
   });
 };
