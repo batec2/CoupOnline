@@ -9,6 +9,7 @@ export class GameState {
   deck = [3, 3, 3, 3, 3];
   roundNumber = 0;
   round = {};
+  passCount = 0;
 
   constructor(players) {
     this.playerCount = players.length;
@@ -42,6 +43,9 @@ export class GameState {
   get playerCards() {
     return this.playerState;
   }
+  get passCount() {
+    return this.passCount;
+  }
 
   loseCard(player, card) {
     this.playerState[player].gameCards[card] = GameCard.Eliminated;
@@ -54,6 +58,14 @@ export class GameState {
   addRound(round) {
     this.round[this.roundNumber] = round;
     this.roundNumber += 1;
+  }
+
+  incrementPassCount() {
+    this.passCount += 1;
+  }
+
+  resetPassCount() {
+    this.passCount = 0;
   }
 
   incrementRound() {

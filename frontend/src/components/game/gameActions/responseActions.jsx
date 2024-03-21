@@ -1,6 +1,8 @@
 import GameActions from "@/lib/actionEnum.js";
 import BlockButtons from "../../blockButtons/blockButtons.jsx";
 import useGameContext from "@/context/useGameContext.js";
+import { Button } from "@/components/ui/button.jsx";
+import { handleResponseAction } from "@/actions/socketActions.js";
 
 /**
  *
@@ -69,6 +71,19 @@ const ResponseActions = () => {
           userId={responseAction.userId}
           action={GameActions.CalloutLie}
         ></BlockButtons>
+        <Button
+          onClick={() =>
+            handleResponseAction(
+              socket,
+              roomId,
+              responseAction.userId,
+              responseAction.action,
+              GameActions.Pass
+            )
+          }
+        >
+          Pass
+        </Button>
       </div>
     </div>
   );
