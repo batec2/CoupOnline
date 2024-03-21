@@ -37,10 +37,17 @@ export const handleTargetAction = (socket, roomId, action, targetId) => {
  * @param {string} requestId - Id of the player being blocked/responded
  * @param {string} action - Block/response action
  */
-export const handleResponseAction = (socket, roomId, requestId, action) => {
+export const handleResponseAction = (
+  socket,
+  roomId,
+  requestId,
+  requestAction,
+  action
+) => {
   socket.emit("response-action", {
     roomId: roomId,
     requestId: requestId,
+    requestAction: requestAction,
     action: action,
   });
 };

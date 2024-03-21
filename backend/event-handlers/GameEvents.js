@@ -14,6 +14,7 @@ const {
   BlockStealAsCaptain,
   BlockAssassinate,
   CalloutLie,
+  Pass,
 } = GameActions;
 
 /**
@@ -28,9 +29,7 @@ const broadcastResponseRequest = (io, socket, rooms, recv) => {
   const { roomId, userId, action } = recv;
   const room = rooms[roomId];
   if (action === Income) {
-    room.state.increasePlayerMoney(userId, 1);
-    room.state.incrementTurn();
-    emitUpdate(io, room);
+    handleAction(io, room, userId, action);
     return;
   }
   socket.to(roomId).emit("player-choice", {
@@ -45,11 +44,13 @@ const broadcastResponseRequest = (io, socket, rooms, recv) => {
  *
  * @param {*} io
  * @param {*} roomId
- * @param {*} requestId
+ * @param {*} requestId - Id of the player being blocked/responded
  * @param {*} action
  */
-const onResponseAction = (io, socket, recv) => {
-  const { roomId, requestId, action } = recv;
+const onResponseAction = (io, socket, rooms, recv) => {
+  const { roomId, requestId, requestAction, action } = recv;
+  const room = rooms[roomId];
+  const state = room.state;
   console.log(requestId + " " + action);
   if (
     action === BlockAssassinate ||
@@ -71,7 +72,31 @@ const onResponseAction = (io, socket, recv) => {
         action: action,
       },
     });
+  } else if (action === Pass) {
+    state.incrementPassCount();
+    //if all players pass
+    if (state.passCount === state.playerCount - 1) {
+      handleAction(io, room, requestId, requestAction);
+      state.resetPassCount();
+    }
   }
+};
+
+const handleAction = (io, room, userId, action) => {
+  console.log(action);
+  const state = room.state;
+  switch (action) {
+    case Income: {
+      state.increasePlayerMoney(userId, 1);
+      break;
+    }
+    case Taxes: {
+      state.increasePlayerMoney(userId, 3);
+      break;
+    }
+  }
+  state.incrementTurn();
+  emitUpdate(io, room);
 };
 
 const onTargetAction = (io, socket, rooms, recv) => {
@@ -101,7 +126,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
   });
 
   socket.on("response-action", (recv) => {
-    onResponseAction(io, socket, recv);
+    onResponseAction(io, socket, rooms, recv);
   });
 
   socket.on("target-action", (recv) => {
