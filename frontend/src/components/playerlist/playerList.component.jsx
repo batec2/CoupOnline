@@ -1,4 +1,3 @@
-import React from "react"
 import PlayerItem from "./playerItem.component";
 
 import './playerList.styles.css'

@@ -1,13 +1,12 @@
-import React from "react";
 import actions from "../../data/actions.json";
 
-import "./actionLegend.styles.css";
+import "./actionTable.styles.css";
 
 /**
  * Table showing all available player actions
- * @returns ActionLegend table react component
+ * @returns ActionTable table react component
  */
-const ActionLegend = () => {
+const ActionTable = () => {
   return (
     <table className="tableActions">
       <tr>
@@ -36,4 +35,4 @@ const ActionLegend = () => {
   );
 };
 
-export default ActionLegend;
+export default ActionTable;
