@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 
@@ -14,7 +14,12 @@ const RoomPage = () => {
   const room = useRef();
   const navigate = useNavigate();
 
-
+  // Checks if a cookie exists for a user, if not, logs then out
+  useEffect(() => {
+    if(cookies.get("PersonalCookie") === undefined){
+      navigate("/")
+    }
+  }, []);
   const handleJoin = () => {
     if (!room.current) {
       return;
@@ -48,7 +53,7 @@ const RoomPage = () => {
       </Button>
       <Button
         onClick={handleLogout}
-        className="bg-red-500 text-white px-4 py-2 rounded-md"
+        className="bg-red-500 text-white px-4 py-2 my-4 rounded-md"
       >
         {"Logout"}
       </Button>

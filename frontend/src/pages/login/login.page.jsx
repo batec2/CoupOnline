@@ -37,9 +37,10 @@ const LoginPage = () => {
     terminal.log(verif);
     if (verif) {
       retrieveAccountByName(username.current).then((res) => {
-        cookies.set("PersonalCookie", res.data._id);
+        cookies.set("PersonalCookie", res.data._id)
+        setLocalCookie(cookies.get("PersonalCookie"));
+        navigate("/room");
       });
-      navigate("/room");
     } else {
       window.alert("Account Does not Exist.");
     }
