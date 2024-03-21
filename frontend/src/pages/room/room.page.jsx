@@ -1,7 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useRef } from "react";
+import {useRef, useState} from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
 
 /**
  * Page for joining a game Room
@@ -11,11 +14,17 @@ const RoomPage = () => {
   const room = useRef();
   const navigate = useNavigate();
 
+
   const handleJoin = () => {
     if (!room.current) {
       return;
     }
     navigate(`${room.current}`);
+  };
+
+  const handleLogout = () => {
+    cookies.remove("PersonalCookie")
+    navigate("/");
   };
 
   return (
@@ -36,6 +45,12 @@ const RoomPage = () => {
         className="bg-blue-500 text-white px-4 py-2 rounded-md"
       >
         {room.current ? "Leave Room" : "Join Room"}
+      </Button>
+      <Button
+        onClick={handleLogout}
+        className="bg-red-500 text-white px-4 py-2 rounded-md"
+      >
+        {"Logout"}
       </Button>
     </div>
   );

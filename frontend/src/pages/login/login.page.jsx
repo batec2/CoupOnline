@@ -33,10 +33,10 @@ const LoginPage = () => {
   };
 
   const handleLoginClick = async () => {
-    const verif = await verifyAccount(username, setVerified);
+    const verif = await verifyAccount(username.current, setVerified);
     terminal.log(verif);
     if (verif) {
-      retrieveAccountByName(username).then((res) => {
+      retrieveAccountByName(username.current).then((res) => {
         cookies.set("PersonalCookie", res.data._id);
       });
       navigate("/room");
