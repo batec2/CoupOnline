@@ -1,6 +1,6 @@
 import actions from "../../data/actions.json";
 
-import "./actionLegend.styles.css";
+import "./actionTable.styles.css";
 
 /**
  * Table showing all available player actions
