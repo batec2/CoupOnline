@@ -1,5 +1,3 @@
-import React from "react"
-
 /**
  * A general textfield for user input
  * @param {String} placeholder - The placeholder text 

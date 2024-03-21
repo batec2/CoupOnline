@@ -1,4 +1,3 @@
-import React from "react"
 import card from './card32.png'
 import tombstone from './tombstone32.png'
 

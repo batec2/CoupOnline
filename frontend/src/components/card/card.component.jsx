@@ -1,6 +1,5 @@
-import React from "react";
-import ambassador from "./ambassador256.png"
-import assassin from "./assassin256.png"
+import ambassador from "./ambassador64.png"
+import assassin from "./assassin64.png"
 import notFound from "./not-found.png"
 
 import './card.styles.css'
