@@ -1,10 +1,31 @@
 import useGameContext from "@/context/useGameContext.js";
 import CardInfo from "@/components/card/CardInfo";
 import Card from "@/components/card/card.component";
-import { handleLoseCard } from "@/actions/socketActions";
+import { handleChooseCard } from "@/actions/socketActions";
+import ChooseCard from "@/lib/chooseCardEnum";
+import GameActions from "@/lib/actionEnum";
 
 const PlayerCards = () => {
-  const { gameCards, isTarget, socket, roomId } = useGameContext();
+  const { gameCards, isTarget, socket, roomId, requestAction } =
+    useGameContext();
+
+  const chooseCardType = () => {
+    switch (requestAction) {
+      case GameActions.Coup: {
+        return ChooseCard.Loose;
+      }
+      case GameActions.LooseCallout: {
+        return ChooseCard.Loose;
+      }
+      case GameActions.Exchange: {
+        return ChooseCard.Exchange;
+      }
+      case GameActions.CalloutLie: {
+        return ChooseCard.Show;
+      }
+    }
+  };
+
   const showPrompt = () => {
     if (isTarget) {
       return <p className="font-bold">Please Select a Card to Lose</p>;
@@ -16,11 +37,15 @@ const PlayerCards = () => {
       <div className="flex">
         <Card
           card={CardInfo[gameCards[0]]}
-          onClick={() => handleLoseCard(socket, roomId, 0, isTarget)}
+          onClick={() =>
+            handleChooseCard(socket, roomId, 0, isTarget, chooseCardType())
+          }
         ></Card>
         <Card
           card={CardInfo[gameCards[1]]}
-          onClick={() => handleLoseCard(socket, roomId, 1, isTarget)}
+          onClick={() =>
+            handleChooseCard(socket, roomId, 1, isTarget, chooseCardType())
+          }
         ></Card>
       </div>
       {showPrompt()}

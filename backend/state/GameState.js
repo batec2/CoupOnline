@@ -1,3 +1,5 @@
+import CardInfo from "../lib/CardInfo.js";
+import GameActions from "../lib/actionEnum.js";
 import GameCard from "../lib/cardEnum.js";
 
 export class GameState {
@@ -5,17 +7,16 @@ export class GameState {
   currentPlayer = 0;
   playerCount = 0;
   players = [];
-  playerCards = {};
-  playerMoney = {};
+  playerState = {};
   deck = [3, 3, 3, 3, 3];
   roundNumber = 0;
   round = {};
+  passCount = 0;
 
   constructor(players) {
     this.playerCount = players.length;
     this.players = players;
-    this.generateCardsForAll();
-    this.initMoney();
+    this.initPlayers();
   }
 
   get currentPlayer() {
@@ -42,20 +43,45 @@ export class GameState {
   }
 
   get playerCards() {
-    return this.playerCards;
+    return this.playerState;
+  }
+  get passCount() {
+    return this.passCount;
+  }
+
+  /**
+   *
+   * @param {*} userId - player called out
+   * @param {*} card - card shown
+   * @param {*} action - action being called out
+   */
+  checkCard(userId, card, action) {
+    const playerCard = this.playerState[userId].gameCards[card];
+    if (CardInfo[playerCard].validActions.includes(action)) {
+      return true;
+    }
+    return false;
   }
 
   loseCard(player, card) {
-    this.playerCards[player][card] = GameCard.Eliminated;
+    this.playerState[player].gameCards[card] = GameCard.Eliminated;
   }
 
-  getPlayersCards(player) {
-    return this.playerCards[player];
+  getPlayer(player) {
+    return this.playerState[player];
   }
 
   addRound(round) {
     this.round[this.roundNumber] = round;
     this.roundNumber += 1;
+  }
+
+  incrementPassCount() {
+    this.passCount += 1;
+  }
+
+  resetPassCount() {
+    this.passCount = 0;
   }
 
   incrementRound() {
@@ -70,19 +96,18 @@ export class GameState {
     }
   }
 
-  initMoney() {
-    for (let i = 0; i < this.players.length; i++) {
-      this.playerMoney[i] = 2;
-    }
+  increasePlayerMoney(userId, amount) {
+    this.playerState[userId].coins += amount;
+  }
+  decreasePlayerMoney(userId, amount) {
+    this.playerState[userId].coins -= amount;
   }
 
-  increasePlayerMoney(amount) {
-    this.playerMoney[this.currentPlayer] += amount;
-  }
-
-  generateCardsForAll() {
+  initPlayers() {
     this.players.forEach((player) => {
-      this.playerCards[player] = this.generateCards();
+      this.playerState[player] = { gameCards: {}, coins: 0 };
+      this.playerState[player].gameCards = this.generateCards();
+      this.playerState[player].coins = 8;
     });
   }
 

@@ -5,12 +5,14 @@ export const emitStartGame = (io, roomId) => {
 export const emitUpdate = (io, room) => {
   const { players, state } = room;
   Object.keys(players).forEach((player) => {
-    const gameCards = state.getPlayersCards(player);
+    const { gameCards, coins } = state.getPlayer(player);
+
     // Sends players cards
     // Starts the game for players and sends player id of first turn\
     io.to(player).emit("update-state", {
       gameCards: gameCards,
       turnId: state.currentTurnId,
+      coins: coins,
     });
   });
 };

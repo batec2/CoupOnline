@@ -1,5 +1,5 @@
-import GameCard from "@/lib/cardEnum";
-import GameActions from "@/lib/actionEnum";
+import GameCard from "./cardEnum.js";
+import GameActions from "./actionEnum.js";
 const {
   Taxes,
   Assassinate,

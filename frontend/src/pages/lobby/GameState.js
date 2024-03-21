@@ -14,6 +14,10 @@ import { useParams } from "react-router-dom";
  * @property {function} setGameCards
  * @property {Object} responseAction
  * @property {function} setResponseAction
+ * @property {boolean} isTarget
+ * @property {function} setIsTarget
+ * @property {number} coins
+ * @property {function} setCoins
  * @property {Object} socket
  * @property {string} roomId
  */
@@ -28,7 +32,9 @@ export const useGameState = () => {
   const [currentTurnId, setTurnId] = useState(null);
   const [gameCards, setGameCards] = useState(null);
   const [responseAction, setResponseAction] = useState(null);
+  const [requestAction, setRequestAction] = useState(null);
   const [isTarget, setIsTarget] = useState(false);
+  const [coins, setCoins] = useState(0);
   const socket = useContext(SocketContext);
   const { roomId } = useParams();
 
@@ -43,8 +49,12 @@ export const useGameState = () => {
     setGameCards: setGameCards,
     responseAction: responseAction,
     setResponseAction: setResponseAction,
+    requestAction: requestAction,
+    setRequestAction: setRequestAction,
     isTarget: isTarget,
     setIsTarget: setIsTarget,
+    coins: coins,
+    setCoins: setCoins,
     socket: socket,
     roomId: roomId,
   };
