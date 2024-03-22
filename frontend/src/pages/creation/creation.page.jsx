@@ -61,13 +61,14 @@ const CreationPage = () => {
             }
           );
 
-          cookies.set("PersonalCookie", response.data._id);
+          cookies.set("PersonalCookie", {id: response.data._id, username: response.data.userName, screenName: response.data.userName});
           setCurrentCookie(cookies.get("PersonalCookie"));
+          navigate("/room");
         };
 
         if (CreatedCookie === true) {
           makeNewAccount();
-          navigate("/room");
+
         }
       });
       setCreatedCookie(false);
