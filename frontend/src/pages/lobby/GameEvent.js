@@ -18,6 +18,7 @@ export const useGameEvents = (gameState) => {
     setIsTarget,
     setCoins,
     setRequestAction,
+    requestIdRef,
   } = gameState;
 
   useEffect(() => {
@@ -33,9 +34,17 @@ export const useGameEvents = (gameState) => {
       setResponseAction(responseAction);
     };
 
-    const onChooseCardEvent = ({ userId, targetId, requestAction }) => {
+    /**
+     *
+     * @param {*} requestId - Player asking for target to choose card
+     * @param {*} targetId - Player choosing card
+     * @param {*} requestAction - type of choose card action
+     * @returns
+     */
+    const onChooseCardEvent = ({ requestId, targetId, requestAction }) => {
       setTurnId(targetId);
       setRequestAction(requestAction);
+      requestIdRef.current = requestId;
       if (targetId === socket.id) {
         setIsTarget(true);
         return;
@@ -48,7 +57,7 @@ export const useGameEvents = (gameState) => {
       setGameCards(gameCards);
       setTurnId(turnId);
       setIsTarget(false);
-
+      requestIdRef.current = null;
       setCoins(coins);
     };
 

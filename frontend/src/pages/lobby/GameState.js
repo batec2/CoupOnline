@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useRef } from "react";
 import SocketContext from "@/context/socketContext";
 import { useParams } from "react-router-dom";
 
@@ -33,6 +33,7 @@ export const useGameState = () => {
   const [gameCards, setGameCards] = useState(null);
   const [responseAction, setResponseAction] = useState(null);
   const [requestAction, setRequestAction] = useState(null);
+  const requestIdRef = useRef(null);
   const [isTarget, setIsTarget] = useState(false);
   const [coins, setCoins] = useState(0);
   const socket = useContext(SocketContext);
@@ -51,6 +52,7 @@ export const useGameState = () => {
     setResponseAction: setResponseAction,
     requestAction: requestAction,
     setRequestAction: setRequestAction,
+    requestIdRef: requestIdRef,
     isTarget: isTarget,
     setIsTarget: setIsTarget,
     coins: coins,

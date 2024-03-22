@@ -6,7 +6,7 @@ import ChooseCard from "@/lib/chooseCardEnum";
 import GameActions from "@/lib/actionEnum";
 
 const PlayerCards = () => {
-  const { gameCards, isTarget, socket, roomId, requestAction } =
+  const { gameCards, isTarget, socket, roomId, requestAction, requestIdRef } =
     useGameContext();
 
   const chooseCardType = () => {
@@ -43,6 +43,7 @@ const PlayerCards = () => {
               roomId,
               0,
               isTarget,
+              requestIdRef.current,
               requestAction,
               chooseCardType()
             )
@@ -56,6 +57,7 @@ const PlayerCards = () => {
               roomId,
               1,
               isTarget,
+              requestIdRef.current,
               requestAction,
               chooseCardType()
             )

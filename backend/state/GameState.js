@@ -57,6 +57,11 @@ export class GameState {
    */
   checkCard(userId, card, requestAction) {
     const playerCard = this.playerState[userId].gameCards[card];
+    console.log(playerCard);
+    console.log(CardInfo[playerCard]);
+    console.log(requestAction);
+    console.log(CardInfo[playerCard].validActions.includes(requestAction));
+
     if (CardInfo[playerCard].validActions.includes(requestAction)) {
       return true;
     }

@@ -73,7 +73,8 @@ export const handleStartGame = (socket, roomId) => {
  * @param {*} roomId
  * @param {*} card - Card being chosen
  * @param {*} isTarget
- * @param {*} requestAction
+ * @param {*} requestId - Player who requested show card
+ * @param {*} requestAction - Action being called out/blocked
  * @param {*} action - Type of card selection action ex: loose/show/exchange
  * @returns
  */
@@ -82,6 +83,7 @@ export const handleChooseCard = (
   roomId,
   card,
   isTarget,
+  requestId,
   requestAction,
   action
 ) => {
@@ -92,6 +94,7 @@ export const handleChooseCard = (
     roomId: roomId,
     userId: socket.id,
     card: card,
+    requestId: requestId,
     requestAction: requestAction,
     action: action,
   });
