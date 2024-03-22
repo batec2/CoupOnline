@@ -36,6 +36,7 @@ export const handleTargetAction = (socket, roomId, action, targetId) => {
  * @param {Object} socket - Global Socket Object
  * @param {string} roomId - Current room id
  * @param {string} requestId - Id of the player being blocked/responded
+ * @param {string} requestAction - Action being responded to
  * @param {string} action - Block/response action
  */
 export const handleResponseAction = (
@@ -66,7 +67,26 @@ export const handleStartGame = (socket, roomId) => {
   );
 };
 
-export const handleChooseCard = (socket, roomId, card, isTarget, action) => {
+/**
+ *
+ * @param {*} socket
+ * @param {*} roomId
+ * @param {*} card - Card being chosen
+ * @param {*} isTarget
+ * @param {*} requestId - Player who requested show card
+ * @param {*} requestAction - Action being called out/blocked
+ * @param {*} action - Type of card selection action ex: loose/show/exchange
+ * @returns
+ */
+export const handleChooseCard = (
+  socket,
+  roomId,
+  card,
+  isTarget,
+  requestId,
+  requestAction,
+  action
+) => {
   if (!isTarget) {
     return;
   }
@@ -74,6 +94,8 @@ export const handleChooseCard = (socket, roomId, card, isTarget, action) => {
     roomId: roomId,
     userId: socket.id,
     card: card,
+    requestId: requestId,
+    requestAction: requestAction,
     action: action,
   });
 };

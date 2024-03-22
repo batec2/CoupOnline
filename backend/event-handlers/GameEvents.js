@@ -29,8 +29,12 @@ const {
 const broadcastResponseRequest = (io, socket, rooms, recv) => {
   const { roomId, userId, action } = recv;
   const room = rooms[roomId];
+  const state = room.state;
+
   if (action === Income) {
     handleAction(io, room, userId, action);
+    state.incrementTurn();
+    emitUpdate(io, room);
     return;
   }
   socket.to(roomId).emit("player-choice", {
@@ -46,6 +50,7 @@ const broadcastResponseRequest = (io, socket, rooms, recv) => {
  * @param {*} io
  * @param {*} roomId
  * @param {*} requestId - Id of the player being blocked/responded
+ * @param {string} requestAction - Action being responded to
  * @param {*} action
  */
 const onResponseAction = (io, socket, rooms, recv) => {
@@ -69,15 +74,18 @@ const onResponseAction = (io, socket, rooms, recv) => {
     console.log("Callout Lie");
     // Tells the person being called out to select a card to show
     io.to(requestId).emit("choose-card", {
-      userId: socket.id,
+      requestId: socket.id,
       targetId: requestId,
-      requestAction: GameActions.CalloutLie,
+      requestAction: requestAction,
+      chooseAction: GameActions.CalloutLie,
     });
   } else if (action === Pass) {
     state.incrementPassCount();
     //if all players pass
     if (state.passCount === state.playerCount - 1) {
       handleAction(io, room, requestId, requestAction);
+      state.incrementTurn();
+      emitUpdate(io, room);
       state.resetPassCount();
     }
   }
@@ -96,8 +104,6 @@ const handleAction = (io, room, userId, action) => {
       break;
     }
   }
-  state.incrementTurn();
-  emitUpdate(io, room);
 };
 
 const onTargetAction = (io, socket, rooms, recv) => {
@@ -112,18 +118,29 @@ const onTargetAction = (io, socket, rooms, recv) => {
     io.to(roomId).emit("choose-card", {
       userId: socket.id,
       targetId: targetId,
-      requestAction: GameActions.Coup,
+      chooseAction: GameActions.Coup,
     });
   }
 };
 
+/**
+ * Action for Choose-card event from the client
+ * @param {*} io
+ * @param {*} socket
+ * @param {*} rooms
+ * @param {*} recv
+ * @returns
+ */
 const onChooseCard = (io, socket, rooms, recv) => {
-  const { roomId, userId, card, action } = recv;
+  const { roomId, userId, card, requestId, requestAction, action } = recv;
   const room = rooms[roomId];
   const state = room.state;
+
   switch (action) {
     case ChooseCard.Loose: {
+      console.log("loose " + action);
       state.loseCard(userId, card);
+      emitUpdate(io, room);
       break;
     }
     case ChooseCard.Exchange: {
@@ -131,16 +148,24 @@ const onChooseCard = (io, socket, rooms, recv) => {
     }
     case ChooseCard.Show: {
       // card shown gets checked
-      if (state.checkCard(userId, card, action)) {
+      console.log("show " + action);
+      //If the called out player shows the correct card the calling out player
+      //chooses a card to loose
+      console.log(state.checkCard(userId, card, requestAction));
+      if (state.checkCard(userId, card, requestAction)) {
+        handleAction(io, room, userId, requestAction);
         io.to(roomId).emit("choose-card", {
           userId: socket.id,
-          targetId: targetId,
+          targetId: requestId,
           requestAction: GameActions.LooseCallout,
         });
+        return;
       }
+      state.incrementTurn();
+      state.loseCard(userId, card);
+      emitUpdate(io, room);
     }
   }
-  emitUpdate(io, room);
 };
 
 export const registerGameHandlers = (io, socket, rooms) => {
