@@ -1,16 +1,17 @@
 import ActionTable from "../../components/actionTable/actionTable.component";
-import PlayerList from "../../components/playerlist/playerList.component";
+import CardList from "../../components/cardList/cardList.component";
 import Card from "../../components/card/card.component";
 import CardInfo from "@/components/card/CardInfo";
 import GameCard from "@/lib/cardEnum";
+import { Button } from "../../components/ui/button";
 const TestPage = () => {
   const players = [
-    {"name": "Diane", "cards": 1},
-    {"name": "Steve", "cards": 2},
-    {"name": "Katie", "cards": 0},
-    {"name": "Joe", "cards": 2},
-    {"name": "Morgan", "cards": 0},
-    {"name": "Dwayne", "cards": 2}
+    {"item": "Diane", "count": 1},
+    {"item": "Steve", "count": 2},
+    {"item": "Katie", "count": 0},
+    {"item": "Joe", "count": 2},
+    {"item": "Morgan", "count": 0},
+    {"item": "Dwayne", "count": 2}
   ]
   const card1 = {
     "character": "Assassin",
@@ -28,13 +29,9 @@ const TestPage = () => {
   return (
     <div>
       <h1>Test Page</h1>
-      <PlayerList playerList={players} />
+      <Button className="flex bg-actions-unavailableAction">Button</Button>
+      <CardList cardList={players} context="player"/>
       <ActionTable />
-      <Card card={CardInfo[GameCard.Assassin]} />
-      <Card card={CardInfo[GameCard.Ambassador]} />
-      <Card card={CardInfo[GameCard.Contessa]} />
-      <Card card={CardInfo[GameCard.Captain]} />
-      <Card card={CardInfo[GameCard.Duke]} />
     </div>
   );
 };

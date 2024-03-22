@@ -10,6 +10,10 @@ const NormalActions = () => {
   const [showTarget, setShowTarget] = useState(false);
   const [currentAction, setAction] = useState(null);
 
+  const normalAction = "button "
+  const unavailableAction = "button bg-gray-400"
+  const bluffAction = "button bg-red-600"
+  const haveCardAction = "button bg-green-600"
   return (
     <div className="space-y-2">
       <div className="space-x-4">
