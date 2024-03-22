@@ -29,7 +29,7 @@ const TestPage = () => {
   return (
     <div>
       <h1>Test Page</h1>
-      <Button className="flex bg-actions-unavailableAction">Button</Button>
+      <Button className="flex bg-actions-unavailable">Button</Button>
       <CardList cardList={players} context="player"/>
       <ActionTable />
     </div>

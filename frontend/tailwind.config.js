@@ -32,7 +32,11 @@ module.exports = {
           foreground: "hsl(var(--secondary-foreground))",
         },
         actions: {
-          unavailableAction: "#9ca3af",
+          normal: "#000000",
+          unavailable: "#9ca3af",
+          haveCard: "#16a34a",
+          bluff: "#dc2626",
+          callout: "#eab308"
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
