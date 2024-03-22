@@ -37,7 +37,11 @@ const LoginPage = () => {
     terminal.log(verif);
     if (verif) {
       retrieveAccountByName(username.current).then((res) => {
-        cookies.set("PersonalCookie", res.data._id)
+        cookies.set("PersonalCookie", {
+          id: res.data._id,
+          username: res.data.userName,
+          screenName: res.data.screenName});
+
         setLocalCookie(cookies.get("PersonalCookie"));
         navigate("/room");
       });
