@@ -40,7 +40,8 @@ const LoginPage = () => {
         cookies.set("PersonalCookie", {
           id: res.data._id,
           username: res.data.userName,
-          screenName: res.data.screenName});
+          screenName: res.data.screenName,
+        });
 
         setLocalCookie(cookies.get("PersonalCookie"));
         navigate("/room");
@@ -72,14 +73,14 @@ const LoginPage = () => {
       />
       <Button
         onClick={handleLoginClick}
-        className="bg-blue-500 text-white px-4 py-2 rounded-md mb-2"
+        className="bg-blue-400 text-white px-4 py-2 rounded-md mb-2"
       >
         Login
       </Button>
       <h2 className="text-xl mb-2">No account?</h2>
       <Button
         onClick={handleCreateClick}
-        className="bg-green-500 text-white px-4 py-2 rounded-md"
+        className="bg-blue-800 text-white px-4 py-2 rounded-md"
       >
         Create an account
       </Button>
