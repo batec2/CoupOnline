@@ -38,13 +38,27 @@ const PlayerCards = () => {
         <Card
           card={CardInfo[gameCards[0]]}
           onClick={() =>
-            handleChooseCard(socket, roomId, 0, isTarget, chooseCardType())
+            handleChooseCard(
+              socket,
+              roomId,
+              0,
+              isTarget,
+              requestAction,
+              chooseCardType()
+            )
           }
         ></Card>
         <Card
           card={CardInfo[gameCards[1]]}
           onClick={() =>
-            handleChooseCard(socket, roomId, 1, isTarget, chooseCardType())
+            handleChooseCard(
+              socket,
+              roomId,
+              1,
+              isTarget,
+              requestAction,
+              chooseCardType()
+            )
           }
         ></Card>
       </div>

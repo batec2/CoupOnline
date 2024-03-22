@@ -40,6 +40,7 @@ export const useGameEvents = (gameState) => {
         setIsTarget(true);
         return;
       }
+      setIsTarget(false);
     };
 
     const onUpdateState = ({ gameCards, turnId, coins }) => {
@@ -47,6 +48,7 @@ export const useGameEvents = (gameState) => {
       setGameCards(gameCards);
       setTurnId(turnId);
       setIsTarget(false);
+
       setCoins(coins);
     };
 

@@ -46,6 +46,7 @@ const broadcastResponseRequest = (io, socket, rooms, recv) => {
  * @param {*} io
  * @param {*} roomId
  * @param {*} requestId - Id of the player being blocked/responded
+ * @param {string} requestAction - Action being responded to
  * @param {*} action
  */
 const onResponseAction = (io, socket, rooms, recv) => {
@@ -117,13 +118,24 @@ const onTargetAction = (io, socket, rooms, recv) => {
   }
 };
 
+/**
+ * Action for Choose-card event from the client
+ * @param {*} io
+ * @param {*} socket
+ * @param {*} rooms
+ * @param {*} recv
+ * @returns
+ */
 const onChooseCard = (io, socket, rooms, recv) => {
-  const { roomId, userId, card, action } = recv;
+  const { roomId, userId, card, requestAction, action } = recv;
   const room = rooms[roomId];
   const state = room.state;
+
   switch (action) {
     case ChooseCard.Loose: {
+      console.log("loose " + action);
       state.loseCard(userId, card);
+      emitUpdate(io, room);
       break;
     }
     case ChooseCard.Exchange: {
@@ -131,16 +143,20 @@ const onChooseCard = (io, socket, rooms, recv) => {
     }
     case ChooseCard.Show: {
       // card shown gets checked
-      if (state.checkCard(userId, card, action)) {
+      console.log("show " + action);
+      if (state.checkCard(userId, card, requestAction)) {
         io.to(roomId).emit("choose-card", {
           userId: socket.id,
           targetId: targetId,
           requestAction: GameActions.LooseCallout,
         });
+        return;
       }
+      state.incrementTurn();
+      state.loseCard(userId, card);
+      emitUpdate(io, room);
     }
   }
-  emitUpdate(io, room);
 };
 
 export const registerGameHandlers = (io, socket, rooms) => {
