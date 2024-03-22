@@ -1,11 +1,12 @@
-import { useEffect } from "react";
+import {useEffect, useState} from "react";
 import handleStatus from "@/lib/handleStatus";
 import GameActions from "@/lib/actionEnum";
-
+import Cookie from "universal-cookie"
 /**
  * Sets up socket listeners for gamestate variables
  * @param {*} gameState
  */
+const cookie = new Cookie()
 export const useGameEvents = (gameState) => {
   const {
     socket,
@@ -20,6 +21,7 @@ export const useGameEvents = (gameState) => {
     setRequestAction,
     requestIdRef,
   } = gameState;
+  const localCookie = cookie.get("PersonalCookie")
 
   useEffect(() => {
     const onLobbyEvent = ({ lobby }) => {
@@ -62,7 +64,7 @@ export const useGameEvents = (gameState) => {
     };
 
     socket.connect();
-    socket.emit("join-room", { roomId: roomId, userId: "user1" }, handleStatus);
+    socket.emit("join-room", { roomId: roomId, userId: localCookie["username"] }, handleStatus);
     socket.on("lobby-members", onLobbyEvent);
     socket.on("start-game", onStartEvent);
     socket.on("player-choice", onActionEvent);

@@ -1,7 +1,6 @@
 import { useState, useContext, useRef } from "react";
 import SocketContext from "@/context/socketContext";
 import { useParams } from "react-router-dom";
-
 /**
  * @typedef {Object} GameState
  * @property {Object} currentLobbyMembers

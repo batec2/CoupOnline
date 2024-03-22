@@ -33,13 +33,18 @@ const LoginPage = () => {
   };
 
   const handleLoginClick = async () => {
-    const verif = await verifyAccount(username, setVerified);
+    const verif = await verifyAccount(username.current, setVerified);
     terminal.log(verif);
     if (verif) {
-      retrieveAccountByName(username).then((res) => {
-        cookies.set("PersonalCookie", res.data._id);
+      retrieveAccountByName(username.current).then((res) => {
+        cookies.set("PersonalCookie", {
+          id: res.data._id,
+          username: res.data.userName,
+          screenName: res.data.screenName});
+
+        setLocalCookie(cookies.get("PersonalCookie"));
+        navigate("/room");
       });
-      navigate("/room");
     } else {
       window.alert("Account Does not Exist.");
     }
