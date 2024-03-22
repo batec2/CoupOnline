@@ -76,7 +76,8 @@ const onResponseAction = (io, socket, rooms, recv) => {
     io.to(requestId).emit("choose-card", {
       requestId: socket.id,
       targetId: requestId,
-      requestAction: GameActions.CalloutLie,
+      requestAction: requestAction,
+      chooseAction: GameActions.CalloutLie,
     });
   } else if (action === Pass) {
     state.incrementPassCount();
@@ -117,7 +118,7 @@ const onTargetAction = (io, socket, rooms, recv) => {
     io.to(roomId).emit("choose-card", {
       userId: socket.id,
       targetId: targetId,
-      requestAction: GameActions.Coup,
+      chooseAction: GameActions.Coup,
     });
   }
 };

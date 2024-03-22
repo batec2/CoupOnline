@@ -1,12 +1,12 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import handleStatus from "@/lib/handleStatus";
 import GameActions from "@/lib/actionEnum";
-import Cookie from "universal-cookie"
+import Cookie from "universal-cookie";
 /**
  * Sets up socket listeners for gamestate variables
  * @param {*} gameState
  */
-const cookie = new Cookie()
+const cookie = new Cookie();
 export const useGameEvents = (gameState) => {
   const {
     socket,
@@ -21,7 +21,7 @@ export const useGameEvents = (gameState) => {
     setRequestAction,
     requestIdRef,
   } = gameState;
-  const localCookie = cookie.get("PersonalCookie")
+  const localCookie = cookie.get("PersonalCookie");
 
   useEffect(() => {
     const onLobbyEvent = ({ lobby }) => {
@@ -40,12 +40,18 @@ export const useGameEvents = (gameState) => {
      *
      * @param {*} requestId - Player asking for target to choose card
      * @param {*} targetId - Player choosing card
-     * @param {*} requestAction - type of choose card action
+     * @param {*} requestAction -
+     * @param {*} chooseAction - type of choose card action
      * @returns
      */
-    const onChooseCardEvent = ({ requestId, targetId, requestAction }) => {
+    const onChooseCardEvent = ({
+      requestId,
+      targetId,
+      requestAction,
+      chooseAction,
+    }) => {
       setTurnId(targetId);
-      setRequestAction(requestAction);
+      setRequestAction(chooseAction);
       requestIdRef.current = requestId;
       if (targetId === socket.id) {
         setIsTarget(true);
@@ -64,7 +70,11 @@ export const useGameEvents = (gameState) => {
     };
 
     socket.connect();
-    socket.emit("join-room", { roomId: roomId, userId: localCookie["username"] }, handleStatus);
+    socket.emit(
+      "join-room",
+      { roomId: roomId, userId: localCookie["username"] },
+      handleStatus
+    );
     socket.on("lobby-members", onLobbyEvent);
     socket.on("start-game", onStartEvent);
     socket.on("player-choice", onActionEvent);
