@@ -33,6 +33,16 @@ const LoginPage = () => {
   };
 
   const handleLoginClick = async () => {
+    login();
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      login();
+    }
+  };
+
+  const login = async () => {
     const verif = await verifyAccount(username.current, setVerified);
     terminal.log(verif);
     if (verif) {
@@ -69,6 +79,7 @@ const LoginPage = () => {
         type="username"
         placeholder="User Name"
         onChange={handleUsernameInput}
+        onKeyPress={handleKeyPress}
         className="w-60 px-4 py-2 border rounded-md mb-4"
       />
       <Button
