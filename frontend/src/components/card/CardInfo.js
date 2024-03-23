@@ -22,7 +22,7 @@ const CardInfo = {
   [GameCard.Ambassador]: {
     character: "Ambassador",
     "action-name": "Exchange",
-    "action-effect": "Take two cards from the deck and return 2 cards",
+    "action-effect": "Take 2 cards from the deck, then return 2 cards",
     counteraction: "Block stealing",
     validActions: [Exchange, BlockStealAsAmbass],
   },

@@ -1,6 +1,5 @@
 import CardItem from "./cardItem.component";
-
-import './playerList.styles.css'
+import GameSectionTitle from "../text/gameSectionTitle.component";
 
 /**
  * List of players and remaining cards
@@ -8,13 +7,19 @@ import './playerList.styles.css'
  * @returns Textfield
  */
 const CardList = ({ items, context }) => {
-  const name = (context="players") ? "userId" : "card";
+  const name = (context=="players") ? "userId" : "card";
   const keys = Object.keys(items);
+
+  const title = (context=="players") ? "Players:" : "Discarded Cards:"
+
   return(
-    <div className="flex flex-col">
-      {keys.map((key) => 
-        <CardItem item={items[key][name]} count={2} context={context} /> 
-      )}
+    <div>
+      <GameSectionTitle text={title} />
+      <div className="flex flex-col w-40 space-y-1">
+        {keys.map((key) => 
+          <CardItem item={items[key][name]} count={2} context={context} /> 
+        )}
+      </div>
     </div>
   )
 }

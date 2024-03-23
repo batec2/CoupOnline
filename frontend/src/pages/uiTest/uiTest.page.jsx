@@ -29,8 +29,7 @@ const TestPage = () => {
   return (
     <div>
       <h1>Test Page</h1>
-      <Button className="flex ">Button</Button>
-      <CardList cardList={players} context="player"/>
+      <Button className="flex bg-actions-unavailable">Button</Button>
       <ActionTable />
     </div>
   );

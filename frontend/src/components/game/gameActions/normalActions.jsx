@@ -5,172 +5,165 @@ import useGameContext from "@/context/useGameContext";
 import TargetAction from "./targetAction";
 import { useState } from "react";
 import GameCard from "@/lib/cardEnum";
+import ActionButton from "./actionButton.component";
+import ButtonClass from "@/lib/buttonClassEnum";
 
 const NormalActions = () => {
   const { socket, roomId, coins, gameCards } = useGameContext();
   const [showTarget, setShowTarget] = useState(false);
   const [currentAction, setAction] = useState(null);
 
-  //Button conditional stylings
-  const normal = "bg-actions-normal";
-  const unavailable = "bg-actions-unavailable";
-  const haveCard = "bg-actions-haveCard";
-  const bluff = "bg-actions-bluff";
 
-  //Determine
+  //Determine button functionality based on game state
   const buttonClass = (button) => {
+    //Have > 10 coins -> must coup
     if(coins >= 10 && button != GameActions.Coup) {
-      return unavailable;
+      return ButtonClass.Unavailable;
     }
     switch(button){
+      //Have >= 6 coins -> can coup
       case GameActions.Coup:{
-         if(coins > 6) {
-          return normal;
+         if(coins >= 7) {
+          return ButtonClass.Normal;
          } else {
-          return unavailable;
+          return ButtonClass.Unavailable;
          }
       }
+      //Can always declare income or foreign aid
       case GameActions.Income || GameActions.Aid:{
-        return normal;
+        return ButtonClass.Normal;
       }
+      //Taxes are legit if have duke, bluff if not
       case GameActions.Taxes: {
         if(gameCards[0] == GameCard.Duke || gameCards[1] == GameCard.Duke) {
-          return haveCard;
+          return ButtonClass.HaveCard;
         } else {
-          return bluff;
+          return ButtonClass.Bluff;
         }
       }
+      //Exchange is legit if have ambassador, bluff if not
       case GameActions.Exchange: {
         if(gameCards[0] == GameCard.Ambassador 
            || gameCards[1] == GameCard.Ambassador) {
-          return haveCard;
+          return ButtonClass.HaveCard;
         } else {
-          return bluff;
+          return ButtonClass.Bluff;
         }
       }
+      //Assassination is legit with assassin and >= 3 coins, bluff if not
       case GameActions.Assassinate: {
         if(coins < 3) {
-          return unavailable;
+          return ButtonClass.Unavailable;
         } else if(gameCards[0] == GameCard.Assassin 
                   || gameCards[1] == GameCard.Assassin) {
-          return haveCard;
+          return ButtonClass.HaveCard;
         } else {
-          return bluff;
+          return ButtonClass.Bluff;
         }
       }
-      
+      //Steal is legit with captain, bludd if not
       case GameActions.Steal: {
         if(gameCards[0] == GameCard.Captain 
            || gameCards[1] == GameCard.Captain) {
-          return haveCard;
+          return ButtonClass.HaveCard;
         } else {
-          return bluff;
+          return ButtonClass.Bluff;
         }
       }
     }
   }
 
+  const onIncomeClick = () => {
+    handleNormalAction(socket, roomId, GameActions.Income);
+    setShowTarget(false);
+    setAction(GameActions.Income);
+  }
+
+  const onCoupClick = () => {
+    setShowTarget(true);
+    setAction(GameActions.Coup);
+  }
+
+  const onTaxClick = () => {
+    handleNormalAction(socket, roomId, GameActions.Taxes);
+    setAction(GameActions.Taxes);
+  }
+
+  const onExchangeClick = () => {
+    handleNormalAction(socket, roomId, GameActions.Exchange);
+    setShowTarget(false);
+    setAction(GameActions.Exchange);
+  }
+
+  const onAidClick = () => {
+    handleNormalAction(socket, roomId, GameActions.Aid);
+    setShowTarget(false);
+    setAction(GameActions.Aid);
+  }
+
+  const onAssassinateClick = () => {
+    handleNormalAction(socket, roomId, GameActions.Assassinate);
+    setShowTarget(true);
+    setAction(GameActions.Assassinate);
+  }
+
+  const onStealClick = () => {
+    handleNormalAction(socket, roomId, GameActions.Steal);
+    setShowTarget(true);
+    setAction(GameActions.Steal);
+  }
+
   return (
-    <div className="space-y-2">
-      <div className="space-x-4">
-        <Button
-          className={buttonClass(GameActions.Income)}
-          onClick={() => {
-            if(buttonClass(GameActions.Income) != unavailable) {
-              handleNormalAction(socket, roomId, GameActions.Income);
-              setShowTarget(false);
-              setAction(GameActions.Income);
-            }
-          }}
-        >
-          Income
-        </Button>
-
-        <Button
-          className={buttonClass(GameActions.Coup)}
-          onClick={() => {
-            // handleNormalAction(socket, roomId, GameActions.Coup);
-            if (buttonClass(GameActions.Coup) != unavailable) {
-              setShowTarget(true);
-              setAction(GameActions.Coup);
-            }
-          }}
-        >
-          Coup
-        </Button>
-      </div>
-
-      <div className="space-x-4">
-        <Button
-          className={buttonClass(GameActions.Taxes)}
-          onClick={() => {
-            if (buttonClass(GameActions.Taxes) != unavailable) {
-              handleNormalAction(socket, roomId, GameActions.Taxes);
-              setAction(GameActions.Taxes);
-            }
-          }}
-        >
-          Taxes
-        </Button>
+    <div className="grid grid-cols-2 space-x-2">
+      <div className="space-y-2">
+        <text>Actions:</text>
+        <ActionButton
+          buttonClass={buttonClass(GameActions.Income)}
+          onClick={onIncomeClick}
+          text={"Income"}
+        />
+        <ActionButton
+          buttonClass={buttonClass(GameActions.Coup)}
+          onClick={onCoupClick}
+          text={"Coup"}
+        />
+        <ActionButton
+          buttonClass={buttonClass(GameActions.Taxes)}
+          onClick={onTaxClick}
+          text={"Taxes"}
+        />
         
-        <Button
-          className={buttonClass(GameActions.Exchange)}
-          onClick={() => {
-            if(buttonClass(GameActions.Exchange) != unavailable) {
-              handleNormalAction(socket, roomId, GameActions.Exchange);
-              setShowTarget(false);
-              setAction(GameActions.Exchange);
-            }
-          }}
-        >
-          Exchange Influence
-        </Button>
+        <ActionButton
+          buttonClass={buttonClass(GameActions.Exchange)}
+          onClick={onExchangeClick}
+          text={"Exchange Influence"}
+        />
+        <ActionButton
+          buttonClass={buttonClass(GameActions.Aid)}
+          onClick={onAidClick}
+          text={"Foreign Aid"}
+        />
+        <ActionButton
+          buttonClass={buttonClass(GameActions.Assassinate)}
+          onClick={onAssassinateClick}
+          text={"Assassinate"}
+        />
+        <ActionButton
+          buttonClass={buttonClass(GameActions.Steal)}
+          onClick={onStealClick}
+          text={"Steal"}
+        />
       </div>
-       <div className="space-x-4">
-        <Button
-          className={buttonClass(GameActions.Aid)}
-          onClick={() => {
-            if(buttonClass(GameActions.Aid) != unavailable) {
-              handleNormalAction(socket, roomId, GameActions.Aid);
-              setShowTarget(false);
-              setAction(GameActions.Aid);
-            }
-          }}
-        >
-          Foreign Aid
-        </Button>
-
-        <Button
-          className={buttonClass(GameActions.Assassinate)}
-          onClick={() => {
-            if(buttonClass(GameActions.Assassinate) != unavailable) {
-              handleNormalAction(socket, roomId, GameActions.Assassinate);
-              setShowTarget(true);
-              setAction(GameActions.Assassinate);
-            }
-          }}
-        >
-          Assassinate
-        </Button>
-        <Button
-          className={buttonClass(GameActions.Steal)}
-          onClick={() => {
-            if(buttonClass(GameActions.Steal) != unavailable) {
-              handleNormalAction(socket, roomId, GameActions.Steal);
-              setShowTarget(true);
-              setAction(GameActions.Steal);
-            }
-          }}
-        >
-          Steal
-        </Button>
-      
-      </div>
-      <TargetAction
-        showTarget={showTarget}
-        action={currentAction}
-      ></TargetAction>
-    </div>
+      {showTarget ? (
+        <div className="space-y-2">
+        <h1>Targets:</h1>
+        <TargetAction
+          showTarget={showTarget}
+          action={currentAction}
+        ></TargetAction>
+        </div>
+        ) : <></>}
+    </div>  
   );
 };
 

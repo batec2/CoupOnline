@@ -11,6 +11,7 @@ const TargetAction = ({ showTarget, action }) => {
     }
     buttons.push(
       <Button
+        className="w-40"
         onClick={() => handleTargetAction(socket, roomId, action, member)}
         key={member}
       >
@@ -19,13 +20,10 @@ const TargetAction = ({ showTarget, action }) => {
     );
   });
 
-  return showTarget ? (
-    <div>
-      <h2>Targets</h2>
+  return (
+    <div className="space-y-2">
       {buttons}
     </div>
-  ) : (
-    <></>
   );
 };
 

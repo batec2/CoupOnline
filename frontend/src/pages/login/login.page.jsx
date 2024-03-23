@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { terminal } from "virtual:terminal";
 
-import TextField from "../../components/textfield/textfield.component.jsx";
 import verifyAccount from "../../actions/verifyAccount";
 import Cookies from "universal-cookie";
 import retrieveAccountById from "../../actions/retrieveAccountById.js";
