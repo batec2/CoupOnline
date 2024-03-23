@@ -36,7 +36,7 @@ module.exports = {
           unavailable: "#9ca3af",
           haveCard: "#16a34a",
           bluff: "#dc2626",
-          callout: "#eab308"
+          callout: "#ca8a04"
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
