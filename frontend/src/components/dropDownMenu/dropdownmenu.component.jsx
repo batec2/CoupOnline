@@ -4,7 +4,6 @@ import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { PersonIcon } from "@radix-ui/react-icons";
 import { GlobeIcon } from "@radix-ui/react-icons";
 import { PinRightIcon } from "@radix-ui/react-icons";
-import { CheckCircledIcon } from "@radix-ui/react-icons";
 import { DividerVerticalIcon } from "@radix-ui/react-icons";
 import {
   DropdownMenu,
