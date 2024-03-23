@@ -78,6 +78,12 @@ const CreationPage = () => {
     }
   }, [CreatedCookie, Email, userName, screenName, CurrentCookie]);
 
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      setCreatedCookie(true);
+    }
+  };
+
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <h1 className="text-3xl font-bold mb-4">Account Creation Page</h1>
@@ -86,6 +92,7 @@ const CreationPage = () => {
         type="username"
         placeholder="User Name"
         onChange={(e) => setUserName(e.target.value)}
+        onKeyPress={handleKeyPress}
         className="w-64 px-4 py-2 border rounded-md mb-2"
       />
       <label className="text-xl mb-2">Screen Name</label>
@@ -93,6 +100,7 @@ const CreationPage = () => {
         type="screenname"
         placeholder="Screen Name"
         onChange={(e) => setScreenName(e.target.value)}
+        onKeyPress={handleKeyPress}
         className="w-64 px-4 py-2 border rounded-md mb-2"
       />
       <label className="text-xl mb-2">Email</label>
@@ -100,6 +108,7 @@ const CreationPage = () => {
         type="email"
         placeholder="Email"
         onChange={(e) => setEmail(e.target.value)}
+        onKeyPress={handleKeyPress}
         className="w-64 px-4 py-2 border rounded-md mb-4"
       />
       <Button

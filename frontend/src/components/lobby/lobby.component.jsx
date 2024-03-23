@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 const LobbyComponent = () => {
   const { socket, roomId, currentLobbyMembers } = useContext(GameStateContext);
   const navigate = useNavigate();
+
+  const playerIds = currentLobbyMembers ? Object.keys(currentLobbyMembers) : []
   return (
     <div>
       <h1>Your Current Room: {roomId}</h1>
@@ -22,7 +24,10 @@ const LobbyComponent = () => {
         Start Game
       </Button>
       <div>
-        <p>{currentLobbyMembers ? JSON.stringify(currentLobbyMembers) : ""}</p>
+        <p className="text-xl font-bold">Players in Lobby:</p>
+        {playerIds.map((player) => 
+          <p>{currentLobbyMembers[player].userId}</p>
+        )}
       </div>
     </div>
   );

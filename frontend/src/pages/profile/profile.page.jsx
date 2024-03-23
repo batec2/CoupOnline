@@ -2,10 +2,16 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie";
 import { useNavigate } from "react-router-dom";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
-  const [games, setGames] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const cookies = new Cookies();
   const navigate = useNavigate();
@@ -29,9 +35,7 @@ const ProfilePage = () => {
         const playersResponse = await axios.get(
           `http://localhost:8080/players/${cookie.id}`
         );
-        const gamesResponse = await axios.get(`http://localhost:8080/games`);
         setUser(playersResponse.data);
-        setGames(gamesResponse.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -46,29 +50,38 @@ const ProfilePage = () => {
 
   if (user) {
     return (
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-4">Profile Page</h1>
-        <p className="mb-2">
-          <span className="font-semibold">User Name:</span> {user.userName}
-        </p>
-        <p className="mb-2">
-          <span className="font-semibold">Screen Name:</span> {user.screenName}
-        </p>
-        <p className="mb-2">
-          <span className="font-semibold">Email:</span> {user.email}
-        </p>
-
-        <h2 className="text-2xl font-semibold mb-4">Game History</h2>
-        <p className="mb-2">
-          <span className="font-semibold">Games Won:</span> {user.gamesWon}
-        </p>
-        <p className="mb-2">
-          <span className="font-semibold">Games Lost:</span> {user.gamesLost}
-        </p>
-        <p className="mb-2">
-          <span className="font-semibold">Win Streak:</span> {user.winStreak}
-        </p>
-      </div>
+      <Card className="w-[380px] mx-auto">
+        <CardHeader>
+          <CardTitle>
+            Welcome,{" "}
+            {user &&
+              user.userName &&
+              user.userName.charAt(0).toUpperCase() + user.userName.slice(1)}
+            !
+          </CardTitle>{" "}
+        </CardHeader>
+        <CardContent>
+          <CardDescription>
+            <span className="font-semibold">User Name:</span> {user.userName}
+          </CardDescription>
+          <CardDescription>
+            <span className="font-semibold">Screen Name:</span>{" "}
+            {user.screenName}
+          </CardDescription>
+          <CardDescription>
+            <span className="font-semibold">Email:</span>
+          </CardDescription>
+          <CardDescription>
+            <span className="font-semibold">Games Won:</span>
+          </CardDescription>
+          <CardDescription>
+            <span className="font-semibold">Games Lost:</span>
+          </CardDescription>
+          <CardDescription>
+            <span className="font-semibold">Win Streak:</span>
+          </CardDescription>
+        </CardContent>
+      </Card>
     );
   }
 };
