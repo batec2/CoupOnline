@@ -31,6 +31,22 @@ module.exports = {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
         },
+        actions: {
+          normal: "#000000",
+          unavailable: "#9ca3af",
+          haveCard: "#16a34a",
+          bluff: "#dc2626",
+          callout: "#ca8a04"
+        },
+        cards: {
+          duke: "#a78bfa",
+          assassin: "#facc15",
+          ambassador: "#a3e635",
+          captain: "#60a5fa",
+          contessa: "#f87171",
+          eliminated: "#6b7280",
+          discard: "#d1d5db"
+        },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
@@ -70,6 +86,9 @@ module.exports = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+      },
+      fontSize: {
+        "desc" : "text-lg",
       },
     },
   },

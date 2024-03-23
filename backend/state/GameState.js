@@ -55,9 +55,14 @@ export class GameState {
    * @param {*} card - card shown
    * @param {*} action - action being called out
    */
-  checkCard(userId, card, action) {
+  checkCard(userId, card, requestAction) {
     const playerCard = this.playerState[userId].gameCards[card];
-    if (CardInfo[playerCard].validActions.includes(action)) {
+    console.log(playerCard);
+    console.log(CardInfo[playerCard]);
+    console.log(requestAction);
+    console.log(CardInfo[playerCard].validActions.includes(requestAction));
+
+    if (CardInfo[playerCard].validActions.includes(requestAction)) {
       return true;
     }
     return false;

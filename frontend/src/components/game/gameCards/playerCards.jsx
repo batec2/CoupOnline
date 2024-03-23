@@ -1,12 +1,12 @@
 import useGameContext from "@/context/useGameContext.js";
-import CardInfo from "@/components/card/CardInfo";
 import Card from "@/components/card/card.component";
 import { handleChooseCard } from "@/actions/socketActions";
 import ChooseCard from "@/lib/chooseCardEnum";
 import GameActions from "@/lib/actionEnum";
+import GameCard from "@/lib/cardEnum";
 
 const PlayerCards = () => {
-  const { gameCards, isTarget, socket, roomId, requestAction } =
+  const { gameCards, isTarget, socket, roomId, requestAction, requestIdRef } =
     useGameContext();
 
   const chooseCardType = () => {
@@ -32,21 +32,62 @@ const PlayerCards = () => {
     }
   };
 
+  const cardClass = (card) => {
+    switch (card) {
+      case GameCard.Duke: {
+        return "bg-cards-duke";
+      }
+      case GameCard.Assassin: {
+        return "bg-cards-assassin";
+      }
+      case GameCard.Ambassador: {
+        return "bg-cards-ambassador";
+      }
+      case GameCard.Captain: {
+        return "bg-cards-captain";
+      }
+      case GameCard.Contessa: {
+        return "bg-cards-contessa";
+      }
+      default: {
+        return "bg-actions-normal";
+      }
+    } 
+  }
+
   return (
     <>
       <div className="flex">
-        <Card
-          card={CardInfo[gameCards[0]]}
-          onClick={() =>
-            handleChooseCard(socket, roomId, 0, isTarget, chooseCardType())
-          }
-        ></Card>
-        <Card
-          card={CardInfo[gameCards[1]]}
-          onClick={() =>
-            handleChooseCard(socket, roomId, 1, isTarget, chooseCardType())
-          }
-        ></Card>
+          <Card
+            className="bg-cards-duke"
+            card={gameCards[0]}
+            onClick={() =>
+              handleChooseCard(
+                socket,
+                roomId,
+                0,
+                isTarget,
+                requestIdRef.current,
+                requestAction,
+                chooseCardType()
+              )
+            }
+          ></Card>
+          <Card
+            className={cardClass(gameCards[1])}
+            card={gameCards[1]}
+            onClick={() =>
+              handleChooseCard(
+                socket,
+                roomId,
+                1,
+                isTarget,
+                requestIdRef.current,
+                requestAction,
+                chooseCardType()
+             )
+            }
+          ></Card>
       </div>
       {showPrompt()}
     </>
