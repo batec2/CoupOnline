@@ -1,0 +1,44 @@
+import { Button } from "../../ui/button";
+import ButtonClass from "@/lib/buttonClassEnum";
+
+const ActionButton = ({buttonClass, onClick, text}) => {
+  let buttonColor = ""
+  
+  switch(buttonClass) {
+    case ButtonClass.Normal: {
+      buttonColor = "bg-actions-normal";
+      break;
+    }
+    case ButtonClass.Unavailable: {
+      buttonColor = "bg-actions-unavailable";
+      break;
+    }
+    case ButtonClass.HaveCard: {
+      buttonColor = "bg-actions-haveCard";
+      break;
+    }
+    case ButtonClass.Bluff: {
+      buttonColor = "bg-actions-bluff";
+      break;
+    }
+    case ButtonClass.Callout: {
+      buttonColor = "bg-actions-callout";
+    }
+  }
+  
+  let cName = `${buttonColor} w-48`
+    return (
+      <Button
+        className={cName}
+        onClick={() => {
+          if(buttonClass != ButtonClass.Unavailable) {
+            onClick();
+          }
+        }}
+      >
+        {text}
+      </Button>
+    )
+}
+
+export default ActionButton
