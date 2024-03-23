@@ -68,7 +68,7 @@ const StatsPage = () => {
     );
   } else if (playersPending || gamesPending) {
     return (
-      <div>
+      <div className="text-center">
         <h1>Crunching the latest statistics ...</h1>
       </div>
     );

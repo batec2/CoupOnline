@@ -9,7 +9,9 @@ import {
 } from "@/components/ui/table";
 
 const StatsTable = ({ players, games }) => {
-  const calculateStatistics = (playerId) => {
+  // Calculate statistics for all players
+  const playerStatistics = players.map((player) => {
+    const playerId = player._id;
     let gamesPlayed = 0;
     let gamesWon = 0;
     let gamesLost = 0;
@@ -25,8 +27,9 @@ const StatsTable = ({ players, games }) => {
       }
     });
 
-    return { gamesPlayed, gamesWon, gamesLost };
-  };
+    return { playerId, gamesPlayed, gamesWon, gamesLost };
+  });
+
   return (
     <Table>
       <TableCaption>Global Statistics</TableCaption>
@@ -40,17 +43,19 @@ const StatsTable = ({ players, games }) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {players.map((player, index) => (
+        {playerStatistics.map((stats, index) => (
           <TableRow key={index}>
-            <TableCell>{player.userName}</TableCell>
-            <TableCell>{calculateStatistics(player._id).gamesPlayed}</TableCell>
-            <TableCell>{calculateStatistics(player._id).gamesWon}</TableCell>
-            <TableCell>{calculateStatistics(player._id).gamesLost}</TableCell>
             <TableCell>
-              {calculateStatistics(player._id).gamesLost === 0
-                ? "N/A"
-                : calculateStatistics(player._id).gamesWon /
-                  calculateStatistics(player._id).gamesLost}
+              {
+                players.find((player) => player._id === stats.playerId)
+                  ?.userName
+              }
+            </TableCell>
+            <TableCell>{stats.gamesPlayed}</TableCell>
+            <TableCell>{stats.gamesWon}</TableCell>
+            <TableCell>{stats.gamesLost}</TableCell>
+            <TableCell>
+              {stats.gamesLost === 0 ? "N/A" : stats.gamesWon / stats.gamesLost}
             </TableCell>
           </TableRow>
         ))}
