@@ -1,13 +1,12 @@
-import React from "react";
-// import {
-//   Table,
-//   TableHeader,
-//   TableBody,
-//   TableRow,
-//   TableCell,
-//   Button,
-// } from "semantic-ui-react";
-import "./statsTable.component.css";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 const StatsTable = ({ players, games }) => {
   const calculateStatistics = (playerId) => {
@@ -28,56 +27,35 @@ const StatsTable = ({ players, games }) => {
 
     return { gamesPlayed, gamesWon, gamesLost };
   };
-
   return (
-    <div>
-      <Table className="StatsTable">
-        <TableHeader>
-          <TableRow>
-            <Table.HeaderCell className="statsTableHeaderCell">
-              Username
-            </Table.HeaderCell>
-            <Table.HeaderCell className="statsTableHeaderCell">
-              Games Played
-            </Table.HeaderCell>
-            <Table.HeaderCell className="statsTableHeaderCell">
-              Games Won
-            </Table.HeaderCell>
-            <Table.HeaderCell className="statsTableHeaderCell">
-              Games Lost
-            </Table.HeaderCell>
-            <Table.HeaderCell className="statsTableHeaderCell">
-              Win Lose Ratio
-            </Table.HeaderCell>
-            <Table.HeaderCell className="statsTableHeaderCell">
-              Check Games
-            </Table.HeaderCell>
+    <Table>
+      <TableCaption>Global Statistics</TableCaption>
+      <TableHeader>
+        <TableRow>
+          <TableHead className="w-[100px]">Username</TableHead>
+          <TableHead>Games Played</TableHead>
+          <TableHead>Games Won</TableHead>
+          <TableHead>Games Lost</TableHead>
+          <TableHead>Win Lose Ratio</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {players.map((player, index) => (
+          <TableRow key={index}>
+            <TableCell>{player.userName}</TableCell>
+            <TableCell>{calculateStatistics(player._id).gamesPlayed}</TableCell>
+            <TableCell>{calculateStatistics(player._id).gamesWon}</TableCell>
+            <TableCell>{calculateStatistics(player._id).gamesLost}</TableCell>
+            <TableCell>
+              {calculateStatistics(player._id).gamesLost === 0
+                ? "N/A"
+                : calculateStatistics(player._id).gamesWon /
+                  calculateStatistics(player._id).gamesLost}
+            </TableCell>
           </TableRow>
-        </TableHeader>
-
-        <TableBody>
-          {players.map((player, index) => (
-            <TableRow key={index}>
-              <TableCell>{player.userName}</TableCell>
-              <TableCell>
-                {calculateStatistics(player._id).gamesPlayed}
-              </TableCell>
-              <TableCell>{calculateStatistics(player._id).gamesWon}</TableCell>
-              <TableCell>{calculateStatistics(player._id).gamesLost}</TableCell>
-              <TableCell>
-                {calculateStatistics(player._id).gamesLost === 0
-                  ? "N/A"
-                  : calculateStatistics(player._id).gamesWon /
-                    calculateStatistics(player._id).gamesLost}
-              </TableCell>
-              <TableCell>
-                <Button>Stats</Button>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </div>
+        ))}
+      </TableBody>
+    </Table>
   );
 };
 

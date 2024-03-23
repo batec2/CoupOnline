@@ -74,9 +74,7 @@ const StatsPage = () => {
     );
   } else {
     return (
-      <div className="m-4">
-        <p>{"players " + JSON.stringify(playersData)}</p>
-        <p>{"games " + JSON.stringify(gamesData)}</p>
+      <div className="m-16 mt-4">
         <StatsTable players={playersData} games={gamesData} />
       </div>
     );
