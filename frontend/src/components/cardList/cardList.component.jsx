@@ -1,4 +1,5 @@
 import CardItem from "./cardItem.component";
+import GameSectionTitle from "../text/gameSectionTitle.component";
 
 /**
  * List of players and remaining cards
@@ -13,7 +14,7 @@ const CardList = ({ items, context }) => {
 
   return(
     <div>
-      <text className="text-lg font-semibold underline">{title}</text>
+      <GameSectionTitle text={title} />
       <div className="flex flex-col w-40">
         {keys.map((key) => 
           <CardItem item={items[key][name]} count={2} context={context} /> 
