@@ -1,7 +1,5 @@
 import CardItem from "./cardItem.component";
 
-import './playerList.styles.css'
-
 /**
  * List of players and remaining cards
  * @param {String} placeholder - The placeholder text 
@@ -10,11 +8,17 @@ import './playerList.styles.css'
 const CardList = ({ items, context }) => {
   const name = (context="players") ? "userId" : "card";
   const keys = Object.keys(items);
+
+  const title = (context="players") ? "Players:" : "Graveyard:"
+
   return(
-    <div className="flex flex-col">
-      {keys.map((key) => 
-        <CardItem item={items[key][name]} count={2} context={context} /> 
-      )}
+    <div>
+      <text className="text-lg font-semibold underline">{title}</text>
+      <div className="flex flex-col w-40">
+        {keys.map((key) => 
+          <CardItem item={items[key][name]} count={2} context={context} /> 
+        )}
+      </div>
     </div>
   )
 }

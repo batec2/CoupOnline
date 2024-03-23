@@ -114,7 +114,9 @@ const NormalActions = () => {
   }
 
   return (
-    <div className="space-y-2">
+    <div className="grid grid-cols-2 space-x-2">
+      <div className="space-y-2">
+        <text>Actions:</text>
         <ActionButton
           buttonClass={buttonClass(GameActions.Income)}
           onClick={onIncomeClick}
@@ -151,11 +153,17 @@ const NormalActions = () => {
           onClick={onStealClick}
           text={"Steal"}
         />
-      <TargetAction
-        showTarget={showTarget}
-        action={currentAction}
-      ></TargetAction>
-    </div>
+      </div>
+      {showTarget ? (
+        <div className="space-y-2">
+        <h1>Targets:</h1>
+        <TargetAction
+          showTarget={showTarget}
+          action={currentAction}
+        ></TargetAction>
+        </div>
+        ) : <></>}
+    </div>  
   );
 };
 

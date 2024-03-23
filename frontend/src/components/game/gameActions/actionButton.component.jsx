@@ -26,7 +26,7 @@ const ActionButton = ({buttonClass, onClick, text}) => {
     }
   }
   
-  let cName = `${buttonColor} w-48`
+  let cName = `${buttonColor} w-40`
     return (
       <Button
         className={cName}
