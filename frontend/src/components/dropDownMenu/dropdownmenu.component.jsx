@@ -4,7 +4,6 @@ import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { PersonIcon } from "@radix-ui/react-icons";
 import { GlobeIcon } from "@radix-ui/react-icons";
 import { PinRightIcon } from "@radix-ui/react-icons";
-import { CheckCircledIcon } from "@radix-ui/react-icons";
 import { DividerVerticalIcon } from "@radix-ui/react-icons";
 import {
   DropdownMenu,
@@ -36,12 +35,12 @@ const DropDownMenu = () => {
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
             <DropdownMenuSub>
-              <DropdownMenuSubTrigger>Profile</DropdownMenuSubTrigger>
+              <DropdownMenuSubTrigger>Account</DropdownMenuSubTrigger>
               <DropdownMenuPortal>
                 <DropdownMenuSubContent>
                   <Link to="/">
                     <DropdownMenuItem className="hover:cursor-pointer">
-                      <CheckCircledIcon /> Login
+                      <DividerVerticalIcon /> Login
                     </DropdownMenuItem>
                   </Link>
                   <Link to="/creation">
@@ -58,7 +57,7 @@ const DropDownMenu = () => {
                 <DropdownMenuSubContent>
                   <Link to="/profile">
                     <DropdownMenuItem className="hover:cursor-pointer">
-                      <PersonIcon /> Personal Statistics
+                      <PersonIcon /> Profile
                     </DropdownMenuItem>
                   </Link>
                   <Link to="/global-stats">
