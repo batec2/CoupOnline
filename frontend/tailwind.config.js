@@ -44,7 +44,8 @@ module.exports = {
           ambassador: "#a3e635",
           captain: "#60a5fa",
           contessa: "#f87171",
-          eliminated: "#000000"
+          eliminated: "#6b7280",
+          discard: "#d1d5db"
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
@@ -85,6 +86,9 @@ module.exports = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+      },
+      fontSize: {
+        "desc" : "text-lg",
       },
     },
   },
