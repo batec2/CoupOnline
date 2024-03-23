@@ -14,7 +14,7 @@ const TargetAction = ({ showTarget, action }) => {
         onClick={() => handleTargetAction(socket, roomId, action, member)}
         key={member}
       >
-        {member}
+        {currentLobbyMembers[member].userId}
       </Button>
     );
   });

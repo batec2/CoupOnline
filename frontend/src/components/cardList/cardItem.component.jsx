@@ -11,16 +11,16 @@ import './playerList.styles.css'
 const CardItem = ({ item, count, context }) => {
   if(count > 0) {
     return (
-      <div className="cardItem">
+      <div className="flex flex-row">
         <text className="textPName">{item}</text>
         {Array.from({length: count}, () => 
         <img className="imgCard" src={card} alt="card" />
         )}
       </div>
     )
-  } else if (context == "player") {
+  } else if (context == "players") {
     return(
-      <div className="cardItem">
+      <div className="flex flex-row">
         <text className="textPName">{item}</text>
         <img className="imgCard" src={tombstone} alt="dead" />
       </div>
