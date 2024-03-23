@@ -7,12 +7,14 @@ import './playerList.styles.css'
  * @param {String} placeholder - The placeholder text 
  * @returns Textfield
  */
-const CardList = ({ cardList, context }) => {
+const CardList = ({ items, context }) => {
+  const name = (context="players") ? "userId" : "card";
+  const keys = Object.keys(items);
   return(
-    <div className="cardList">
-      {cardList.map(item => (
-        <CardItem item={item.item} count={item.count} context={context} /> 
-      ))}
+    <div className="flex flex-col">
+      {keys.map((key) => 
+        <CardItem item={items[key][name]} count={2} context={context} /> 
+      )}
     </div>
   )
 }

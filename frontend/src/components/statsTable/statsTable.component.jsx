@@ -1,12 +1,12 @@
 import React from "react";
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableRow,
-  TableCell,
-  Button,
-} from "semantic-ui-react";
+// import {
+//   Table,
+//   TableHeader,
+//   TableBody,
+//   TableRow,
+//   TableCell,
+//   Button,
+// } from "semantic-ui-react";
 import "./statsTable.component.css";
 
 const StatsTable = ({ players, games }) => {
