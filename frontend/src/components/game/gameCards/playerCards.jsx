@@ -57,7 +57,7 @@ const PlayerCards = () => {
 
   return (
     <>
-      <div className="flex">
+      <div className="flex justify-center flex-row space-x-2">
           <Card
             className="bg-cards-duke"
             card={gameCards[0]}

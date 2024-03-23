@@ -4,6 +4,8 @@ import useGameContext from "@/context/useGameContext.js";
 import { Button } from "@/components/ui/button.jsx";
 import { handleResponseAction } from "@/actions/socketActions.js";
 import GameCard from "@/lib/cardEnum.js";
+import ButtonClass from "@/lib/buttonClassEnum.js";
+import ActionButton from "./actionButton.component.jsx";
 
 /**
  *
@@ -12,53 +14,57 @@ import GameCard from "@/lib/cardEnum.js";
  */
 const ResponseActions = () => {
   const { socket, roomId, responseAction, gameCards } = useGameContext();
-
-  //Button conditional stylings
-  const normal = "bg-actions-normal";
-  const callout = "bg-actions-callout";
-  const haveCard = "bg-actions-haveCard";
-  const bluff = "bg-actions-bluff";
   
   //Detemines button colour based on whether player has appropriate card or not
   const buttonClass = (button) => {
     switch(button) {
       case GameActions.CalloutLie: {
-        return callout;
+        return ButtonClass.Callout;
       }
       case GameActions.BlockAid: {
         if(gameCards[0] == GameCard.Duke) {
-          return haveCard;
+          return ButtonClass.HaveCard;
         } else {
-          return bluff;
+          return ButtonClass.Bluff;
         }
       }
       case GameActions.BlockStealAsAmbass: {
         if(gameCards[0] == GameCard.Ambassador) {
-          return haveCard;
+          return ButtonClass.HaveCard;
         } else {
-          return bluff;
+          return ButtonClass.Bluff;
         }
       }
       case GameActions.BlockStealAsCaptain: {
         if(gameCards[0] == GameCard.Captain) {
-          return haveCard;
+          return ButtonClass.HaveCard;
         } else {
-          return bluff;
+          return ButtonClass.Bluff;
         }
       }
       case GameActions.BlockAssassinate: {
         if(gameCards[0] == GameCard.Contessa) {
-          return haveCard;
+          return ButtonClass.HaveCard;
         } else {
-          return bluff;
+          return ButtonClass.Bluff;
         }
       }
       default: {
-        return normal;
+        return ButtonClass.Normal;
       }
     }
   }
 
+  const onResponseClick = (gameAction) => {
+    handleResponseAction(
+      socket,
+      roomId,
+      responseAction.userId,
+      responseAction.action,
+      gameAction
+    )
+  }
+  
   const handleDisplayedAction = (action) => {
     switch (action) {
       case GameActions.Assassinate: {
@@ -115,34 +121,17 @@ const ResponseActions = () => {
       <h1>{JSON.stringify(responseAction)}</h1>
       <div>
         {handleDisplayedAction(responseAction.action)}
-        <Button
-          className={buttonClass(GameActions.CalloutLie)}
-          onClick={() =>
-            handleResponseAction(
-              socket,
-              roomId,
-              responseAction.userId,
-              responseAction.action,
-              GameActions.CalloutLie
-            )
-          }
-        >
-          Callout Lie
-        </Button>
-        <Button
-          onClick={() =>
-            handleResponseAction(
-              socket,
-              roomId,
-              responseAction.userId,
-              responseAction.action,
-              GameActions.Pass
-            )
-          }
-        >
-          Pass
-        </Button>
-      </div>
+        <ActionButton
+          buttonClass={ButtonClass.Callout}
+          onClick={() => onResponseClick(GameActions.CalloutLie)}
+          text={"Callout Lie"}
+        />
+        <ActionButton
+          buttonClass={ButtonClass.Normal}
+          onClick={() => onResponseClick(GameActions.Pass)}
+          text={"Pass"}  
+        />
+        </div>
     </div>
   );
 };

@@ -9,8 +9,8 @@ const Game = () => {
   const { roomId, currentLobbyMembers } = useGameContext();
   return (
     <div>
-      <h1>Room: {roomId}</h1>
-      <div className="grid grid-cols-5">
+      <p className="flex justify-center text-3xl font-bold">Room: {roomId}</p>
+      <div className="grid grid-cols-5 border divide-y divide-x">
         <CardList items={currentLobbyMembers} context={"players"}/>
         <div className="col-span-3">
           <GameInfo />
