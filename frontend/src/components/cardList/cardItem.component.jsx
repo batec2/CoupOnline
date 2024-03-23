@@ -1,8 +1,6 @@
 import card from './card32.png'
 import tombstone from './tombstone32.png'
 
-import './playerList.styles.css'
-
 /**
  * Player Overview for list of players
  * @param {String} player Player object, containing player name and number of cards 
@@ -11,10 +9,10 @@ import './playerList.styles.css'
 const CardItem = ({ item, count, context }) => {
   if(count > 0) {
     return (
-      <div className="flex flex-row">
-        <text className="textPName">{item}</text>
+      <div className="grid grid-cols-5">
+        <text className="text-right col-span-3">{item}</text>
         {Array.from({length: count}, () => 
-        <img className="imgCard" src={card} alt="card" />
+        <img className="flex flex-row" src={card} alt="card" />
         )}
       </div>
     )
