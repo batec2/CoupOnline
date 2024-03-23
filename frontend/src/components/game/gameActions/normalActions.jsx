@@ -11,12 +11,14 @@ const NormalActions = () => {
   const [showTarget, setShowTarget] = useState(false);
   const [currentAction, setAction] = useState(null);
 
+  //Button conditional stylings
   const normal = "bg-actions-normal";
   const unavailable = "bg-actions-unavailable";
   const haveCard = "bg-actions-haveCard";
   const bluff = "bg-actions-bluff";
 
-  const buttonColor = (button) => {
+  //Determine
+  const buttonClass = (button) => {
     if(coins >= 10 && button != GameActions.Coup) {
       return unavailable;
     }
@@ -72,9 +74,9 @@ const NormalActions = () => {
     <div className="space-y-2">
       <div className="space-x-4">
         <Button
-          className={buttonColor(GameActions.Income)}
+          className={buttonClass(GameActions.Income)}
           onClick={() => {
-            if(buttonColor(GameActions.Income) != unavailable) {
+            if(buttonClass(GameActions.Income) != unavailable) {
               handleNormalAction(socket, roomId, GameActions.Income);
               setShowTarget(false);
               setAction(GameActions.Income);
@@ -85,10 +87,10 @@ const NormalActions = () => {
         </Button>
 
         <Button
-          className={buttonColor(GameActions.Coup)}
+          className={buttonClass(GameActions.Coup)}
           onClick={() => {
             // handleNormalAction(socket, roomId, GameActions.Coup);
-            if (buttonColor(GameActions.Coup) != {unavailable}) {
+            if (buttonClass(GameActions.Coup) != unavailable) {
               setShowTarget(true);
               setAction(GameActions.Coup);
             }
@@ -100,9 +102,9 @@ const NormalActions = () => {
 
       <div className="space-x-4">
         <Button
-          className={buttonColor(GameActions.Taxes)}
+          className={buttonClass(GameActions.Taxes)}
           onClick={() => {
-            if (buttonColor(GameActions.Taxes) != unavailable) {
+            if (buttonClass(GameActions.Taxes) != unavailable) {
               handleNormalAction(socket, roomId, GameActions.Taxes);
               setAction(GameActions.Taxes);
             }
@@ -112,9 +114,9 @@ const NormalActions = () => {
         </Button>
         
         <Button
-          className={buttonColor(GameActions.Exchange)}
+          className={buttonClass(GameActions.Exchange)}
           onClick={() => {
-            if(buttonColor(GameActions.Exchange) != unavailable) {
+            if(buttonClass(GameActions.Exchange) != unavailable) {
               handleNormalAction(socket, roomId, GameActions.Exchange);
               setShowTarget(false);
               setAction(GameActions.Exchange);
@@ -126,9 +128,9 @@ const NormalActions = () => {
       </div>
        <div className="space-x-4">
         <Button
-          className={buttonColor(GameActions.Aid)}
+          className={buttonClass(GameActions.Aid)}
           onClick={() => {
-            if(buttonColor(GameActions.Aid) != unavailable) {
+            if(buttonClass(GameActions.Aid) != unavailable) {
               handleNormalAction(socket, roomId, GameActions.Aid);
               setShowTarget(false);
               setAction(GameActions.Aid);
@@ -139,9 +141,9 @@ const NormalActions = () => {
         </Button>
 
         <Button
-          className={buttonColor(GameActions.Assassinate)}
+          className={buttonClass(GameActions.Assassinate)}
           onClick={() => {
-            if(buttonColor(GameActions.Assassinate) != unavailable) {
+            if(buttonClass(GameActions.Assassinate) != unavailable) {
               handleNormalAction(socket, roomId, GameActions.Assassinate);
               setShowTarget(true);
               setAction(GameActions.Assassinate);
@@ -151,9 +153,9 @@ const NormalActions = () => {
           Assassinate
         </Button>
         <Button
-          className={buttonColor(GameActions.Steal)}
+          className={buttonClass(GameActions.Steal)}
           onClick={() => {
-            if(buttonColor(GameActions.Steal) != unavailable) {
+            if(buttonClass(GameActions.Steal) != unavailable) {
               handleNormalAction(socket, roomId, GameActions.Steal);
               setShowTarget(true);
               setAction(GameActions.Steal);

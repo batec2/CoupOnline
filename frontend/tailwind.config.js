@@ -38,6 +38,14 @@ module.exports = {
           bluff: "#dc2626",
           callout: "#ca8a04"
         },
+        cards: {
+          duke: "#a78bfa",
+          assassin: "#facc15",
+          ambassador: "#a3e635",
+          captain: "#60a5fa",
+          contessa: "#f87171",
+          eliminated: "#000000"
+        },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
