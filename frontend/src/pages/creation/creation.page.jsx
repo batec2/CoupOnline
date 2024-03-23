@@ -61,14 +61,17 @@ const CreationPage = () => {
             }
           );
 
-          cookies.set("PersonalCookie", {id: response.data._id, username: response.data.userName, screenName: response.data.userName});
+          cookies.set("PersonalCookie", {
+            id: response.data._id,
+            username: response.data.userName,
+            screenName: response.data.userName,
+          });
           setCurrentCookie(cookies.get("PersonalCookie"));
           navigate("/room");
         };
 
         if (CreatedCookie === true) {
           makeNewAccount();
-
         }
       });
       setCreatedCookie(false);
@@ -101,7 +104,7 @@ const CreationPage = () => {
       />
       <Button
         onClick={() => setCreatedCookie(true)}
-        className="bg-blue-500 text-white px-4 py-2 rounded-md"
+        className="bg-blue-400 text-white px-4 py-2 rounded-md"
       >
         Create Account
       </Button>
