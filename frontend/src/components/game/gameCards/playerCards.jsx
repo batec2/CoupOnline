@@ -1,16 +1,25 @@
 import useGameContext from "@/context/useGameContext.js";
 import Card from "@/components/card/card.component";
-import { handleChooseCard } from "@/actions/socketActions";
 import ChooseCard from "@/lib/chooseCardEnum";
 import GameActions from "@/lib/actionEnum";
 import GameCard from "@/lib/cardEnum";
+import GameSectionTitle from "@/components/text/gameSectionTitle.component";
 
 const PlayerCards = () => {
-  const { gameCards, isTarget, socket, roomId, requestAction, requestIdRef } =
-    useGameContext();
+  const {
+    gameCards,
+    isTarget,
+    socket,
+    roomId,
+    responseAction,
+    responseIdRef,
+    currentTurnId,
+    initialAction,
+    initialUserId,
+  } = useGameContext();
 
   const chooseCardType = () => {
-    switch (requestAction) {
+    switch (responseAction) {
       case GameActions.Coup: {
         return ChooseCard.Loose;
       }
@@ -24,6 +33,28 @@ const PlayerCards = () => {
         return ChooseCard.Show;
       }
     }
+  };
+
+  /**
+   *
+   * @param {*} card - Card being chosen
+   * @param {*} chooseActionType - Type of card selection action ex: loose/show/exchange
+   * @returns
+   */
+  const handleChooseCard = (card) => {
+    if (!isTarget) {
+      return;
+    }
+    socket.emit("choose-card", {
+      roomId: roomId,
+      chooserId: currentTurnId,
+      initialUserId: initialUserId,
+      initialAction: initialAction,
+      responseId: responseIdRef.current,
+      responseAction: responseAction,
+      card: card,
+      chooseActionType: chooseCardType(),
+    });
   };
 
   const showPrompt = () => {
@@ -52,45 +83,26 @@ const PlayerCards = () => {
       default: {
         return "bg-actions-normal";
       }
-    } 
-  }
+    }
+  };
 
   return (
-    <>
+    <div className="flex flex-col space-y-2">
+      <GameSectionTitle text={"Your Cards:"} />
       <div className="flex justify-center flex-row space-x-2">
-          <Card
-            className="bg-cards-duke"
-            card={gameCards[0]}
-            onClick={() =>
-              handleChooseCard(
-                socket,
-                roomId,
-                0,
-                isTarget,
-                requestIdRef.current,
-                requestAction,
-                chooseCardType()
-              )
-            }
-          ></Card>
-          <Card
-            className={cardClass(gameCards[1])}
-            card={gameCards[1]}
-            onClick={() =>
-              handleChooseCard(
-                socket,
-                roomId,
-                1,
-                isTarget,
-                requestIdRef.current,
-                requestAction,
-                chooseCardType()
-             )
-            }
-          ></Card>
+        <Card
+          className="bg-cards-duke"
+          card={gameCards[0]}
+          onClick={() => handleChooseCard(0)}
+        ></Card>
+        <Card
+          className={cardClass(gameCards[1])}
+          card={gameCards[1]}
+          onClick={() => handleChooseCard(1)}
+        ></Card>
       </div>
       {showPrompt()}
-    </>
+    </div>
   );
 };
 

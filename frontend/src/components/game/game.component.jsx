@@ -19,17 +19,17 @@ const Game = () => {
   return (
     <div>
       <p className="flex justify-center text-3xl font-bold">Room: {roomId}</p>
-      <div className="grid grid-cols-5 border divide-y divide-x">
+      <div className="grid grid-cols-4 border divide-y divide-x">
         <CardList items={currentLobbyMembers} context={"players"}/>
-        <div className="col-span-3">
+        <div className="col-span-2">
           <GameInfo />
         </div>
         <CardList items={discard} context={"discard"}/>
-        <References />
-        <div className="col-span-3">
-          <PlayerCards></PlayerCards>
+        <PlayerCards />
+        <div className="col-span-2">
+          <Actions />
         </div>
-        <Actions></Actions>
+        <References />
       </div>
     </div>
   );

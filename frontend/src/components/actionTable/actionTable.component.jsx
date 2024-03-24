@@ -26,7 +26,7 @@ const ActionTable = () => {
         </TableRow>
       </TableHeader>
       {actions.map((action) => (
-        <TableBody>
+        <TableBody key={action}>
           <TableRow>
             <TableCell>
               {action["character"] == "" ? "-" : action["character"]}

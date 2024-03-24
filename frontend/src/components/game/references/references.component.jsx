@@ -10,11 +10,11 @@ import GameSectionTitle from "@/components/text/gameSectionTitle.component"
 
 const References = () => {
   return(
-  <div className="flex flex-col space-y-2">
+  <div className="flex flex-col space-y-2 ">
     <GameSectionTitle text={"References:"} />
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger className="border bg-secondary rounded-md hover:bg-hover">
+        <TooltipTrigger className="border mx-2 bg-secondary rounded-md hover:bg-hover">
           Actions
         </TooltipTrigger>
         <TooltipContent>
@@ -24,7 +24,7 @@ const References = () => {
     </TooltipProvider>
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger className="border bg-secondary rounded-md hover:bg-hover">
+        <TooltipTrigger className="border mx-2 bg-secondary rounded-md hover:bg-hover">
           Rules
         </TooltipTrigger>
         <TooltipContent>

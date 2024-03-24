@@ -10,8 +10,8 @@ import handleStatus from "@/lib/handleStatus";
 export const handleNormalAction = (socket, roomId, action) => {
   socket.emit("normal-action", {
     roomId: roomId,
-    userId: socket.id,
-    action: action,
+    initialUserId: socket.id,
+    initialAction: action,
   });
 };
 
@@ -35,22 +35,22 @@ export const handleTargetAction = (socket, roomId, action, targetId) => {
  * Sends an response action with the Id of the player being blocked
  * @param {Object} socket - Global Socket Object
  * @param {string} roomId - Current room id
- * @param {string} requestId - Id of the player being blocked/responded
- * @param {string} requestAction - Action being responded to
- * @param {string} action - Block/response action
+ * @param {string} initialUserId - Id of the player being blocked/responded
+ * @param {string} initialAction - Action being responded to
+ * @param {string} responseAction - Block/response action
  */
 export const handleResponseAction = (
   socket,
   roomId,
-  requestId,
-  requestAction,
-  action
+  initialUserId,
+  initialAction,
+  responseAction
 ) => {
   socket.emit("response-action", {
     roomId: roomId,
-    requestId: requestId,
-    requestAction: requestAction,
-    action: action,
+    initialUserId: initialUserId,
+    initialAction: initialAction,
+    responseAction: responseAction,
   });
 };
 
@@ -65,39 +65,6 @@ export const handleStartGame = (socket, roomId) => {
     { roomId: roomId, userId: socket.id },
     handleStatus
   );
-};
-
-/**
- *
- * @param {*} socket
- * @param {*} roomId
- * @param {*} card - Card being chosen
- * @param {*} isTarget
- * @param {*} requestId - Player who requested show card
- * @param {*} requestAction - Action being called out/blocked
- * @param {*} action - Type of card selection action ex: loose/show/exchange
- * @returns
- */
-export const handleChooseCard = (
-  socket,
-  roomId,
-  card,
-  isTarget,
-  requestId,
-  requestAction,
-  action
-) => {
-  if (!isTarget) {
-    return;
-  }
-  socket.emit("choose-card", {
-    roomId: roomId,
-    userId: socket.id,
-    card: card,
-    requestId: requestId,
-    requestAction: requestAction,
-    action: action,
-  });
 };
 
 export const handleLeave = (socket, roomId) => {

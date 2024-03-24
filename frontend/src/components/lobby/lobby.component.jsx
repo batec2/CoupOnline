@@ -8,9 +8,9 @@ const LobbyComponent = () => {
   const { socket, roomId, currentLobbyMembers } = useContext(GameStateContext);
   const navigate = useNavigate();
 
-  const playerIds = currentLobbyMembers ? Object.keys(currentLobbyMembers) : []
+  const playerIds = currentLobbyMembers ? Object.keys(currentLobbyMembers) : [];
   return (
-    <div>
+    <div className="space-x-2">
       <h1>Your Current Room: {roomId}</h1>
       <Button
         onClick={() => {
@@ -25,9 +25,11 @@ const LobbyComponent = () => {
       </Button>
       <div>
         <p className="text-xl font-bold">Players in Lobby:</p>
-        {playerIds.map((player) => 
-          <p>{currentLobbyMembers[player].userId}</p>
-        )}
+        {playerIds.map((player) => (
+          <p key={currentLobbyMembers[player].userId}>
+            {currentLobbyMembers[player].userId}
+          </p>
+        ))}
       </div>
     </div>
   );
