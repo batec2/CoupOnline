@@ -8,15 +8,9 @@ const Actions = () => {
   const { socket, responseAction, currentTurnId, isTarget } = useGameContext();
   if (socket.id === currentTurnId && !isTarget) {
     return <NormalActions></NormalActions>;
-  } else if (
-    responseAction &&
-    responseAction.action !== GameActions.CalloutLie
-  ) {
+  } else if (responseAction && responseAction !== GameActions.CalloutLie) {
     return <ResponseActions></ResponseActions>;
-  } else if (
-    responseAction &&
-    responseAction.action === GameActions.CalloutLie
-  ) {
+  } else if (responseAction && responseAction === GameActions.CalloutLie) {
     return <CalledOutActions></CalledOutActions>;
   }
   return <h2>Not your turn bro</h2>;
