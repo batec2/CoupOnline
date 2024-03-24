@@ -30,9 +30,10 @@ export const useGameState = () => {
   const [gameStart, setGameStart] = useState(false);
   const [currentTurnId, setTurnId] = useState(null);
   const [gameCards, setGameCards] = useState(null);
+  const [initialAction, setInitialAction] = useState(null);
+  const [initialUserId, setInitialUserId] = useState(null);
   const [responseAction, setResponseAction] = useState(null);
-  const [requestAction, setRequestAction] = useState(null);
-  const requestIdRef = useRef(null);
+  const responseIdRef = useRef(null);
   const [isTarget, setIsTarget] = useState(false);
   const [coins, setCoins] = useState(0);
   const socket = useContext(SocketContext);
@@ -47,11 +48,13 @@ export const useGameState = () => {
     setTurnId: setTurnId,
     gameCards: gameCards,
     setGameCards: setGameCards,
+    initialAction: initialAction,
+    setInitialAction: setInitialAction,
+    initialUserId: initialUserId,
+    setInitialUserId: setInitialUserId,
     responseAction: responseAction,
     setResponseAction: setResponseAction,
-    requestAction: requestAction,
-    setRequestAction: setRequestAction,
-    requestIdRef: requestIdRef,
+    responseIdRef: responseIdRef,
     isTarget: isTarget,
     setIsTarget: setIsTarget,
     coins: coins,

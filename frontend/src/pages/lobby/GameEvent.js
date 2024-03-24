@@ -15,11 +15,12 @@ export const useGameEvents = (gameState) => {
     setGameCards,
     setGameStart,
     setTurnId,
-    setResponseAction,
+    setInitialUserId,
+    setInitialAction,
     setIsTarget,
     setCoins,
-    setRequestAction,
-    requestIdRef,
+    setResponseAction,
+    responseIdRef,
   } = gameState;
   const localCookie = cookie.get("PersonalCookie");
 
@@ -32,28 +33,32 @@ export const useGameEvents = (gameState) => {
       setGameStart(true);
     };
 
-    const onActionEvent = ({ responseAction }) => {
-      setResponseAction(responseAction);
+    const onChooseResponseEvent = ({ initialUserId, initialAction }) => {
+      setInitialAction(initialAction);
+      setInitialUserId(initialUserId);
     };
 
     /**
      *
-     * @param {*} requestId - Player asking for target to choose card
-     * @param {*} targetId - Player choosing card
-     * @param {*} requestAction -
-     * @param {*} chooseAction - type of choose card action
+     * @param {*} chooserId - Player asking for target to choose card
+     * @param {*} initialUserId - initial user
+     * @param {*} initialAction - initial action
+     * @param {*} responseId - response userId
+     * @param {*} responseAction - response action
      * @returns
      */
     const onChooseCardEvent = ({
-      requestId,
-      targetId,
-      requestAction,
-      chooseAction,
+      chooserId,
+      initialUserId,
+      initialAction,
+      responseId,
+      responseAction,
     }) => {
-      setTurnId(targetId);
-      setRequestAction(chooseAction);
-      requestIdRef.current = requestId;
-      if (targetId === socket.id) {
+      setTurnId(chooserId);
+      setInitialUserId(initialUserId);
+      setResponseAction(responseAction ? responseAction : initialAction);
+      responseIdRef.current = responseId;
+      if (chooserId === socket.id) {
         setIsTarget(true);
         return;
       }
@@ -65,7 +70,7 @@ export const useGameEvents = (gameState) => {
       setGameCards(gameCards);
       setTurnId(turnId);
       setIsTarget(false);
-      requestIdRef.current = null;
+      responseIdRef.current = null;
       setCoins(coins);
     };
 
@@ -77,8 +82,7 @@ export const useGameEvents = (gameState) => {
     );
     socket.on("lobby-members", onLobbyEvent);
     socket.on("start-game", onStartEvent);
-    socket.on("player-choice", onActionEvent);
-    socket.on("block", onActionEvent);
+    socket.on("choose-response", onChooseResponseEvent);
     socket.on("choose-card", onChooseCardEvent);
     socket.on("update-state", onUpdateState);
 
@@ -86,9 +90,7 @@ export const useGameEvents = (gameState) => {
     return () => {
       socket.off("lobby-members", onLobbyEvent);
       socket.off("start-game", onStartEvent);
-      socket.off("player-choice", onActionEvent);
-      socket.off("called-out", onActionEvent);
-      socket.off("block", onActionEvent);
+      socket.off("choose-response", onChooseResponseEvent);
       socket.off("choose-card", onChooseCardEvent);
       socket.off("update-state", onUpdateState);
       socket.disconnect();

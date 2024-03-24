@@ -1,7 +1,5 @@
-const GameSectionTitle = ({text}) => {
-  return (
-    <text className="text-lg font-semibold underline">{text}</text>
-  );
-}
+const GameSectionTitle = ({ text }) => {
+  return <p className="text-lg font-semibold underline">{text}</p>;
+};
 
 export default GameSectionTitle;
