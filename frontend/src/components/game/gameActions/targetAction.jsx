@@ -23,7 +23,7 @@ const TargetAction = ({ action }) => {
     );
   });
 
-  return <div className="space-y-2">{buttons}</div>;
+  return <div className="space-y-2 space-x-2">{buttons}</div>;
 };
 
 export default TargetAction;
