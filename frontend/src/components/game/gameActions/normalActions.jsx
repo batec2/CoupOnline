@@ -114,9 +114,9 @@ const NormalActions = () => {
   }
 
   return (
-    <div className="grid grid-rows-4 space-x-2">
-      <div className="space-y-2">
-        <p>Actions:</p>
+    <div className="flex flex-col space-x-2 space-y-2">
+      <p>Actions:</p>
+      <div className="flex flex-row space-x-2">
         <ActionButton
           buttonClass={buttonClass(GameActions.Income)}
           onClick={onIncomeClick}
@@ -126,22 +126,6 @@ const NormalActions = () => {
           buttonClass={buttonClass(GameActions.Coup)}
           onClick={onCoupClick}
           text={"Coup"}
-        />
-        <ActionButton
-          buttonClass={buttonClass(GameActions.Taxes)}
-          onClick={onTaxClick}
-          text={"Taxes"}
-        />
-        
-        <ActionButton
-          buttonClass={buttonClass(GameActions.Exchange)}
-          onClick={onExchangeClick}
-          text={"Exchange Influence"}
-        />
-        <ActionButton
-          buttonClass={buttonClass(GameActions.Aid)}
-          onClick={onAidClick}
-          text={"Foreign Aid"}
         />
         <ActionButton
           buttonClass={buttonClass(GameActions.Assassinate)}
@@ -154,15 +138,36 @@ const NormalActions = () => {
           text={"Steal"}
         />
       </div>
+      <div className="flex flex-row space-x-2">
+        <ActionButton
+          buttonClass={buttonClass(GameActions.Aid)}
+          onClick={onAidClick}
+          text={"Foreign Aid"}
+        />
+        <ActionButton
+          buttonClass={buttonClass(GameActions.Taxes)}
+          onClick={onTaxClick}
+          text={"Taxes"}
+        />
+        <ActionButton
+          buttonClass={buttonClass(GameActions.Exchange)}
+          onClick={onExchangeClick}
+          text={"Exchange Influence"}
+        />
+      </div>
       {showTarget ? (
-        <div className="space-y-2">
-        <h1>Targets:</h1>
-        <TargetAction
-          showTarget={showTarget}
-          action={currentAction}
-        ></TargetAction>
+        <div className="space-y-8 space-x-2">
+          <h1>Targets:</h1>
         </div>
-        ) : <></>}
+      ) : <></>}
+      {showTarget ? (
+          <div className="flex flex-row space-y-2 space-x-2">
+            <TargetAction
+              showTarget={showTarget}
+              action={currentAction}
+            ></TargetAction>
+          </div>
+      ) : <></>}
     </div>  
   );
 };
