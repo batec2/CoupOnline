@@ -16,7 +16,9 @@ const PlayerCards = () => {
     currentTurnId,
     initialAction,
     initialUserId,
-    setCurrentTurnId,
+    setTurnId,
+    setInitialAction,
+    setInitialUserId,
   } = useGameContext();
 
   const chooseCardType = () => {
@@ -59,7 +61,9 @@ const PlayerCards = () => {
       card: card,
       chooseActionType: chooseCardType(),
     });
-    setCurrentTurnId(null);
+    setTurnId(null);
+    setInitialAction(null);
+    setInitialUserId(null);
   };
 
   const showPrompt = () => {

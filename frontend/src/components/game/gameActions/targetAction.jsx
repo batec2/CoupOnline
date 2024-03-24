@@ -3,7 +3,15 @@ import { Button } from "@/components/ui/button";
 import useGameContext from "@/context/useGameContext";
 
 const TargetAction = ({ action }) => {
-  const { socket, roomId, currentLobbyMembers, setTurnId } = useGameContext();
+  const {
+    socket,
+    roomId,
+    currentLobbyMembers,
+    setTurnId,
+    setInitialAction,
+    setInitialUserId,
+  } = useGameContext();
+
   const buttons = [];
   Object.keys(currentLobbyMembers).forEach((member) => {
     if (member === socket.id) {
@@ -15,6 +23,8 @@ const TargetAction = ({ action }) => {
         onClick={() => {
           handleNormalAction(socket, roomId, action, member);
           setTurnId(null);
+          setInitialAction(null);
+          setInitialUserId(null);
         }}
         key={member}
       >

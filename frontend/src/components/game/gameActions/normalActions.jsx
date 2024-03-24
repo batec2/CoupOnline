@@ -122,39 +122,39 @@ const NormalActions = () => {
       <div className="flex flex-row space-x-2">
         <ActionButton
           buttonClass={buttonClass(GameActions.Income)}
-          onClick={onIncomeClick}
+          onClick={() => onIncomeClick()}
           text={"Income"}
         />
         <ActionButton
           buttonClass={buttonClass(GameActions.Coup)}
-          onClick={onCoupClick}
+          onClick={() => onCoupClick()}
           text={"Coup"}
         />
         <ActionButton
           buttonClass={buttonClass(GameActions.Assassinate)}
-          onClick={onAssassinateClick}
+          onClick={() => onAssassinateClick()}
           text={"Assassinate"}
         />
         <ActionButton
           buttonClass={buttonClass(GameActions.Steal)}
-          onClick={onStealClick}
+          onClick={() => onStealClick()}
           text={"Steal"}
         />
       </div>
       <div className="flex flex-row space-x-2">
         <ActionButton
           buttonClass={buttonClass(GameActions.Aid)}
-          onClick={onAidClick}
+          onClick={() => onAidClick()}
           text={"Foreign Aid"}
         />
         <ActionButton
           buttonClass={buttonClass(GameActions.Taxes)}
-          onClick={onTaxClick}
+          onClick={() => onTaxClick()}
           text={"Taxes"}
         />
         <ActionButton
           buttonClass={buttonClass(GameActions.Exchange)}
-          onClick={onExchangeClick}
+          onClick={() => onExchangeClick()}
           text={"Exchange Influence"}
         />
       </div>

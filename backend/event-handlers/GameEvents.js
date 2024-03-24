@@ -71,6 +71,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
         handleAction(state, initialUserId, initialAction);
         state.incrementTurn();
         emitUpdate(io, room);
+        return;
       }
       case Coup: {
         state.decreasePlayerMoney(initialUserId, 7);
@@ -82,6 +83,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
           null,
           null
         );
+        return;
       }
     }
 

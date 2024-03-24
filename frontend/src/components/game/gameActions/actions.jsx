@@ -8,6 +8,7 @@ const Actions = () => {
   if (socket.id === currentTurnId && !isTarget) {
     return <NormalActions></NormalActions>;
   } else if (initialAction && initialAction !== GameActions.CalloutLie) {
+    console.log("initial action: " + initialAction);
     return <ResponseActions></ResponseActions>;
   }
   return <h2>Not your turn bro</h2>;
