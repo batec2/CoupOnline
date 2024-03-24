@@ -1,6 +1,6 @@
-import CardInfo from "../lib/CardInfo.js";
-import GameActions from "../lib/actionEnum.js";
-import GameCard from "../lib/cardEnum.js";
+import CardInfo from "./constants/CardInfo.js";
+import GameActions from "./constants/actionEnum.js";
+import GameCard from "./constants/cardEnum.js";
 
 export class GameState {
   //3 of each Duke,Assassin,Captain,Ambassador,Contessa
@@ -55,14 +55,11 @@ export class GameState {
    * @param {*} card - card shown
    * @param {*} action - action being called out
    */
-  checkCard(userId, card, requestAction) {
+  checkCard(userId, card, initialAction) {
     const playerCard = this.playerState[userId].gameCards[card];
-    console.log(playerCard);
-    console.log(CardInfo[playerCard]);
-    console.log(requestAction);
-    console.log(CardInfo[playerCard].validActions.includes(requestAction));
-
-    if (CardInfo[playerCard].validActions.includes(requestAction)) {
+    console.log(CardInfo[playerCard].validActions);
+    console.log(initialAction);
+    if (CardInfo[playerCard].validActions.includes(initialAction)) {
       return true;
     }
     return false;
@@ -74,6 +71,9 @@ export class GameState {
 
   getPlayer(player) {
     return this.playerState[player];
+  }
+  getPlayerCard(player, card) {
+    return this.playerState[player].gameCards[card];
   }
 
   addRound(round) {

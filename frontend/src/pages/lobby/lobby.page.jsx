@@ -1,8 +1,8 @@
 import LobbyComponent from "@/components/lobby/lobby.component";
 import Game from "@/components/game/game.component";
 import { GameStateContext } from "@/context/GameStateContext";
-import { useGameEvents } from "./GameEvent";
-import { useGameState } from "./GameState";
+import { useGameEvents } from "@/components/game/GameEvent";
+import { useGameState } from "../../components/game/GameState";
 
 const LobbyPage = () => {
   const gameState = useGameState();

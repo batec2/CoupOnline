@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import handleStatus from "@/lib/handleStatus";
 import GameActions from "@/lib/actionEnum";
 import Cookie from "universal-cookie";
@@ -20,6 +20,7 @@ export const useGameEvents = (gameState) => {
     setIsTarget,
     setCoins,
     setResponseAction,
+    setIsResponding,
     responseIdRef,
   } = gameState;
   const localCookie = cookie.get("PersonalCookie");
@@ -36,6 +37,7 @@ export const useGameEvents = (gameState) => {
     const onChooseResponseEvent = ({ initialUserId, initialAction }) => {
       setInitialAction(initialAction);
       setInitialUserId(initialUserId);
+      setIsResponding(true);
     };
 
     /**
@@ -54,8 +56,13 @@ export const useGameEvents = (gameState) => {
       responseId,
       responseAction,
     }) => {
+      console.log(
+        `${chooserId} is choosing a card, initial action: ${GameActions[initialAction]}, responseAction: ${GameActions[responseAction]}`
+      );
+      setIsResponding(false);
       setTurnId(chooserId);
       setInitialUserId(initialUserId);
+      setInitialAction(initialAction);
       setResponseAction(responseAction ? responseAction : initialAction);
       responseIdRef.current = responseId;
       if (chooserId === socket.id) {
@@ -66,12 +73,25 @@ export const useGameEvents = (gameState) => {
     };
 
     const onUpdateState = ({ gameCards, turnId, coins }) => {
-      console.log(coins);
       setGameCards(gameCards);
       setTurnId(turnId);
       setIsTarget(false);
+      setInitialAction(null);
+      setInitialUserId(null);
       responseIdRef.current = null;
       setCoins(coins);
+    };
+
+    const onBlocked = ({
+      initialUserId,
+      initialAction,
+      responseId,
+      responseAction,
+    }) => {
+      setInitialUserId(initialUserId);
+      setInitialAction(initialAction);
+      responseIdRef.current = responseId;
+      setResponseAction(responseAction);
     };
 
     socket.connect();
@@ -85,6 +105,7 @@ export const useGameEvents = (gameState) => {
     socket.on("choose-response", onChooseResponseEvent);
     socket.on("choose-card", onChooseCardEvent);
     socket.on("update-state", onUpdateState);
+    socket.on("blocked", onBlocked);
 
     // Removes all event listeners when component is removed
     return () => {

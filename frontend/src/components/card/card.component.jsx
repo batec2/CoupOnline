@@ -1,10 +1,10 @@
-import ambassador from "./Ambassador1.png"
-import assassin from "./Assassin1.png"
-import captain from "./Captain2.png"
-import duke from "./Duke1.png"
-import contessa from "./Contessa1.png"
-import tombstone from "../cardList/tombstone64.png"
-import notFound from "./not-found.png"
+import ambassador from "./Ambassador1.png";
+import assassin from "./Assassin1.png";
+import captain from "./Captain2.png";
+import duke from "./Duke1.png";
+import contessa from "./Contessa1.png";
+import tombstone from "../cardList/tombstone64.png";
+import notFound from "./not-found.png";
 import GameCard from "@/lib/cardEnum";
 import CardInfo from "@/components/card/CardInfo";
 import CardActionTitle from "../text/cardActionTitle.component";
@@ -14,7 +14,6 @@ import useGameContext from "@/context/useGameContext.js";
 
 const Card = ({ card, onClick }) => {
   const { isTarget } = useGameContext();
-  console.log(card);
   let img = notFound;
   let bgColor = "bg-cards-duke";
 
@@ -43,19 +42,19 @@ const Card = ({ card, onClick }) => {
       break;
     case GameCard.Eliminated:
       img = tombstone;
-      bgColor = `bg-cards-eliminated`
+      bgColor = `bg-cards-eliminated`;
       break;
   }
-  
+
   const nonTargetStyle = `card grid justify-items-center ${bgColor} border border-black px-2 py-4`;
   const targetStyle = `${nonTargetStyle} hover:bg-cards-discard hover:opacity-80`;
 
-  if(card == GameCard.Eliminated) {
+  if (card == GameCard.Eliminated) {
     return (
       <div className={nonTargetStyle}>
         <img className="justify-center" src={img} alt="char_icon" />
       </div>
-    )
+    );
   } else {
     return (
       <div
@@ -65,13 +64,19 @@ const Card = ({ card, onClick }) => {
         <p className="text-xl font-bold">{cardInfo["character"]}</p>
         <img className="justify-center" src={img} alt="char_icon" />
         <CardActionTitle text={"Action:"} />
-        <p className="font-semibold italic">{cardInfo["action-name"] == "" ? "N/A" : cardInfo["action-name"]}</p>
-        <p>{cardInfo["action-effect"] == "" ? "N/A" : cardInfo["action-effect"]}</p>
+        <p className="font-semibold italic">
+          {cardInfo["action-name"] == "" ? "N/A" : cardInfo["action-name"]}
+        </p>
+        <p>
+          {cardInfo["action-effect"] == "" ? "N/A" : cardInfo["action-effect"]}
+        </p>
         <CardActionTitle text={"Counter-action:"} />
-        <p>{cardInfo["counteraction"] == "" ? "N/A" : cardInfo["counteraction"]}</p>
+        <p>
+          {cardInfo["counteraction"] == "" ? "N/A" : cardInfo["counteraction"]}
+        </p>
       </div>
     );
-  };
+  }
 };
 
 export default Card;

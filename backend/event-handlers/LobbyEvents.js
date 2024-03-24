@@ -1,4 +1,4 @@
-import { GameState } from "../state/GameState.js";
+import { GameState } from "./GameState.js";
 import { emitStartGame, emitUpdate } from "./GameEmitters.js";
 
 export const registerLobbyHandlers = (io, socket, rooms) => {
@@ -60,6 +60,17 @@ export const registerLobbyHandlers = (io, socket, rooms) => {
       callback({ status: 200 });
     }
     callback({ status: 500 });
+  });
+
+  socket.on("reset-game", ({ roomId }, callback) => {
+    let room = rooms[roomId];
+    const ids = Object.keys(room.players);
+    if (ids.length > 1) {
+      room.state = new GameState(ids);
+      // Sends sends each player their cards when game starts and the current
+      // Player whos turn it is
+      emitUpdate(io, room);
+    }
   });
 
   socket.on("disconnection", (socket) => {

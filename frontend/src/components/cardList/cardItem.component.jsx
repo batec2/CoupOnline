@@ -11,9 +11,9 @@ const CardItem = ({ item, count, context }) => {
     return (
       <div className="grid grid-cols-5">
         <p className="text-right col-span-3">{item}</p>
-        {Array.from({ length: count }, (e) => (
+        {/* {Array.from({ length: count }, (e) => (
           <img key={e} className="flex flex-row" src={card} alt="card" />
-        ))}
+        ))} */}
       </div>
     );
   } else if (context == "players") {
