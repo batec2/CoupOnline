@@ -17,7 +17,7 @@ const CardList = ({ items, context }) => {
       <GameSectionTitle text={title} />
       <div className="flex flex-col w-40 space-y-1">
         {keys.map((key) => 
-          <CardItem item={items[key][name]} count={2} context={context} /> 
+          <CardItem item={items[key][name]} count={2} context={context} key={items[key][name]} /> 
         )}
       </div>
     </div>

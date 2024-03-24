@@ -1,6 +1,6 @@
 const CardActionTitle = ({text}) => {
   return (
-    <text className="font-bold underline">{text}</text>
+    <p className="font-bold underline">{text}</p>
   );
 }
 

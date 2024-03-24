@@ -114,9 +114,9 @@ const NormalActions = () => {
   }
 
   return (
-    <div className="grid grid-cols-2 space-x-2">
+    <div className="grid grid-rows-4 space-x-2">
       <div className="space-y-2">
-        <text>Actions:</text>
+        <p>Actions:</p>
         <ActionButton
           buttonClass={buttonClass(GameActions.Income)}
           onClick={onIncomeClick}

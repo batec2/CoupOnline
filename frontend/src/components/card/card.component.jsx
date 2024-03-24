@@ -1,5 +1,8 @@
-import ambassador from "./ambassador64.png"
-import assassin from "./assassin64.png"
+import ambassador from "./Ambassador1.png"
+import assassin from "./Assassin1.png"
+import captain from "./Captain2.png"
+import duke from "./Duke1.png"
+import contessa from "./Contessa1.png"
 import tombstone from "../cardList/tombstone64.png"
 import notFound from "./not-found.png"
 import GameCard from "@/lib/cardEnum";
@@ -19,7 +22,7 @@ const Card = ({ card, onClick }) => {
 
   switch (card) {
     case GameCard.Duke:
-      img = ambassador;
+      img = duke;
       bgColor = "bg-cards-duke ";
       break;
     case GameCard.Assassin:
@@ -31,11 +34,11 @@ const Card = ({ card, onClick }) => {
       bgColor = "bg-cards-ambassador";
       break;
     case GameCard.Captain:
-      img = ambassador;
+      img = captain;
       bgColor = `bg-cards-captain`;
       break;
     case GameCard.Contessa:
-      img = assassin;
+      img = contessa;
       bgColor = `bg-cards-contessa`;
       break;
     case GameCard.Eliminated:
@@ -59,7 +62,7 @@ const Card = ({ card, onClick }) => {
         onClick={() => onClick()}
         className={isTarget ? targetStyle : nonTargetStyle}
       >
-        <p className="text-2xl font-bold">{cardInfo["character"]}</p>
+        <p className="text-xl font-bold">{cardInfo["character"]}</p>
         <img className="justify-center" src={img} alt="char_icon" />
         <CardActionTitle text={"Action:"} />
         <p className="font-semibold italic">{cardInfo["action-name"] == "" ? "N/A" : cardInfo["action-name"]}</p>

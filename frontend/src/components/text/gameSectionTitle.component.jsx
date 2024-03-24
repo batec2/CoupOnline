@@ -1,6 +1,6 @@
 const GameSectionTitle = ({text}) => {
   return (
-    <text className="text-lg font-semibold underline">{text}</text>
+    <p className="text-lg font-semibold underline">{text}</p>
   );
 }
 

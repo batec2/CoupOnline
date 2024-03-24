@@ -4,6 +4,7 @@ import { handleChooseCard } from "@/actions/socketActions";
 import ChooseCard from "@/lib/chooseCardEnum";
 import GameActions from "@/lib/actionEnum";
 import GameCard from "@/lib/cardEnum";
+import GameSectionTitle from "@/components/text/gameSectionTitle.component";
 
 const PlayerCards = () => {
   const { gameCards, isTarget, socket, roomId, requestAction, requestIdRef } =
@@ -56,7 +57,8 @@ const PlayerCards = () => {
   }
 
   return (
-    <>
+    <div className="flex flex-col space-y-2">
+      <GameSectionTitle text={"Your Cards:"} />
       <div className="flex justify-center flex-row space-x-2">
           <Card
             className="bg-cards-duke"
@@ -90,7 +92,7 @@ const PlayerCards = () => {
           ></Card>
       </div>
       {showPrompt()}
-    </>
+    </div>
   );
 };
 
