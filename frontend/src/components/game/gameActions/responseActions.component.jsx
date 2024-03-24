@@ -28,28 +28,31 @@ const ResponseActions = () => {
         return ButtonClass.Callout;
       }
       case GameActions.BlockAid: {
-        if (gameCards[0] == GameCard.Duke) {
+        if (gameCards[0] == GameCard.Duke || gameCards[1] == GameCard.Duke) {
           return ButtonClass.HaveCard;
         } else {
           return ButtonClass.Bluff;
         }
       }
       case GameActions.BlockStealAsAmbass: {
-        if (gameCards[0] == GameCard.Ambassador) {
+        if (gameCards[0] == GameCard.Ambassador 
+            || gameCards[1] == GameCard.Ambassador) {
           return ButtonClass.HaveCard;
         } else {
           return ButtonClass.Bluff;
         }
       }
       case GameActions.BlockStealAsCaptain: {
-        if (gameCards[0] == GameCard.Captain) {
+        if (gameCards[0] == GameCard.Captain 
+            || gameCards[1] == GameCard.Captain) {
           return ButtonClass.HaveCard;
         } else {
           return ButtonClass.Bluff;
         }
       }
       case GameActions.BlockAssassinate: {
-        if (gameCards[0] == GameCard.Contessa) {
+        if (gameCards[0] == GameCard.Contessa
+          || gameCards[1] == GameCard.Contessa) {
           return ButtonClass.HaveCard;
         } else {
           return ButtonClass.Bluff;
@@ -78,7 +81,7 @@ const ResponseActions = () => {
       case GameActions.Assassinate: {
         return (
           <ActionButton
-            buttonClass={buttonClass()}
+            buttonClass={buttonClass(GameActions.BlockAssassinate)}
             onClick={() => onResponseClick(GameActions.BlockAssassinate)}
             text={"Block Assassinate"}
           ></ActionButton>
@@ -87,7 +90,7 @@ const ResponseActions = () => {
       case GameActions.Aid: {
         return (
           <ActionButton
-            buttonClass={buttonClass()}
+            buttonClass={buttonClass(GameActions.BlockAid)}
             onClick={() => onResponseClick(GameActions.BlockAid)}
             text={"Block Aid"}
           ></ActionButton>
@@ -97,12 +100,12 @@ const ResponseActions = () => {
         return (
           <>
             <ActionButton
-              buttonClass={buttonClass()}
+              buttonClass={buttonClass(GameActions.BlockStealAsAmbass)}
               onClick={() => onResponseClick(GameActions.BlockStealAsAmbass)}
               text={"Block Steal as Ambassador"}
             ></ActionButton>
             <ActionButton
-              buttonClass={buttonClass()}
+              buttonClass={buttonClass(GameActions.BlockStealAsCaptain)}
               onClick={() => onResponseClick(GameActions.BlockStealAsCaptain)}
               text={"Block Steal as Captain"}
             ></ActionButton>
@@ -117,11 +120,12 @@ const ResponseActions = () => {
       <h1>{JSON.stringify(initialAction)}</h1>
       <div>
         {handleDisplayedAction(initialAction)}
+        {initialAction != GameActions.Aid ? 
         <ActionButton
           buttonClass={ButtonClass.Callout}
           onClick={() => onResponseClick(GameActions.CalloutLie)}
           text={"Callout Lie"}
-        ></ActionButton>
+        /> : <></>}
         <ActionButton
           buttonClass={ButtonClass.Normal}
           onClick={() => onResponseClick(GameActions.Pass)}
