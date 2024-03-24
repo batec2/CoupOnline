@@ -54,8 +54,12 @@ export const useGameEvents = (gameState) => {
       responseId,
       responseAction,
     }) => {
+      console.log(
+        `${chooserId} is choosing a card, initial action: ${GameActions[initialAction]}, responseAction: ${GameActions[responseAction]}`
+      );
       setTurnId(chooserId);
       setInitialUserId(initialUserId);
+      setInitialAction(initialAction);
       setResponseAction(responseAction ? responseAction : initialAction);
       responseIdRef.current = responseId;
       if (chooserId === socket.id) {
@@ -66,10 +70,11 @@ export const useGameEvents = (gameState) => {
     };
 
     const onUpdateState = ({ gameCards, turnId, coins }) => {
-      console.log(coins);
       setGameCards(gameCards);
       setTurnId(turnId);
       setIsTarget(false);
+      setInitialAction(null);
+      setInitialUserId(null);
       responseIdRef.current = null;
       setCoins(coins);
     };

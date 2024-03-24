@@ -16,6 +16,7 @@ const PlayerCards = () => {
     currentTurnId,
     initialAction,
     initialUserId,
+    setCurrentTurnId,
   } = useGameContext();
 
   const chooseCardType = () => {
@@ -45,6 +46,9 @@ const PlayerCards = () => {
     if (!isTarget) {
       return;
     }
+    console.log(
+      `${currentTurnId} is choosing ${card}, ${chooseCardType()},${initialAction}`
+    );
     socket.emit("choose-card", {
       roomId: roomId,
       chooserId: currentTurnId,
@@ -55,6 +59,7 @@ const PlayerCards = () => {
       card: card,
       chooseActionType: chooseCardType(),
     });
+    setCurrentTurnId(null);
   };
 
   const showPrompt = () => {

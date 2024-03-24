@@ -1,41 +1,39 @@
 import GameActions from "@/lib/actionEnum";
 import { handleNormalAction } from "../../../actions/socketActions";
-import { Button } from "../../ui/button";
 import useGameContext from "@/context/useGameContext";
 import TargetAction from "./targetAction";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import GameCard from "@/lib/cardEnum";
 import ActionButton from "./actionButton.component";
 import ButtonClass from "@/lib/buttonClassEnum";
 
 const NormalActions = () => {
-  const { socket, roomId, coins, gameCards } = useGameContext();
+  const { socket, roomId, coins, gameCards, setTurnId } = useGameContext();
   const [showTarget, setShowTarget] = useState(false);
-  const [currentAction, setAction] = useState(null);
-
+  const actionRef = useRef(null);
 
   //Determine button functionality based on game state
   const buttonClass = (button) => {
     //Have > 10 coins -> must coup
-    if(coins >= 10 && button != GameActions.Coup) {
+    if (coins >= 10 && button != GameActions.Coup) {
       return ButtonClass.Unavailable;
     }
-    switch(button){
+    switch (button) {
       //Have >= 6 coins -> can coup
-      case GameActions.Coup:{
-         if(coins >= 7) {
+      case GameActions.Coup: {
+        if (coins >= 7) {
           return ButtonClass.Normal;
-         } else {
+        } else {
           return ButtonClass.Unavailable;
-         }
+        }
       }
       //Can always declare income or foreign aid
-      case GameActions.Income || GameActions.Aid:{
+      case GameActions.Income || GameActions.Aid: {
         return ButtonClass.Normal;
       }
       //Taxes are legit if have duke, bluff if not
       case GameActions.Taxes: {
-        if(gameCards[0] == GameCard.Duke || gameCards[1] == GameCard.Duke) {
+        if (gameCards[0] == GameCard.Duke || gameCards[1] == GameCard.Duke) {
           return ButtonClass.HaveCard;
         } else {
           return ButtonClass.Bluff;
@@ -43,8 +41,10 @@ const NormalActions = () => {
       }
       //Exchange is legit if have ambassador, bluff if not
       case GameActions.Exchange: {
-        if(gameCards[0] == GameCard.Ambassador 
-           || gameCards[1] == GameCard.Ambassador) {
+        if (
+          gameCards[0] == GameCard.Ambassador ||
+          gameCards[1] == GameCard.Ambassador
+        ) {
           return ButtonClass.HaveCard;
         } else {
           return ButtonClass.Bluff;
@@ -52,10 +52,12 @@ const NormalActions = () => {
       }
       //Assassination is legit with assassin and >= 3 coins, bluff if not
       case GameActions.Assassinate: {
-        if(coins < 3) {
+        if (coins < 3) {
           return ButtonClass.Unavailable;
-        } else if(gameCards[0] == GameCard.Assassin 
-                  || gameCards[1] == GameCard.Assassin) {
+        } else if (
+          gameCards[0] == GameCard.Assassin ||
+          gameCards[1] == GameCard.Assassin
+        ) {
           return ButtonClass.HaveCard;
         } else {
           return ButtonClass.Bluff;
@@ -63,55 +65,56 @@ const NormalActions = () => {
       }
       //Steal is legit with captain, bludd if not
       case GameActions.Steal: {
-        if(gameCards[0] == GameCard.Captain 
-           || gameCards[1] == GameCard.Captain) {
+        if (
+          gameCards[0] == GameCard.Captain ||
+          gameCards[1] == GameCard.Captain
+        ) {
           return ButtonClass.HaveCard;
         } else {
           return ButtonClass.Bluff;
         }
       }
     }
-  }
+  };
 
   const onIncomeClick = () => {
-    handleNormalAction(socket, roomId, GameActions.Income);
+    handleNormalAction(socket, roomId, GameActions.Income, null);
+    setTurnId(null);
     setShowTarget(false);
-    setAction(GameActions.Income);
-  }
+  };
 
   const onCoupClick = () => {
+    actionRef.current = GameActions.Coup;
     setShowTarget(true);
-    setAction(GameActions.Coup);
-  }
-
-  const onTaxClick = () => {
-    handleNormalAction(socket, roomId, GameActions.Taxes);
-    setAction(GameActions.Taxes);
-  }
-
-  const onExchangeClick = () => {
-    handleNormalAction(socket, roomId, GameActions.Exchange);
-    setShowTarget(false);
-    setAction(GameActions.Exchange);
-  }
-
-  const onAidClick = () => {
-    handleNormalAction(socket, roomId, GameActions.Aid);
-    setShowTarget(false);
-    setAction(GameActions.Aid);
-  }
+  };
 
   const onAssassinateClick = () => {
-    handleNormalAction(socket, roomId, GameActions.Assassinate);
+    actionRef.current = GameActions.Assassinate;
     setShowTarget(true);
-    setAction(GameActions.Assassinate);
-  }
+  };
 
   const onStealClick = () => {
-    handleNormalAction(socket, roomId, GameActions.Steal);
+    actionRef.current = GameActions.Steal;
     setShowTarget(true);
-    setAction(GameActions.Steal);
-  }
+  };
+
+  const onTaxClick = () => {
+    handleNormalAction(socket, roomId, GameActions.Taxes, null);
+    setTurnId(null);
+    setShowTarget(false);
+  };
+
+  const onExchangeClick = () => {
+    handleNormalAction(socket, roomId, GameActions.Exchange, null);
+    setTurnId(null);
+    setShowTarget(false);
+  };
+
+  const onAidClick = () => {
+    handleNormalAction(socket, roomId, GameActions.Aid, null);
+    setTurnId(null);
+    setShowTarget(false);
+  };
 
   return (
     <div className="flex flex-col space-x-2 space-y-2">
@@ -156,19 +159,18 @@ const NormalActions = () => {
         />
       </div>
       {showTarget ? (
-        <div className="space-y-8 space-x-2">
-          <h1>Targets:</h1>
-        </div>
-      ) : <></>}
-      {showTarget ? (
-          <div className="flex flex-row space-y-2 space-x-2">
-            <TargetAction
-              showTarget={showTarget}
-              action={currentAction}
-            ></TargetAction>
+        <>
+          <div className="space-y-8 space-x-2">
+            <h1>Targets:</h1>
           </div>
-      ) : <></>}
-    </div>  
+          <div className="flex flex-row space-y-2 space-x-2">
+            <TargetAction action={actionRef.current}></TargetAction>
+          </div>
+        </>
+      ) : (
+        <></>
+      )}
+    </div>
   );
 };
 

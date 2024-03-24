@@ -1,4 +1,3 @@
-import ChooseCard from "@/lib/chooseCardEnum";
 import handleStatus from "@/lib/handleStatus";
 
 /**
@@ -7,26 +6,11 @@ import handleStatus from "@/lib/handleStatus";
  * @param {string} roomId - Current room id
  * @param {string} action - Action number
  */
-export const handleNormalAction = (socket, roomId, action) => {
+export const handleNormalAction = (socket, roomId, action, targetId) => {
   socket.emit("normal-action", {
     roomId: roomId,
     initialUserId: socket.id,
     initialAction: action,
-  });
-};
-
-/**
- * Sends a action with the id of the player being targeted by the action
- * @param {Object} socket - Global Socket Object
- * @param {string} roomId - Current room id
- * @param {string} action - Action number
- * @param {string} targetId - Id of the target player
- */
-export const handleTargetAction = (socket, roomId, action, targetId) => {
-  socket.emit("target-action", {
-    roomId: roomId,
-    userId: socket.id,
-    action: action,
     targetId: targetId,
   });
 };

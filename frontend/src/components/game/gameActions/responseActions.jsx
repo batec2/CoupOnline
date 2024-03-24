@@ -1,7 +1,6 @@
 import GameActions from "@/lib/actionEnum.js";
 import BlockButtons from "../../blockButtons/blockButtons.jsx";
 import useGameContext from "@/context/useGameContext.js";
-import { Button } from "@/components/ui/button.jsx";
 import { handleResponseAction } from "@/actions/socketActions.js";
 import GameCard from "@/lib/cardEnum.js";
 import ButtonClass from "@/lib/buttonClassEnum.js";
