@@ -10,7 +10,7 @@ const LobbyComponent = () => {
 
   const playerIds = currentLobbyMembers ? Object.keys(currentLobbyMembers) : [];
   return (
-    <div>
+    <div className="space-x-2">
       <h1>Your Current Room: {roomId}</h1>
       <Button
         onClick={() => {

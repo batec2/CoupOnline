@@ -156,12 +156,12 @@ const NormalActions = () => {
         />
       </div>
       {showTarget ? (
-        <div className="space-y-8 space-x-2">
+        <div>
           <h1>Targets:</h1>
         </div>
       ) : <></>}
       {showTarget ? (
-          <div className="flex flex-row space-y-2 space-x-2">
+          <div className="flex flex-row">
             <TargetAction
               showTarget={showTarget}
               action={currentAction}
