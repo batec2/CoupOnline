@@ -1,4 +1,4 @@
-import { GameState } from "../state/GameState.js";
+import { GameState } from "./GameState.js";
 import { emitStartGame, emitUpdate } from "./GameEmitters.js";
 
 export const registerLobbyHandlers = (io, socket, rooms) => {

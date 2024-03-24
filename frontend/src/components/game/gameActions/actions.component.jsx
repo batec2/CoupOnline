@@ -1,6 +1,6 @@
 import useGameContext from "@/context/useGameContext";
-import NormalActions from "./normalActions";
-import ResponseActions from "./responseActions";
+import NormalActions from "./normalActions.component";
+import ResponseActions from "./responseActions.component";
 
 const Actions = () => {
   const { socket, isResponding, currentTurnId, isTarget } = useGameContext();

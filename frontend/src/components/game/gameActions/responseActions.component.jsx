@@ -1,7 +1,6 @@
 import GameActions from "@/lib/actionEnum.js";
-import BlockButtons from "../../blockButtons/blockButtons.jsx";
 import useGameContext from "@/context/useGameContext.js";
-import { handleResponseAction } from "@/actions/socketActions.js";
+import { handleResponseAction } from "@/components/game/socketActions.js";
 import GameCard from "@/lib/cardEnum.js";
 import ButtonClass from "@/lib/buttonClassEnum.js";
 import ActionButton from "./actionButton.component.jsx";
@@ -12,8 +11,15 @@ import ActionButton from "./actionButton.component.jsx";
  * @returns
  */
 const ResponseActions = () => {
-  const { socket, roomId, initialAction, initialUserId, gameCards } =
-    useGameContext();
+  const {
+    socket,
+    roomId,
+    initialAction,
+    initialUserId,
+    gameCards,
+    responseAction,
+    responseIdRef,
+  } = useGameContext();
 
   //Detemines button colour based on whether player has appropriate card or not
   const buttonClass = (button) => {
@@ -61,7 +67,9 @@ const ResponseActions = () => {
       roomId,
       initialUserId,
       initialAction,
-      gameAction
+      gameAction,
+      responseIdRef,
+      responseAction
     );
   };
 
@@ -69,47 +77,35 @@ const ResponseActions = () => {
     switch (action) {
       case GameActions.Assassinate: {
         return (
-          <BlockButtons
-            className={buttonClass(GameActions.Assassinate)}
-            text={"Block Asssassinate"}
-            socket={socket}
-            roomId={roomId}
-            userId={initialUserId}
-            action={GameActions.BlockStealAsAmbass}
-          ></BlockButtons>
+          <ActionButton
+            buttonClass={buttonClass()}
+            onClick={() => onResponseClick(GameActions.BlockAssassinate)}
+            text={"Block Assassinate"}
+          ></ActionButton>
         );
       }
       case GameActions.Aid: {
         return (
-          <BlockButtons
-            className={buttonClass(GameActions.BlockAid)}
-            text={"Block Foreign Aid"}
-            socket={socket}
-            roomId={roomId}
-            userId={initialUserId}
-            action={GameActions.BlockAid}
-          ></BlockButtons>
+          <ActionButton
+            buttonClass={buttonClass()}
+            onClick={() => onResponseClick(GameActions.BlockAid)}
+            text={"Block Aid"}
+          ></ActionButton>
         );
       }
       case GameActions.Steal: {
         return (
           <>
-            <BlockButtons
-              className={buttonClass(GameActions.BlockStealAsAmbass)}
+            <ActionButton
+              buttonClass={buttonClass()}
+              onClick={() => onResponseClick(GameActions.BlockStealAsAmbass)}
               text={"Block Steal as Ambassador"}
-              socket={socket}
-              roomId={roomId}
-              userId={initialUserId}
-              action={GameActions.BlockStealAsAmbass}
-            ></BlockButtons>
-            <BlockButtons
-              className={buttonClass(GameActions.BlockStealAsCaptain)}
+            ></ActionButton>
+            <ActionButton
+              buttonClass={buttonClass()}
+              onClick={() => onResponseClick(GameActions.BlockStealAsCaptain)}
               text={"Block Steal as Captain"}
-              socket={socket}
-              roomId={roomId}
-              userId={initialUserId}
-              action={GameActions.BlockStealAsCaptain}
-            ></BlockButtons>
+            ></ActionButton>
           </>
         );
       }
@@ -125,12 +121,12 @@ const ResponseActions = () => {
           buttonClass={ButtonClass.Callout}
           onClick={() => onResponseClick(GameActions.CalloutLie)}
           text={"Callout Lie"}
-        />
+        ></ActionButton>
         <ActionButton
           buttonClass={ButtonClass.Normal}
           onClick={() => onResponseClick(GameActions.Pass)}
           text={"Pass"}
-        />
+        ></ActionButton>
       </div>
     </div>
   );

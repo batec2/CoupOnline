@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import handleStatus from "@/lib/handleStatus";
 import GameActions from "@/lib/actionEnum";
 import Cookie from "universal-cookie";
@@ -82,6 +82,18 @@ export const useGameEvents = (gameState) => {
       setCoins(coins);
     };
 
+    const onBlocked = ({
+      initialUserId,
+      initialAction,
+      responseId,
+      responseAction,
+    }) => {
+      setInitialUserId(initialUserId);
+      setInitialAction(initialAction);
+      responseIdRef.current = responseId;
+      setResponseAction(responseAction);
+    };
+
     socket.connect();
     socket.emit(
       "join-room",
@@ -93,6 +105,7 @@ export const useGameEvents = (gameState) => {
     socket.on("choose-response", onChooseResponseEvent);
     socket.on("choose-card", onChooseCardEvent);
     socket.on("update-state", onUpdateState);
+    socket.on("blocked", onBlocked);
 
     // Removes all event listeners when component is removed
     return () => {

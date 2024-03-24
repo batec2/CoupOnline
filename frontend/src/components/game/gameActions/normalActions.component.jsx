@@ -1,7 +1,7 @@
 import GameActions from "@/lib/actionEnum";
-import { handleNormalAction } from "../../../actions/socketActions";
+import { handleNormalAction } from "../socketActions";
 import useGameContext from "@/context/useGameContext";
-import TargetAction from "./targetAction";
+import TargetAction from "./targetAction.component";
 import { useRef, useState } from "react";
 import GameCard from "@/lib/cardEnum";
 import ActionButton from "./actionButton.component";

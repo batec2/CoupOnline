@@ -1,4 +1,4 @@
-import { handleNormalAction } from "@/actions/socketActions";
+import { handleNormalAction } from "@/components/game/socketActions";
 import { Button } from "@/components/ui/button";
 import useGameContext from "@/context/useGameContext";
 

@@ -1,10 +1,7 @@
-import useGameContext from "@/context/useGameContext";
 import { Button } from "../../ui/button";
 import ButtonClass from "@/lib/buttonClassEnum";
 
 const ActionButton = ({ buttonClass, onClick, text }) => {
-  const { setInitialUserId, setInitialAction } = useGameContext();
-
   let buttonColor = "";
 
   switch (buttonClass) {

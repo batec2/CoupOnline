@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Button } from "../ui/button";
 import { GameStateContext } from "@/context/GameStateContext";
-import { handleLeave, handleStartGame } from "@/actions/socketActions";
+import { handleLeave, handleStartGame } from "@/components/game/socketActions";
 import { useNavigate } from "react-router-dom";
 
 const LobbyComponent = () => {

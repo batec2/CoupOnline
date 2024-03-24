@@ -1,7 +1,7 @@
-import GameActions from "../lib/actionEnum.js";
+import GameActions from "./constants/actionEnum.js";
 import { emitUpdate } from "./GameEmitters.js";
-import ChooseCard from "../lib/chooseCardEnum.js";
-import CardInfo from "../lib/CardInfo.js";
+import ChooseCard from "./constants/chooseCardEnum.js";
+import CardInfo from "./constants/CardInfo.js";
 
 const {
   Income,
@@ -39,6 +39,29 @@ export const registerGameHandlers = (io, socket, rooms) => {
   ) => {
     io.to(roomId).emit("choose-card", {
       chooserId: chooserId,
+      initialUserId: initialUserId,
+      initialAction: initialAction,
+      responseId: responseId,
+      responseAction: responseAction,
+    });
+  };
+
+  /**
+   *
+   * @param {*} roomId
+   * @param {*} initialUserId - first user in event chain
+   * @param {*} initialAction - first action in event chain
+   * @param {*} responseId - responding user
+   * @param {*} responseAction - responding action
+   */
+  const emitBlockAction = (
+    roomId,
+    initialUserId,
+    initialAction,
+    responseId,
+    responseAction
+  ) => {
+    io.to(roomId).emit("blocked", {
       initialUserId: initialUserId,
       initialAction: initialAction,
       responseId: responseId,
@@ -86,7 +109,6 @@ export const registerGameHandlers = (io, socket, rooms) => {
         return;
       }
     }
-
     socket.to(roomId).emit("choose-response", {
       initialUserId: initialUserId,
       initialAction: initialAction,
@@ -104,6 +126,8 @@ export const registerGameHandlers = (io, socket, rooms) => {
     initialUserId,
     initialAction,
     responseAction,
+    initialResponseId,
+    initialResponseAction,
   }) => {
     const room = rooms[roomId];
     const state = room.state;
@@ -117,6 +141,13 @@ export const registerGameHandlers = (io, socket, rooms) => {
     ) {
       console.log(
         `${responseId} is blocking ${initialUserId} action of ${GameActions[initialAction]}`
+      );
+      emitBlockAction(
+        roomId,
+        initialUserId,
+        initialAction,
+        socket.id,
+        responseAction
       );
     } else if (responseAction === CalloutLie) {
       console.log(

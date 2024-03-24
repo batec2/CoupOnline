@@ -1,6 +1,6 @@
-import CardInfo from "../lib/CardInfo.js";
-import GameActions from "../lib/actionEnum.js";
-import GameCard from "../lib/cardEnum.js";
+import CardInfo from "./constants/CardInfo.js";
+import GameActions from "./constants/actionEnum.js";
+import GameCard from "./constants/cardEnum.js";
 
 export class GameState {
   //3 of each Duke,Assassin,Captain,Ambassador,Contessa
