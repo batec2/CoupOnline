@@ -23,8 +23,6 @@ const TargetAction = ({ action }) => {
         onClick={() => {
           handleNormalAction(socket, roomId, action, member);
           setTurnId(null);
-          setInitialAction(null);
-          setInitialUserId(null);
         }}
         key={member}
       >

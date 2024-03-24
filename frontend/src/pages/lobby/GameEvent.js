@@ -20,6 +20,7 @@ export const useGameEvents = (gameState) => {
     setIsTarget,
     setCoins,
     setResponseAction,
+    setIsResponding,
     responseIdRef,
   } = gameState;
   const localCookie = cookie.get("PersonalCookie");
@@ -36,6 +37,7 @@ export const useGameEvents = (gameState) => {
     const onChooseResponseEvent = ({ initialUserId, initialAction }) => {
       setInitialAction(initialAction);
       setInitialUserId(initialUserId);
+      setIsResponding(true);
     };
 
     /**
@@ -57,6 +59,7 @@ export const useGameEvents = (gameState) => {
       console.log(
         `${chooserId} is choosing a card, initial action: ${GameActions[initialAction]}, responseAction: ${GameActions[responseAction]}`
       );
+      setIsResponding(false);
       setTurnId(chooserId);
       setInitialUserId(initialUserId);
       setInitialAction(initialAction);

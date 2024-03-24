@@ -95,11 +95,9 @@ export const registerGameHandlers = (io, socket, rooms) => {
 
   /**
    * For receiving response actions
-   * @param {*} io
-   * @param {*} roomId
-   * @param {*} requestId - Id of the player being blocked/responded
-   * @param {string} requestAction - Action being responded to
-   * @param {*} action - Type of response action
+   * @param {*} initialUserId - Id of the player being blocked/responded
+   * @param {string} initialAction - Action being responded to
+   * @param {*} responseAction - Type of response action
    */
   const onResponseAction = ({
     roomId,
@@ -120,12 +118,6 @@ export const registerGameHandlers = (io, socket, rooms) => {
       console.log(
         `${responseId} is blocking ${initialUserId} action of ${GameActions[initialAction]}`
       );
-      io.to(initialUserId).emit("block", {
-        responseAction: {
-          userId: socket.id,
-          action: responseAction,
-        },
-      });
     } else if (responseAction === CalloutLie) {
       console.log(
         `${responseId} is calling out ${initialUserId} action of ${GameActions[initialAction]}`

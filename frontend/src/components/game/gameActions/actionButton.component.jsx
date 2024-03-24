@@ -36,8 +36,6 @@ const ActionButton = ({ buttonClass, onClick, text }) => {
       onClick={() => {
         if (buttonClass != ButtonClass.Unavailable) {
           onClick();
-          setInitialAction(null);
-          setInitialUserId(null);
         }
       }}
     >
