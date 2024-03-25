@@ -19,6 +19,7 @@ const ResponseActions = () => {
     gameCards,
     responseAction,
     responseIdRef,
+    setIsResponding,
   } = useGameContext();
 
   //Detemines button colour based on whether player has appropriate card or not
@@ -71,6 +72,7 @@ const ResponseActions = () => {
   };
 
   const onResponseClick = (gameAction) => {
+    // setIsResponding(false);
     handleResponseAction(
       socket,
       roomId,
