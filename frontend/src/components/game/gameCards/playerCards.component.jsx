@@ -35,6 +35,18 @@ const PlayerCards = () => {
       case GameActions.CalloutLie: {
         return ChooseCard.Show;
       }
+      case GameActions.BlockAssassinate: {
+        return ChooseCard.Show;
+      }
+      case GameActions.BlockAid: {
+        return ChooseCard.Show;
+      }
+      case GameActions.BlockStealAsAmbass: {
+        return ChooseCard.Show;
+      }
+      case GameActions.BlockStealAsCaptain: {
+        return ChooseCard.Show;
+      }
     }
   };
 
@@ -53,7 +65,7 @@ const PlayerCards = () => {
     );
     socket.emit("choose-card", {
       roomId: roomId,
-      chooserId: currentTurnId,
+      chooserId: socket.id,
       initialUserId: initialUserId,
       initialAction: initialAction,
       responseId: responseIdRef.current,

@@ -35,24 +35,30 @@ const ResponseActions = () => {
         }
       }
       case GameActions.BlockStealAsAmbass: {
-        if (gameCards[0] == GameCard.Ambassador 
-            || gameCards[1] == GameCard.Ambassador) {
+        if (
+          gameCards[0] == GameCard.Ambassador ||
+          gameCards[1] == GameCard.Ambassador
+        ) {
           return ButtonClass.HaveCard;
         } else {
           return ButtonClass.Bluff;
         }
       }
       case GameActions.BlockStealAsCaptain: {
-        if (gameCards[0] == GameCard.Captain 
-            || gameCards[1] == GameCard.Captain) {
+        if (
+          gameCards[0] == GameCard.Captain ||
+          gameCards[1] == GameCard.Captain
+        ) {
           return ButtonClass.HaveCard;
         } else {
           return ButtonClass.Bluff;
         }
       }
       case GameActions.BlockAssassinate: {
-        if (gameCards[0] == GameCard.Contessa
-          || gameCards[1] == GameCard.Contessa) {
+        if (
+          gameCards[0] == GameCard.Contessa ||
+          gameCards[1] == GameCard.Contessa
+        ) {
           return ButtonClass.HaveCard;
         } else {
           return ButtonClass.Bluff;
@@ -71,7 +77,7 @@ const ResponseActions = () => {
       initialUserId,
       initialAction,
       gameAction,
-      responseIdRef,
+      responseIdRef.current,
       responseAction
     );
   };
@@ -120,12 +126,15 @@ const ResponseActions = () => {
       <h1>{JSON.stringify(initialAction)}</h1>
       <div>
         {handleDisplayedAction(initialAction)}
-        {initialAction != GameActions.Aid ? 
-        <ActionButton
-          buttonClass={ButtonClass.Callout}
-          onClick={() => onResponseClick(GameActions.CalloutLie)}
-          text={"Callout Lie"}
-        /> : <></>}
+        {initialAction != GameActions.Aid ? (
+          <ActionButton
+            buttonClass={ButtonClass.Callout}
+            onClick={() => onResponseClick(GameActions.CalloutLie)}
+            text={"Callout Lie"}
+          />
+        ) : (
+          <></>
+        )}
         <ActionButton
           buttonClass={ButtonClass.Normal}
           onClick={() => onResponseClick(GameActions.Pass)}

@@ -48,20 +48,18 @@ export const registerGameHandlers = (io, socket, rooms) => {
 
   /**
    *
-   * @param {*} roomId
    * @param {*} initialUserId - first user in event chain
    * @param {*} initialAction - first action in event chain
    * @param {*} responseId - responding user
    * @param {*} responseAction - responding action
    */
   const emitBlockAction = (
-    roomId,
     initialUserId,
     initialAction,
     responseId,
     responseAction
   ) => {
-    io.to(roomId).emit("blocked", {
+    io.to(initialUserId).emit("blocked", {
       initialUserId: initialUserId,
       initialAction: initialAction,
       responseId: responseId,
@@ -91,7 +89,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
     const state = room.state;
     switch (initialAction) {
       case Income: {
-        handleAction(state, initialUserId, initialAction);
+        handleAction(state, initialUserId, initialAction, false);
         state.incrementTurn();
         emitUpdate(io, room);
         return;
@@ -109,6 +107,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
         return;
       }
     }
+    //Emits to everyone except the current player
     socket.to(roomId).emit("choose-response", {
       initialUserId: initialUserId,
       initialAction: initialAction,
@@ -120,6 +119,8 @@ export const registerGameHandlers = (io, socket, rooms) => {
    * @param {*} initialUserId - Id of the player being blocked/responded
    * @param {string} initialAction - Action being responded to
    * @param {*} responseAction - Type of response action
+   * @param {*} initialResponseId
+   * @param {*} initialResponseAction
    */
   const onResponseAction = ({
     roomId,
@@ -132,7 +133,29 @@ export const registerGameHandlers = (io, socket, rooms) => {
     const room = rooms[roomId];
     const state = room.state;
     const responseId = socket.id;
-
+    // If the player being block calls out
+    if (
+      initialResponseAction === BlockAssassinate ||
+      initialResponseAction === BlockAid ||
+      initialResponseAction === BlockStealAsCaptain ||
+      initialResponseAction === BlockStealAsAmbass
+    ) {
+      if (responseAction === Pass) {
+        handleAction(state, initialUserId, initialAction, true);
+        state.incrementTurn();
+        emitUpdate(io, room);
+      } else if (responseAction === CalloutLie) {
+        emitChooseCard(
+          roomId,
+          initialResponseId,
+          initialUserId,
+          initialAction,
+          initialResponseAction,
+          initialResponseAction
+        );
+      }
+      return;
+    }
     if (
       responseAction === BlockAssassinate ||
       responseAction === BlockAid ||
@@ -140,18 +163,12 @@ export const registerGameHandlers = (io, socket, rooms) => {
       responseAction === BlockStealAsAmbass
     ) {
       console.log(
-        `${responseId} is blocking ${initialUserId} action of ${GameActions[initialAction]}`
+        `${socket.id} is blocking ${initialUserId} action of ${GameActions[initialAction]}`
       );
-      emitBlockAction(
-        roomId,
-        initialUserId,
-        initialAction,
-        socket.id,
-        responseAction
-      );
+      emitBlockAction(initialUserId, initialAction, socket.id, responseAction);
     } else if (responseAction === CalloutLie) {
       console.log(
-        `${responseId} is calling out ${initialUserId} action of ${GameActions[initialAction]}`
+        `${socket.id} is calling out ${initialUserId} action of ${GameActions[initialAction]}`
       );
       // Tells the person being called out to select a card to show
       emitChooseCard(
@@ -167,7 +184,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
       state.incrementPassCount();
       //if all players pass
       if (state.passCount === state.playerCount - 1) {
-        handleAction(state, initialUserId, initialAction);
+        handleAction(state, initialUserId, initialAction, false);
         state.incrementTurn();
         emitUpdate(io, room);
         state.resetPassCount();
@@ -175,7 +192,11 @@ export const registerGameHandlers = (io, socket, rooms) => {
     }
   };
 
-  const handleAction = (state, userId, action) => {
+  const handleAction = (state, userId, action, isBlocked) => {
+    if (isBlocked && action === Assassinate) {
+      state.decreasePlayerMoney(userId, 3);
+      return;
+    }
     switch (action) {
       case Income: {
         state.increasePlayerMoney(userId, 1);
@@ -224,31 +245,61 @@ export const registerGameHandlers = (io, socket, rooms) => {
       case ChooseCard.Exchange: {
         break;
       }
-      case ChooseCard.Show: {
-        // card shown gets checked
-        console.log(
-          `${chooserId} is showing ${
-            CardInfo[state.getPlayerCard(chooserId, card)].character
-          }`
-        );
-        //If the called out player shows the correct card the calling out player
-        //chooses a card to loose
-        if (state.checkCard(chooserId, card, initialAction)) {
-          handleAction(state, chooserId, initialAction);
-          emitChooseCard(
-            roomId,
-            responseId,
-            initialUserId,
-            initialAction,
-            null,
-            GameActions.LooseCallout
+      case ChooseCard.Show:
+        {
+          // card shown gets checked
+          console.log(
+            `${chooserId} is showing ${
+              CardInfo[state.getPlayerCard(chooserId, card)].character
+            }`
           );
-          return;
+          // If a Block action is called out
+          if (
+            responseAction === BlockAssassinate ||
+            responseAction === BlockAid ||
+            responseAction === BlockStealAsAmbass ||
+            responseAction === BlockStealAsCaptain
+          ) {
+            if (state.checkCard(chooserId, card, responseAction)) {
+              console.log(
+                `${chooserId} showed the proper card for ${GameActions[responseAction]} and ${responseId} must choose to lose a card`
+              );
+              // If the Person Can Block then the initial user loses a card
+              emitChooseCard(
+                roomId,
+                initialUserId,
+                initialUserId,
+                initialAction,
+                null,
+                GameActions.LooseCallout
+              );
+              return;
+            }
+            state.incrementTurn();
+            state.loseCard(chooserId, card);
+            emitUpdate(io, room);
+            return;
+          } else if (state.checkCard(chooserId, card, initialAction)) {
+            //If the called out player shows the correct card the calling out player
+            //chooses a card to loose
+            console.log(
+              `${chooserId} showed the proper card for ${GameActions[initialAction]} and ${initialUserId} must choose to lose a card`
+            );
+            handleAction(state, chooserId, initialAction, false);
+            emitChooseCard(
+              roomId,
+              responseId,
+              initialUserId,
+              initialAction,
+              null,
+              GameActions.LooseCallout
+            );
+            return;
+          }
         }
         state.incrementTurn();
         state.loseCard(initialUserId, card);
         emitUpdate(io, room);
-      }
     }
   };
 
