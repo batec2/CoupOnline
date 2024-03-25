@@ -79,6 +79,7 @@ export const useGameEvents = (gameState) => {
       setInitialAction(null);
       setInitialUserId(null);
       responseIdRef.current = null;
+      setResponseAction(null);
       setCoins(coins);
     };
 
