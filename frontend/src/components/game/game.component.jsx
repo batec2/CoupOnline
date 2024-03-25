@@ -15,10 +15,11 @@ const discard = {
 };
 
 const Game = () => {
-  const { roomId, currentLobbyMembers } = useGameContext();
+  const { roomId, currentLobbyMembers, gameCards } = useGameContext();
   return (
     <div>
       <p className="flex justify-center text-3xl font-bold">Room: {roomId}</p>
+      <p>{JSON.stringify(currentLobbyMembers)}</p>
       <div className="grid grid-cols-4 border divide-y divide-x">
         <CardList items={currentLobbyMembers} context={"players"} />
         <div className="col-span-2">
