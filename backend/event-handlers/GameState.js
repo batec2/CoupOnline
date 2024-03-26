@@ -1,5 +1,4 @@
 import CardInfo from "./constants/CardInfo.js";
-import GameActions from "./constants/actionEnum.js";
 import GameCard from "./constants/cardEnum.js";
 
 export class GameState {
@@ -12,6 +11,14 @@ export class GameState {
   roundNumber = 0;
   round = {};
   passCount = 0;
+
+  // Turn State
+  targetId = null;
+  initialPlayerId = null;
+  initialAction = null;
+  initialResponseId = null;
+  initialResponseAction = null;
+  isBlocked = false;
 
   constructor(players) {
     this.playerCount = players.length;
@@ -47,6 +54,61 @@ export class GameState {
   }
   get passCount() {
     return this.passCount;
+  }
+
+  get targetId() {
+    return this.targetId;
+  }
+
+  get initialPlayerId() {
+    return this.initialPlayerId;
+  }
+  get initialAction() {
+    return this.initialAction;
+  }
+
+  get initialResponseId() {
+    return this.initialResponseId;
+  }
+
+  get initialResponseAction() {
+    return this.initialResponseAction;
+  }
+
+  get isBlocked() {
+    return this.isBlocked;
+  }
+
+  set targetId(targetId) {
+    this.targetId = targetId;
+  }
+
+  set initialPlayerId(initialPlayerId) {
+    this.initialPlayerId = initialPlayerId;
+  }
+  set initialAction(initialAction) {
+    this.initialAction = initialAction;
+  }
+
+  set initialResponseId(initialResponseId) {
+    this.initialResponseId = initialResponseId;
+  }
+
+  set initialResponseAction(initialResponseAction) {
+    this.initialResponseAction = initialResponseAction;
+  }
+
+  set isBlocked(isBlocked) {
+    this.isBlocked = isBlocked;
+  }
+
+  resetTurnState() {
+    this.targetId = null;
+    this.initialPlayerId = null;
+    this.initialAction = null;
+    this.initialResponseId = null;
+    this.initialResponseId = null;
+    this.isBlocked = false;
   }
 
   /**

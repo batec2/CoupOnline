@@ -15,10 +15,8 @@ const ResponseActions = () => {
     socket,
     roomId,
     initialAction,
-    initialUserId,
     gameCards,
     responseAction,
-    responseIdRef,
     setIsResponding,
   } = useGameContext();
 
@@ -72,49 +70,41 @@ const ResponseActions = () => {
   };
 
   const onResponseClick = (gameAction) => {
-    // setIsResponding(false);
-    handleResponseAction(
-      socket,
-      roomId,
-      initialUserId,
-      initialAction,
-      gameAction,
-      responseIdRef.current,
-      responseAction
-    );
+    setIsResponding(false);
+    handleResponseAction(socket, roomId, gameAction);
   };
 
   const canCallout = () => {
-    if(initialAction == GameActions.Aid && responseAction == null) {
+    if (initialAction == GameActions.Aid && responseAction == null) {
       return false;
     } else {
       return true;
     }
-  }
+  };
 
   const canBlockAssassinate = () => {
-    if(initialAction == GameActions.Assassinate && responseAction == null) {
+    if (initialAction == GameActions.Assassinate && responseAction == null) {
       return true;
     } else {
       return false;
     }
-  }
-    
+  };
+
   const canBlockAid = () => {
-    if(initialAction == GameActions.Aid && responseAction == null) {
+    if (initialAction == GameActions.Aid && responseAction == null) {
       return true;
     } else {
       return false;
     }
-  }
-  
+  };
+
   const canBlockSteal = () => {
-    if(initialAction == GameActions.Steal && responseAction == null) {
+    if (initialAction == GameActions.Steal && responseAction == null) {
       return true;
     } else {
       return false;
     }
-  }
+  };
 
   const handleDisplayedAction = (action) => {
     switch (action) {
@@ -189,21 +179,27 @@ const ResponseActions = () => {
             onClick={() => onResponseClick(GameActions.CalloutLie)}
             text={"Callout Lie"}
           />
-        ) : ( <></> )}
+        ) : (
+          <></>
+        )}
         {canBlockAssassinate() ? (
           <ActionButton
             buttonClass={buttonClass(GameActions.BlockAssassinate)}
             onClick={() => onResponseClick(GameActions.BlockAssassinate)}
             text={"Block Assassinate"}
           />
-        ) : ( <></> )}
+        ) : (
+          <></>
+        )}
         {canBlockAid() ? (
           <ActionButton
             buttonClass={buttonClass(GameActions.BlockAid)}
             onClick={() => onResponseClick(GameActions.BlockAid)}
             text={"Block Aid"}
           />
-        ) : ( <></> )}
+        ) : (
+          <></>
+        )}
         {canBlockSteal() ? (
           <>
             <ActionButton
@@ -217,7 +213,9 @@ const ResponseActions = () => {
               text={"Block Steal as Captain"}
             />
           </>
-        ) : ( <></> )}
+        ) : (
+          <></>
+        )}
         <ActionButton
           buttonClass={ButtonClass.Normal}
           onClick={() => onResponseClick(GameActions.Pass)}
