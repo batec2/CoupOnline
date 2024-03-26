@@ -94,9 +94,9 @@ export const useGameEvents = (gameState) => {
       setInitialAction(initialAction);
       responseIdRef.current = responseId;
       setResponseAction(responseAction);
-
       if (initialUserId === socket.id) {
         setIsResponding(true);
+        return;
       }
       setIsResponding(false);
     };

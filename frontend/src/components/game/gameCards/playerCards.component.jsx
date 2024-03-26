@@ -32,6 +32,9 @@ const PlayerCards = () => {
       case GameActions.Exchange: {
         return ChooseCard.Exchange;
       }
+      case GameActions.Assassinate: {
+        return ChooseCard.Loose;
+      }
       case GameActions.CalloutLie: {
         return ChooseCard.Show;
       }

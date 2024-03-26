@@ -83,14 +83,20 @@ export const registerGameHandlers = (io, socket, rooms) => {
       }
       case Taxes: {
         state.increasePlayerMoney(state.initialUserId, 3);
+        state.incrementTurn();
+        emitUpdate(io, room);
         break;
       }
       case Steal: {
         state.increasePlayerMoney(state.initialUserId, 2);
         state.decreasePlayerMoney(state.targetId, 2);
+        state.incrementTurn();
+        emitUpdate(io, room);
         break;
       }
       case Assassinate: {
+        state.initialResponseAction = null;
+        state.initialResponseId = null;
         emitChooseCard(roomId, state.targetId, state);
         break;
       }
@@ -155,16 +161,16 @@ export const registerGameHandlers = (io, socket, rooms) => {
       // If Block action emits a new event to client
       if (isBlockAction(state.initialResponseAction)) {
         console.log(
-          `${socket.id} is blocking ${state.initialAction} action of ${
+          `${socket.id} is blocking ${state.initialUserId} action of ${
             GameActions[state.initialAction]
           }`
         );
-        emitBlockAction(state);
+        emitBlockAction(roomId, state);
       }
       // If response is a callout askes the initial user to show a card
       else if (responseAction === CalloutLie) {
         console.log(
-          `${socket.id} is calling out ${state.initialAction} action of ${
+          `${socket.id} is calling out ${state.initialUserId} action of ${
             GameActions[state.initialAction]
           }`
         );
@@ -176,9 +182,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
         state.incrementPassCount();
 
         if (state.passCount === state.playerCount - 1) {
-          handleAction(roomId, room, state);
-          state.incrementTurn();
-          emitUpdate(io, room);
+          handleAction(roomId, state.targetId, state);
         }
       }
       return;
@@ -189,6 +193,11 @@ export const registerGameHandlers = (io, socket, rooms) => {
       state.incrementTurn();
       emitUpdate(io, room);
     } else if (responseAction === CalloutLie) {
+      console.log(
+        `${socket.id} is blocking ${state.responseId} action of ${
+          GameActions[state.responseAction]
+        }`
+      );
       emitChooseCard(roomId, state.initialResponseId, state);
     }
   };

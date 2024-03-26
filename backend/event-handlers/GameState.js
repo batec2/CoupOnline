@@ -14,7 +14,7 @@ export class GameState {
 
   // Turn State
   targetId = null;
-  initialPlayerId = null;
+  initialUserId = null;
   initialAction = null;
   initialResponseId = null;
   initialResponseAction = null;
@@ -60,8 +60,8 @@ export class GameState {
     return this.targetId;
   }
 
-  get initialPlayerId() {
-    return this.initialPlayerId;
+  get initialUserId() {
+    return this.initialUserId;
   }
   get initialAction() {
     return this.initialAction;
@@ -83,8 +83,8 @@ export class GameState {
     this.targetId = targetId;
   }
 
-  set initialPlayerId(initialPlayerId) {
-    this.initialPlayerId = initialPlayerId;
+  set initialUserId(initialUserId) {
+    this.initialUserId = initialUserId;
   }
   set initialAction(initialAction) {
     this.initialAction = initialAction;
@@ -104,7 +104,7 @@ export class GameState {
 
   resetTurnState() {
     this.targetId = null;
-    this.initialPlayerId = null;
+    this.initialUserId = null;
     this.initialAction = null;
     this.initialResponseId = null;
     this.initialResponseId = null;
