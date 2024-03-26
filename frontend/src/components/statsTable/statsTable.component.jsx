@@ -8,27 +8,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-const StatsTable = ({ players, games }) => {
-  // Calculate statistics for all players
-  const playerStatistics = players.map((player) => {
-    const playerId = player._id;
-    let gamesPlayed = 0;
-    let gamesWon = 0;
-    let gamesLost = 0;
-
-    games.forEach((game) => {
-      if (game.players.some((player) => player.player === playerId)) {
-        gamesPlayed++;
-        if (game.winner === playerId) {
-          gamesWon++;
-        } else {
-          gamesLost++;
-        }
-      }
-    });
-
-    return { playerId, gamesPlayed, gamesWon, gamesLost };
-  });
+const StatsTable = ({ playerStatistics, players }) => {
 
   return (
     <Table>

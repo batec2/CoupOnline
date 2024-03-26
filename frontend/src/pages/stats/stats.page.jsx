@@ -2,6 +2,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import axios from "axios";
 import StatsTable from "../../components/statsTable/statsTable.component.jsx";
+import calculatePlayerStatistics from "@/components/statsTable/calculatePlayerStatistics.js";
 
 const axiosClientPlayers = axios.create({
   baseURL: "http://localhost:8080",
@@ -12,11 +13,6 @@ const axiosClientPlayers = axios.create({
   },
 });
 
-/**
- * Page for getting the global stats, for example
- * win-rate per card, most winning card combinations, ect..
- * @returns Stats/Leader Board
- */
 const axiosClientGames = axios.create({
   baseURL: "http://localhost:8080",
   headers: {
@@ -73,9 +69,13 @@ const StatsPage = () => {
       </div>
     );
   } else {
+    const playerStatistics = calculatePlayerStatistics({
+      players: playersData,
+      games: gamesData,
+    });
     return (
       <div className="m-16 mt-4">
-        <StatsTable players={playersData} games={gamesData} />
+        <StatsTable playerStatistics={playerStatistics} players={playersData} />
       </div>
     );
   }
