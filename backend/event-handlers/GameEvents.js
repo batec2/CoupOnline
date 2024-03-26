@@ -128,11 +128,11 @@ export const registerGameHandlers = (io, socket, rooms) => {
     state.initialUserId = initialUserId;
     state.initialAction = initialAction;
 
-    if (initialAction !== Coup && initialAction !== Income) {
+    if (state.initialAction !== Coup && state.initialAction !== Income) {
       //Emits to everyone except the current player
       socket.to(roomId).emit("choose-response", {
-        initialUserId: initialUserId,
-        initialAction: initialAction,
+        initialUserId: state.initialUserId,
+        initialAction: state.initialAction,
       });
       return;
     }
@@ -174,7 +174,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
             GameActions[state.initialAction]
           }`
         );
-        emitChooseCard(roomId, state.initialAction, state);
+        emitChooseCard(roomId, state.initialUserId, state);
       }
       // If all players pass the initial action goes through
       else if (responseAction === Pass) {
@@ -182,7 +182,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
         state.incrementPassCount();
 
         if (state.passCount === state.playerCount - 1) {
-          handleAction(roomId, state.targetId, state);
+          handleAction(roomId, room, state);
         }
       }
       return;

@@ -119,8 +119,6 @@ export class GameState {
    */
   checkCard(userId, card, initialAction) {
     const playerCard = this.playerState[userId].gameCards[card];
-    console.log(CardInfo[playerCard].validActions);
-    console.log(initialAction);
     if (CardInfo[playerCard].validActions.includes(initialAction)) {
       return true;
     }
