@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/table";
 
 const StatsTable = ({ playerStatistics, players }) => {
-
   return (
     <Table>
       <TableCaption>Global Statistics</TableCaption>
@@ -35,7 +34,9 @@ const StatsTable = ({ playerStatistics, players }) => {
             <TableCell>{stats.gamesWon}</TableCell>
             <TableCell>{stats.gamesLost}</TableCell>
             <TableCell>
-              {stats.gamesLost === 0 ? "N/A" : stats.gamesWon / stats.gamesLost}
+              {stats.gamesLost !== 0
+                ? (stats.gamesWon / stats.gamesLost).toFixed(2)
+                : "N/A"}
             </TableCell>
           </TableRow>
         ))}
