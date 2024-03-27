@@ -40,30 +40,32 @@ const RoomPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <div className="mb-4">
-        <Input
-          type="text"
-          onChange={(e) => {
-            room.current = e.target.value;
-          }}
-          onKeyPress={handleKeyPress}
-          placeholder="Room Number"
-          disabled={room.current ? true : false}
-          className="w-64 px-4 py-2 border rounded-md"
-        />
+      <div className="w-50">
+        <div className="mb-4">
+          <Input
+            type="text"
+            onChange={(e) => {
+              room.current = e.target.value;
+            }}
+            onKeyPress={handleKeyPress}
+            placeholder="Room Number"
+            disabled={room.current ? true : false}
+            className="w-full px-4 py-2 border rounded-md"
+          />
+        </div>
+        <Button
+          onClick={handleJoin}
+          className="bg-blue-800 text-white px-4 py-2 rounded-md w-full"
+        >
+          {room.current ? "Leave Room" : "Join Room"}
+        </Button>
+        <Button
+          onClick={handleLogout}
+          className="bg-red-500 text-white px-4 py-2 my-4 rounded-md w-full"
+        >
+          Logout
+        </Button>
       </div>
-      <Button
-        onClick={handleJoin}
-        className="bg-blue-500 text-white px-4 py-2 rounded-md"
-      >
-        {room.current ? "Leave Room" : "Join Room"}
-      </Button>
-      <Button
-        onClick={handleLogout}
-        className="bg-red-500 text-white px-4 py-2 my-4 rounded-md"
-      >
-        {"Logout"}
-      </Button>
     </div>
   );
 };
