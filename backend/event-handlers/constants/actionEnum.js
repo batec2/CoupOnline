@@ -1,4 +1,4 @@
-const GameActions = {
+export const GameActions = {
   Income: 0,
   Aid: 1,
   Coup: 2,
@@ -29,4 +29,14 @@ const GameActions = {
   13: "LooseCallout",
 };
 
-export default GameActions;
+export const isBlockAction = (action) => {
+  if (
+    action === GameActions.BlockAssassinate ||
+    action === GameActions.BlockAid ||
+    action === GameActions.BlockStealAsCaptain ||
+    action === GameActions.BlockStealAsAmbass
+  ) {
+    return true;
+  }
+  return false;
+};

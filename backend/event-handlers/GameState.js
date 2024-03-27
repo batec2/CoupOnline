@@ -1,5 +1,4 @@
 import CardInfo from "./constants/CardInfo.js";
-import GameActions from "./constants/actionEnum.js";
 import GameCard from "./constants/cardEnum.js";
 
 export class GameState {
@@ -12,6 +11,14 @@ export class GameState {
   roundNumber = 0;
   round = {};
   passCount = 0;
+
+  // Turn State
+  targetId = null;
+  initialUserId = null;
+  initialAction = null;
+  initialResponseId = null;
+  initialResponseAction = null;
+  isBlocked = false;
 
   constructor(players) {
     this.playerCount = players.length;
@@ -49,6 +56,61 @@ export class GameState {
     return this.passCount;
   }
 
+  get targetId() {
+    return this.targetId;
+  }
+
+  get initialUserId() {
+    return this.initialUserId;
+  }
+  get initialAction() {
+    return this.initialAction;
+  }
+
+  get initialResponseId() {
+    return this.initialResponseId;
+  }
+
+  get initialResponseAction() {
+    return this.initialResponseAction;
+  }
+
+  get isBlocked() {
+    return this.isBlocked;
+  }
+
+  set targetId(targetId) {
+    this.targetId = targetId;
+  }
+
+  set initialUserId(initialUserId) {
+    this.initialUserId = initialUserId;
+  }
+  set initialAction(initialAction) {
+    this.initialAction = initialAction;
+  }
+
+  set initialResponseId(initialResponseId) {
+    this.initialResponseId = initialResponseId;
+  }
+
+  set initialResponseAction(initialResponseAction) {
+    this.initialResponseAction = initialResponseAction;
+  }
+
+  set isBlocked(isBlocked) {
+    this.isBlocked = isBlocked;
+  }
+
+  resetTurnState() {
+    this.targetId = null;
+    this.initialUserId = null;
+    this.initialAction = null;
+    this.initialResponseId = null;
+    this.initialResponseId = null;
+    this.isBlocked = false;
+  }
+
   /**
    *
    * @param {*} userId - player called out
@@ -57,8 +119,6 @@ export class GameState {
    */
   checkCard(userId, card, initialAction) {
     const playerCard = this.playerState[userId].gameCards[card];
-    console.log(CardInfo[playerCard].validActions);
-    console.log(initialAction);
     if (CardInfo[playerCard].validActions.includes(initialAction)) {
       return true;
     }

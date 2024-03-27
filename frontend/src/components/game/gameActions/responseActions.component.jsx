@@ -15,10 +15,9 @@ const ResponseActions = () => {
     socket,
     roomId,
     initialAction,
-    initialUserId,
     gameCards,
     responseAction,
-    responseIdRef,
+    setIsResponding,
   } = useGameContext();
 
   //Detemines button colour based on whether player has appropriate card or not
@@ -35,24 +34,30 @@ const ResponseActions = () => {
         }
       }
       case GameActions.BlockStealAsAmbass: {
-        if (gameCards[0] == GameCard.Ambassador 
-            || gameCards[1] == GameCard.Ambassador) {
+        if (
+          gameCards[0] == GameCard.Ambassador ||
+          gameCards[1] == GameCard.Ambassador
+        ) {
           return ButtonClass.HaveCard;
         } else {
           return ButtonClass.Bluff;
         }
       }
       case GameActions.BlockStealAsCaptain: {
-        if (gameCards[0] == GameCard.Captain 
-            || gameCards[1] == GameCard.Captain) {
+        if (
+          gameCards[0] == GameCard.Captain ||
+          gameCards[1] == GameCard.Captain
+        ) {
           return ButtonClass.HaveCard;
         } else {
           return ButtonClass.Bluff;
         }
       }
       case GameActions.BlockAssassinate: {
-        if (gameCards[0] == GameCard.Contessa
-          || gameCards[1] == GameCard.Contessa) {
+        if (
+          gameCards[0] == GameCard.Contessa ||
+          gameCards[1] == GameCard.Contessa
+        ) {
           return ButtonClass.HaveCard;
         } else {
           return ButtonClass.Bluff;
@@ -65,15 +70,40 @@ const ResponseActions = () => {
   };
 
   const onResponseClick = (gameAction) => {
-    handleResponseAction(
-      socket,
-      roomId,
-      initialUserId,
-      initialAction,
-      gameAction,
-      responseIdRef,
-      responseAction
-    );
+    setIsResponding(false);
+    handleResponseAction(socket, roomId, gameAction);
+  };
+
+  const canCallout = () => {
+    if (initialAction == GameActions.Aid && responseAction == null) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  const canBlockAssassinate = () => {
+    if (initialAction == GameActions.Assassinate && responseAction == null) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const canBlockAid = () => {
+    if (initialAction == GameActions.Aid && responseAction == null) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const canBlockSteal = () => {
+    if (initialAction == GameActions.Steal && responseAction == null) {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   const handleDisplayedAction = (action) => {
@@ -115,22 +145,82 @@ const ResponseActions = () => {
     }
   };
 
+  // return (
+  //   <div>
+  //     <h1>{JSON.stringify(initialAction)}</h1>
+  //     <div>
+  //       {handleDisplayedAction(initialAction)}
+  //       {initialAction != GameActions.Aid ? (
+  //         <ActionButton
+  //           buttonClass={ButtonClass.Callout}
+  //           onClick={() => onResponseClick(GameActions.CalloutLie)}
+  //           text={"Callout Lie"}
+  //         />
+  //       ) : (
+  //         <></>
+  //       )}
+  //       <ActionButton
+  //         buttonClass={ButtonClass.Normal}
+  //         onClick={() => onResponseClick(GameActions.Pass)}
+  //         text={"Pass"}
+  //       ></ActionButton>
+  //     </div>
+  //   </div>
+  // );
+
   return (
     <div>
-      <h1>{JSON.stringify(initialAction)}</h1>
-      <div>
-        {handleDisplayedAction(initialAction)}
-        {initialAction != GameActions.Aid ? 
-        <ActionButton
-          buttonClass={ButtonClass.Callout}
-          onClick={() => onResponseClick(GameActions.CalloutLie)}
-          text={"Callout Lie"}
-        /> : <></>}
+      <h1>Initial Action: {JSON.stringify(initialAction)}</h1>
+      <div className="space-x-2 space-y-2">
+        <p>Response Action: {JSON.stringify(responseAction)}</p>
+        {canCallout() ? (
+          <ActionButton
+            buttonClass={ButtonClass.Callout}
+            onClick={() => onResponseClick(GameActions.CalloutLie)}
+            text={"Callout Lie"}
+          />
+        ) : (
+          <></>
+        )}
+        {canBlockAssassinate() ? (
+          <ActionButton
+            buttonClass={buttonClass(GameActions.BlockAssassinate)}
+            onClick={() => onResponseClick(GameActions.BlockAssassinate)}
+            text={"Block Assassinate"}
+          />
+        ) : (
+          <></>
+        )}
+        {canBlockAid() ? (
+          <ActionButton
+            buttonClass={buttonClass(GameActions.BlockAid)}
+            onClick={() => onResponseClick(GameActions.BlockAid)}
+            text={"Block Aid"}
+          />
+        ) : (
+          <></>
+        )}
+        {canBlockSteal() ? (
+          <>
+            <ActionButton
+              buttonClass={buttonClass(GameActions.BlockStealAsAmbass)}
+              onClick={() => onResponseClick(GameActions.BlockStealAsAmbass)}
+              text={"Block Steal as Ambassador"}
+            />
+            <ActionButton
+              buttonClass={buttonClass(GameActions.BlockStealAsCaptain)}
+              onClick={() => onResponseClick(GameActions.BlockStealAsCaptain)}
+              text={"Block Steal as Captain"}
+            />
+          </>
+        ) : (
+          <></>
+        )}
         <ActionButton
           buttonClass={ButtonClass.Normal}
           onClick={() => onResponseClick(GameActions.Pass)}
           text={"Pass"}
-        ></ActionButton>
+        />
       </div>
     </div>
   );

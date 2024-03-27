@@ -45,8 +45,8 @@ export const useGameEvents = (gameState) => {
      * @param {*} chooserId - Player asking for target to choose card
      * @param {*} initialUserId - initial user
      * @param {*} initialAction - initial action
-     * @param {*} responseId - response userId
-     * @param {*} responseAction - response action
+     * @param {*} responseId - responser userId
+     * @param {*} responseAction - responser action
      * @returns
      */
     const onChooseCardEvent = ({
@@ -65,6 +65,7 @@ export const useGameEvents = (gameState) => {
       setInitialAction(initialAction);
       setResponseAction(responseAction ? responseAction : initialAction);
       responseIdRef.current = responseId;
+
       if (chooserId === socket.id) {
         setIsTarget(true);
         return;
@@ -79,6 +80,7 @@ export const useGameEvents = (gameState) => {
       setInitialAction(null);
       setInitialUserId(null);
       responseIdRef.current = null;
+      setResponseAction(null);
       setCoins(coins);
     };
 
@@ -92,6 +94,11 @@ export const useGameEvents = (gameState) => {
       setInitialAction(initialAction);
       responseIdRef.current = responseId;
       setResponseAction(responseAction);
+      if (initialUserId === socket.id) {
+        setIsResponding(true);
+        return;
+      }
+      setIsResponding(false);
     };
 
     socket.connect();

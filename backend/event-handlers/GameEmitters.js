@@ -14,4 +14,6 @@ export const emitUpdate = (io, room) => {
       coins: coins,
     });
   });
+  state.resetTurnState();
+  state.resetPassCount();
 };
