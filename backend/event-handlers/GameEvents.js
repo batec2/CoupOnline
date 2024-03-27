@@ -264,7 +264,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
             //If the called out player shows the correct card the calling out player
             //chooses a card to loose
             console.log(
-              `${chooserId} showed the proper card for ${GameActions[initialAction]} and ${initialUserId} must choose to lose a card`
+              `${chooserId} showed the proper card for ${GameActions[initialAction]} and ${responseId} must choose to lose a card`
             );
             handleAction(roomId, room, state);
             emitChooseCard(roomId, responseId, state);
