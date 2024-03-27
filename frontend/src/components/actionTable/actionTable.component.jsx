@@ -1,6 +1,13 @@
 import actions from "../../data/actions.json";
-
-import "./actionTable.styles.css";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 
 /**
  * Table showing all available player actions
@@ -8,30 +15,35 @@ import "./actionTable.styles.css";
  */
 const ActionTable = () => {
   return (
-    <table className="tableActions">
-      <tr>
-        <th className="tableActionsElement">Card</th>
-        <th className="tableActionsElement">Action</th>
-        <th className="tableActionsElement">Effect</th>
-        <th className="tableActionsElement">Counteraction</th>
-      </tr>
+    <Table>
+      <TableCaption>Actions</TableCaption>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Card</TableHead>
+          <TableHead>Action</TableHead>
+          <TableHead>Effect</TableHead>
+          <TableHead>Counteraction</TableHead>
+        </TableRow>
+      </TableHeader>
       {actions.map((action) => (
-        <tr>
-          <td className="tableActionsElement">
-            {action["character"] == "" ? "-" : action["character"]}
-          </td>
-          <td className="tableActionsElement">
-            {action["action-name"] == "" ? "-" : action["action-name"]}
-          </td>
-          <td className="tableActionsElement">
-            {action["action-effect"] == "" ? "-" : action["action-effect"]}
-          </td>
-          <td className="tableActionsElement">
-            {action["counteraction"] == "" ? "-" : action["counteraction"]}
-          </td>
-        </tr>
+        <TableBody key={action}>
+          <TableRow>
+            <TableCell>
+              {action["character"] == "" ? "-" : action["character"]}
+            </TableCell>
+            <TableCell>
+              {action["action-name"] == "" ? "-" : action["action-name"]}
+            </TableCell>
+            <TableCell>
+              {action["action-effect"] == "" ? "-" : action["action-effect"]}
+            </TableCell>
+            <TableCell>
+             {action["counteraction"] == "" ? "-" : action["counteraction"]}
+            </TableCell>
+          </TableRow>
+        </TableBody>
       ))}
-    </table>
+    </Table>
   );
 };
 

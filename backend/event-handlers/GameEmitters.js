@@ -6,7 +6,6 @@ export const emitUpdate = (io, room) => {
   const { players, state } = room;
   Object.keys(players).forEach((player) => {
     const { gameCards, coins } = state.getPlayer(player);
-
     // Sends players cards
     // Starts the game for players and sends player id of first turn\
     io.to(player).emit("update-state", {
@@ -15,4 +14,6 @@ export const emitUpdate = (io, room) => {
       coins: coins,
     });
   });
+  state.resetTurnState();
+  state.resetPassCount();
 };

@@ -17,14 +17,23 @@ const axiosClientPlayers = axios.create({
  * win-rate per card, most winning card combinations, ect..
  * @returns Stats/Leader Board
  */
+const axiosClientGames = axios.create({
+  baseURL: "http://localhost:8080",
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "application/x-www-form-urlencoded",
+    "Access-Control-Allow-Origin": "*",
+  },
+});
+
 const StatsPage = () => {
   const queryClient = useQueryClient();
-  const [AllPlayers, setAllPlayers] = useState([]);
+  const [allPlayers, setAllPlayers] = useState([]);
 
   const {
-    data: results,
-    isError,
-    isPending,
+    data: playersData,
+    isError: playersError,
+    isPending: playersPending,
   } = useQuery({
     queryKey: ["players"],
     queryFn: async () => {
@@ -32,37 +41,44 @@ const StatsPage = () => {
       if (response.status != 200) {
         throw new Error(`Failed to get players`);
       }
-      console.log(response.data);
       return response.data;
     },
   });
 
-  console.log(results);
-  if (isError) {
+  const {
+    data: gamesData,
+    isError: gamesError,
+    isPending: gamesPending,
+  } = useQuery({
+    queryKey: ["games"],
+    queryFn: async () => {
+      const response = await axiosClientGames.get("/games");
+      if (response.status !== 200) {
+        throw new Error(`Failed to get games`);
+      }
+      return response.data;
+    },
+  });
+
+  if (playersError || gamesError) {
     return (
       <div>
-        <h1>🤷‍♂️UHOH HOT DOG🌭</h1>
+        <h1>Unable to retrieve stats. Error: {playersError || gamesError}</h1>
       </div>
     );
-  } else if (isPending) {
+  } else if (playersPending || gamesPending) {
     return (
-      <div>
-        <h1>🤷‍♂️UHOH WE LOADING🌭</h1>
+      <div className="text-center">
+        <h1>Crunching the latest statistics ...</h1>
+      </div>
+    );
+  } else {
+    return (
+      <div className="m-16 mt-4">
+        <StatsTable players={playersData} games={gamesData} />
       </div>
     );
   }
-  return (
-    <div>
-      <p>{JSON.stringify(results)}</p>
-    </div>
-  );
-
-  // return (
-  //   <div>
-  //     {/* {isSuccess && <StatsTable entries={AllPlayers}></StatsTable>} */}
-  //     {isError && <h3>Error Occurred In Retrieving Player Stats</h3>}
-  //   </div>
-  // );
 };
 
 export default StatsPage;

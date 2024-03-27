@@ -30,11 +30,13 @@ export const useGameState = () => {
   const [gameStart, setGameStart] = useState(false);
   const [currentTurnId, setTurnId] = useState(null);
   const [gameCards, setGameCards] = useState(null);
-  const [responseAction, setResponseAction] = useState(null);
-  const [requestAction, setRequestAction] = useState(null);
-  const requestIdRef = useRef(null);
+  const [initialAction, setInitialAction] = useState(null);
+  const [initialUserId, setInitialUserId] = useState(null);
   const [isTarget, setIsTarget] = useState(false);
   const [coins, setCoins] = useState(0);
+  const [isResponding, setIsResponding] = useState(false);
+  const [responseAction, setResponseAction] = useState(null);
+  const responseIdRef = useRef(null);
   const socket = useContext(SocketContext);
   const { roomId } = useParams();
 
@@ -47,15 +49,19 @@ export const useGameState = () => {
     setTurnId: setTurnId,
     gameCards: gameCards,
     setGameCards: setGameCards,
-    responseAction: responseAction,
-    setResponseAction: setResponseAction,
-    requestAction: requestAction,
-    setRequestAction: setRequestAction,
-    requestIdRef: requestIdRef,
+    initialAction: initialAction,
+    setInitialAction: setInitialAction,
+    initialUserId: initialUserId,
+    setInitialUserId: setInitialUserId,
     isTarget: isTarget,
     setIsTarget: setIsTarget,
     coins: coins,
     setCoins: setCoins,
+    isResponding: isResponding,
+    setIsResponding: setIsResponding,
+    responseAction: responseAction,
+    setResponseAction: setResponseAction,
+    responseIdRef: responseIdRef,
     socket: socket,
     roomId: roomId,
   };

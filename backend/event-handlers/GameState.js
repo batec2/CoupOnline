@@ -1,6 +1,5 @@
-import CardInfo from "../lib/CardInfo.js";
-import GameActions from "../lib/actionEnum.js";
-import GameCard from "../lib/cardEnum.js";
+import CardInfo from "./constants/CardInfo.js";
+import GameCard from "./constants/cardEnum.js";
 
 export class GameState {
   //3 of each Duke,Assassin,Captain,Ambassador,Contessa
@@ -12,6 +11,14 @@ export class GameState {
   roundNumber = 0;
   round = {};
   passCount = 0;
+
+  // Turn State
+  targetId = null;
+  initialUserId = null;
+  initialAction = null;
+  initialResponseId = null;
+  initialResponseAction = null;
+  isBlocked = false;
 
   constructor(players) {
     this.playerCount = players.length;
@@ -49,20 +56,70 @@ export class GameState {
     return this.passCount;
   }
 
+  get targetId() {
+    return this.targetId;
+  }
+
+  get initialUserId() {
+    return this.initialUserId;
+  }
+  get initialAction() {
+    return this.initialAction;
+  }
+
+  get initialResponseId() {
+    return this.initialResponseId;
+  }
+
+  get initialResponseAction() {
+    return this.initialResponseAction;
+  }
+
+  get isBlocked() {
+    return this.isBlocked;
+  }
+
+  set targetId(targetId) {
+    this.targetId = targetId;
+  }
+
+  set initialUserId(initialUserId) {
+    this.initialUserId = initialUserId;
+  }
+  set initialAction(initialAction) {
+    this.initialAction = initialAction;
+  }
+
+  set initialResponseId(initialResponseId) {
+    this.initialResponseId = initialResponseId;
+  }
+
+  set initialResponseAction(initialResponseAction) {
+    this.initialResponseAction = initialResponseAction;
+  }
+
+  set isBlocked(isBlocked) {
+    this.isBlocked = isBlocked;
+  }
+
+  resetTurnState() {
+    this.targetId = null;
+    this.initialUserId = null;
+    this.initialAction = null;
+    this.initialResponseId = null;
+    this.initialResponseId = null;
+    this.isBlocked = false;
+  }
+
   /**
    *
    * @param {*} userId - player called out
    * @param {*} card - card shown
    * @param {*} action - action being called out
    */
-  checkCard(userId, card, requestAction) {
+  checkCard(userId, card, initialAction) {
     const playerCard = this.playerState[userId].gameCards[card];
-    console.log(playerCard);
-    console.log(CardInfo[playerCard]);
-    console.log(requestAction);
-    console.log(CardInfo[playerCard].validActions.includes(requestAction));
-
-    if (CardInfo[playerCard].validActions.includes(requestAction)) {
+    if (CardInfo[playerCard].validActions.includes(initialAction)) {
       return true;
     }
     return false;
@@ -74,6 +131,9 @@ export class GameState {
 
   getPlayer(player) {
     return this.playerState[player];
+  }
+  getPlayerCard(player, card) {
+    return this.playerState[player].gameCards[card];
   }
 
   addRound(round) {
