@@ -8,28 +8,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-const StatsTable = ({ players, games }) => {
-  // Calculate statistics for all players
-  const playerStatistics = players.map((player) => {
-    const playerId = player._id;
-    let gamesPlayed = 0;
-    let gamesWon = 0;
-    let gamesLost = 0;
-
-    games.forEach((game) => {
-      if (game.players.some((player) => player.player === playerId)) {
-        gamesPlayed++;
-        if (game.winner === playerId) {
-          gamesWon++;
-        } else {
-          gamesLost++;
-        }
-      }
-    });
-
-    return { playerId, gamesPlayed, gamesWon, gamesLost };
-  });
-
+const StatsTable = ({ playerStatistics, players }) => {
   return (
     <Table>
       <TableCaption>Global Statistics</TableCaption>
@@ -55,7 +34,9 @@ const StatsTable = ({ players, games }) => {
             <TableCell>{stats.gamesWon}</TableCell>
             <TableCell>{stats.gamesLost}</TableCell>
             <TableCell>
-              {stats.gamesLost === 0 ? "N/A" : stats.gamesWon / stats.gamesLost}
+              {stats.gamesLost !== 0
+                ? (stats.gamesWon / stats.gamesLost).toFixed(2)
+                : "N/A"}
             </TableCell>
           </TableRow>
         ))}
