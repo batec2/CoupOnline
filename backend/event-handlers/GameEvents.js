@@ -155,8 +155,10 @@ export const registerGameHandlers = (io, socket, rooms) => {
     // If the action is a response to the first normal action
     if (state.initialResponseId === null) {
       // Sets the initial response in state
-      state.initialResponseId = socket.id;
-      state.initialResponseAction = responseAction;
+      if (responseAction !== Pass) {
+        state.initialResponseId = socket.id;
+        state.initialResponseAction = responseAction;
+      }
 
       // If Block action emits a new event to client
       if (isBlockAction(state.initialResponseAction)) {
