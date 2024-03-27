@@ -210,28 +210,19 @@ export const registerGameHandlers = (io, socket, rooms) => {
    * @param {*} recv
    * @returns
    */
-  const onChooseCard = ({
-    roomId,
-    chooserId,
-    initialUserId,
-    initialAction,
-    responseId,
-    responseAction,
-    card,
-    chooseActionType,
-  }) => {
+  const onChooseCard = ({ roomId, card, chooseActionType }) => {
     const room = rooms[roomId];
     const state = room.state;
 
     switch (chooseActionType) {
       case ChooseCard.Loose: {
         console.log(
-          `${chooserId} is choosing to lose his ${
-            CardInfo[state.getPlayerCard(chooserId, card)].character
+          `${socket.id} is choosing to lose his ${
+            CardInfo[state.getPlayerCard(socket.id, card)].character
           }`
         );
         state.incrementTurn();
-        state.loseCard(chooserId, card);
+        state.loseCard(socket.id, card);
         emitUpdate(io, room);
         break;
       }
@@ -242,37 +233,58 @@ export const registerGameHandlers = (io, socket, rooms) => {
         {
           // card shown gets checked
           console.log(
-            `${chooserId} is showing ${
-              CardInfo[state.getPlayerCard(chooserId, card)].character
+            `${socket.id} is showing ${
+              CardInfo[state.getPlayerCard(socket.id, card)].character
             }`
           );
           // If a Block action is called out
-          if (isBlockAction(responseAction)) {
-            if (state.checkCard(chooserId, card, responseAction)) {
+          if (
+            state.initialResponseAction &&
+            isBlockAction(state.initialResponseAction)
+          ) {
+            if (state.checkCard(socket.id, card, state.initialResponseAction)) {
               console.log(
-                `${chooserId} showed the proper card for ${GameActions[responseAction]} and ${responseId} must choose to lose a card`
+                `${socket.id} showed the proper card for ${
+                  GameActions[state.initialResponseAction]
+                } and ${responseId} must choose to lose a card`
               );
               // If the Person Can Block then the initial user loses a card
-              emitChooseCard(roomId, initialUserId, state);
+              emitChooseCard(roomId, state.initialAction, state);
               return;
             }
             state.incrementTurn();
-            state.loseCard(chooserId, card);
+            state.loseCard(socket.id, card);
             emitUpdate(io, room);
             return;
-          } else if (state.checkCard(chooserId, card, initialAction)) {
+          }
+          // Callout happened on first response
+          else if (state.checkCard(socket.id, card, state.initialAction)) {
             //If the called out player shows the correct card the calling out player
             //chooses a card to loose
             console.log(
-              `${chooserId} showed the proper card for ${GameActions[initialAction]} and ${responseId} must choose to lose a card`
+              `${socket.id} showed the proper card for ${
+                GameActions[state.initialAction]
+              } and ${state.initialResponseId} must choose to lose a card`
             );
+            // If a player calls out an Assassin and lose, they lose both cards
+            if ((state.initialAction = Assassinate)) {
+              state.loseCard(state.initialResponseId, 0);
+              state.loseCard(state.initialResponseId, 1);
+              state.incrementTurn();
+              emitUpdate(io, room);
+              return;
+            }
+            if ((state.initialAction = Exchange)) {
+              state.incrementTurn();
+              emitUpdate(io, room);
+            }
             handleAction(roomId, room, state);
-            emitChooseCard(roomId, responseId, state);
+            emitChooseCard(roomId, state.initialResponseId, state);
             return;
           }
         }
         state.incrementTurn();
-        state.loseCard(initialUserId, card);
+        state.loseCard(state.initialUserId, card);
         emitUpdate(io, room);
     }
   };

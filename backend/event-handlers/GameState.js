@@ -193,4 +193,6 @@ export class GameState {
     }
     return gameCards;
   }
+
+  checkWinner() {}
 }

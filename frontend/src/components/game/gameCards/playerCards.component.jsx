@@ -12,10 +12,8 @@ const PlayerCards = () => {
     socket,
     roomId,
     responseAction,
-    responseIdRef,
     currentTurnId,
     initialAction,
-    initialUserId,
     setTurnId,
     setInitialAction,
     setInitialUserId,
@@ -68,11 +66,6 @@ const PlayerCards = () => {
     );
     socket.emit("choose-card", {
       roomId: roomId,
-      chooserId: socket.id,
-      initialUserId: initialUserId,
-      initialAction: initialAction,
-      responseId: responseIdRef.current,
-      responseAction: responseAction,
       card: card,
       chooseActionType: chooseCardType(),
     });
