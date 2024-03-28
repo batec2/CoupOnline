@@ -4,6 +4,8 @@ import ChooseCard from "@/lib/chooseCardEnum";
 import GameActions from "@/lib/actionEnum";
 import GameCard from "@/lib/cardEnum";
 import GameSectionTitle from "@/components/text/gameSectionTitle.component";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 const PlayerCards = () => {
   const {
@@ -19,6 +21,8 @@ const PlayerCards = () => {
     setInitialUserId,
     exchangeCardsRef,
   } = useGameContext();
+
+  const [exchangeCards, setExchangeCards] = useState(null);
 
   const chooseCardType = () => {
     switch (responseAction) {
@@ -59,7 +63,7 @@ const PlayerCards = () => {
    * @returns
    */
   const handleChooseCard = (card) => {
-    if (!isTarget) {
+    if (!isTarget || !exchangeCardsRef) {
       return;
     }
     console.log(
@@ -73,6 +77,14 @@ const PlayerCards = () => {
     setTurnId(null);
     setInitialAction(null);
     setInitialUserId(null);
+  };
+
+  const handleExchangeCard = () => {
+    socket.emit("exchange-cards", {
+      roomId: roomId,
+      selectedCards: exchangeCards.selectedCards,
+      returnedCards: exchangeCards.returnedCards,
+    });
   };
 
   const showPrompt = () => {
@@ -108,16 +120,21 @@ const PlayerCards = () => {
     if (exchangeCardsRef.current) {
       return (
         <>
-          <Card
-            className={cardClass(exchangeCardsRef.current[0])}
-            card={exchangeCardsRef.current[0]}
-            onClick={() => handleChooseCard(0)}
-          ></Card>
-          <Card
-            className={cardClass(exchangeCardsRef.current[1])}
-            card={exchangeCardsRef.current[1]}
-            onClick={() => handleChooseCard(1)}
-          ></Card>
+          <div className="flex justify-center flex-row space-x-2">
+            <Card
+              className={cardClass(exchangeCardsRef.current[0])}
+              card={exchangeCardsRef.current[0]}
+              onClick={() => handleChooseCard(0)}
+            ></Card>
+            <Card
+              className={cardClass(exchangeCardsRef.current[1])}
+              card={exchangeCardsRef.current[1]}
+              onClick={() => handleChooseCard(1)}
+            ></Card>
+          </div>
+          <Button onClick={() => handleExchangeCard()}>
+            Confirm Selection
+          </Button>
         </>
       );
     }
@@ -139,8 +156,8 @@ const PlayerCards = () => {
           card={gameCards[1]}
           onClick={() => handleChooseCard(1)}
         ></Card>
-        {showExchange()}
       </div>
+      {showExchange()}
     </div>
   );
 };
