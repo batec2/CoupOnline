@@ -17,6 +17,7 @@ const PlayerCards = () => {
     setTurnId,
     setInitialAction,
     setInitialUserId,
+    exchangeCardsRef,
   } = useGameContext();
 
   const chooseCardType = () => {
@@ -103,12 +104,33 @@ const PlayerCards = () => {
     }
   };
 
+  const showExchange = () => {
+    if (exchangeCardsRef.current) {
+      return (
+        <>
+          <Card
+            className={cardClass(exchangeCardsRef.current[0])}
+            card={exchangeCardsRef.current[0]}
+            onClick={() => handleChooseCard(0)}
+          ></Card>
+          <Card
+            className={cardClass(exchangeCardsRef.current[1])}
+            card={exchangeCardsRef.current[1]}
+            onClick={() => handleChooseCard(1)}
+          ></Card>
+        </>
+      );
+    }
+    return;
+  };
+
   return (
     <div className="flex flex-col space-y-2">
       <GameSectionTitle text={"Your Cards:"} />
+      {showPrompt()}
       <div className="flex justify-center flex-row space-x-2">
         <Card
-          className="bg-cards-duke"
+          className={cardClass(gameCards[0])}
           card={gameCards[0]}
           onClick={() => handleChooseCard(0)}
         ></Card>
@@ -117,8 +139,8 @@ const PlayerCards = () => {
           card={gameCards[1]}
           onClick={() => handleChooseCard(1)}
         ></Card>
+        {showExchange()}
       </div>
-      {showPrompt()}
     </div>
   );
 };

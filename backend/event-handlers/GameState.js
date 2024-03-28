@@ -135,6 +135,9 @@ export class GameState {
   getPlayerCard(player, card) {
     return this.playerState[player].gameCards[card];
   }
+  getPlayerCards(player) {
+    return this.playerState[player].gameCards;
+  }
 
   addRound(round) {
     this.round[this.roundNumber] = round;
