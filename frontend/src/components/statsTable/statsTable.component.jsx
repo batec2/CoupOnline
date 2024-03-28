@@ -14,7 +14,7 @@ const StatsTable = ({ playerStatistics, players }) => {
       <TableCaption>Global Statistics</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[100px]">Username</TableHead>
+          <TableHead>Username</TableHead>
           <TableHead>Games Played</TableHead>
           <TableHead>Games Won</TableHead>
           <TableHead>Games Lost</TableHead>
