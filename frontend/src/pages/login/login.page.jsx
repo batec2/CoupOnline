@@ -86,14 +86,14 @@ const LoginPage = () => {
         />
         <Button
           onClick={handleLoginClick}
-          className="bg-blue-400 text-white px-4 py-2 rounded-md mb-2 w-full"
+          className="bg-button-secondaryButton text-white px-4 py-2 rounded-md mb-2 w-full"
         >
           Login
         </Button>
         <h2 className="text-xl mb-2">No account?</h2>
         <Button
           onClick={handleCreateClick}
-          className="bg-blue-800 text-white px-4 py-2 rounded-md w-full"
+          className="bg-button-mainButton text-white px-4 py-2 rounded-md w-full"
         >
           Create an account
         </Button>
