@@ -13,13 +13,15 @@ const cookies = new Cookies();
 const RoomPage = () => {
   const room = useRef();
   const navigate = useNavigate();
+  const [cookieExists, setCookieExists] = useState(true);
 
   // Checks if a cookie exists for a user, if not, logs then out
   useEffect(() => {
     if (cookies.get("PersonalCookie") === undefined) {
-      navigate("/");
+      setCookieExists(false); // Update state when cookie doesn't exist
     }
   }, []);
+
   const handleJoin = () => {
     if (!room.current) {
       return;
@@ -40,6 +42,13 @@ const RoomPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
+      {!cookieExists && (
+        <div>
+          <p className="text-textColor-error mb-4">
+            Please log in to create a game.
+          </p>
+        </div>
+      )}
       <div className="w-50">
         <div className="mb-4">
           <Input
@@ -53,18 +62,32 @@ const RoomPage = () => {
             className="w-full px-4 py-2 border rounded-md"
           />
         </div>
-        <Button
-          onClick={handleJoin}
-          className="bg-blue-800 text-white px-4 py-2 rounded-md w-full"
-        >
-          {room.current ? "Leave Room" : "Join Room"}
-        </Button>
-        <Button
-          onClick={handleLogout}
-          className="bg-red-500 text-white px-4 py-2 my-4 rounded-md w-full"
-        >
-          Logout
-        </Button>
+        {cookieExists && (
+          <Button
+            onClick={handleJoin}
+            className="bg-button-mainButton text-white px-4 py-2 rounded-md w-full"
+            disabled={!cookieExists}
+          >
+            {room.current ? "Leave Room" : "Join Room"}
+          </Button>
+        )}
+        {cookieExists && (
+          <Button
+            onClick={handleLogout}
+            className="bg-button-redButton text-white px-4 py-2 my-4 rounded-md w-full"
+            disabled={!cookieExists}
+          >
+            Logout
+          </Button>
+        )}
+        {!cookieExists && (
+          <Button
+            onClick={() => navigate("/")}
+            className="bg-button-mainButton text-white rounded-md w-full"
+          >
+            Login
+          </Button>
+        )}
       </div>
     </div>
   );
