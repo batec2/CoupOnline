@@ -207,8 +207,8 @@ export const registerGameHandlers = (io, socket, rooms) => {
       emitUpdate(io, roomId, room);
     } else if (responseAction === CalloutLie) {
       console.log(
-        `${socket.id} is blocking ${state.responseId} action of ${
-          GameActions[state.responseAction]
+        `${socket.id} is blocking ${state.initialResponseAction} action of ${
+          GameActions[state.initialResponseAction]
         }`
       );
       emitChooseCard(roomId, state.initialResponseId, state);
@@ -234,14 +234,12 @@ export const registerGameHandlers = (io, socket, rooms) => {
             CardInfo[state.getPlayerCard(socket.id, card)].character
           }`
         );
-        state.incrementTurn();
         state.loseCard(socket.id, card);
+        state.incrementTurn();
         emitUpdate(io, roomId, room);
         break;
       }
-      case ChooseCard.Exchange: {
-        break;
-      }
+
       case ChooseCard.Show:
         {
           // card shown gets checked
@@ -259,15 +257,16 @@ export const registerGameHandlers = (io, socket, rooms) => {
               console.log(
                 `${socket.id} showed the proper card for ${
                   GameActions[state.initialResponseAction]
-                } and ${responseId} must choose to lose a card`
+                } and ${state.initialUserId} must choose to lose a card`
               );
               // If the Person Can Block then the initial user loses a card
+              state.initialResponseAction = GameActions.LooseCallout;
               state.swapCards(socket.id, card);
-              emitChooseCard(roomId, state.initialAction, state);
+              emitChooseCard(roomId, state.initialUserId, state);
               return;
             }
-            state.incrementTurn();
             state.loseCard(socket.id, card);
+            state.incrementTurn();
             emitUpdate(io, roomId, room);
             return;
           }
@@ -299,8 +298,8 @@ export const registerGameHandlers = (io, socket, rooms) => {
             return;
           }
         }
-        state.incrementTurn();
         state.loseCard(state.initialUserId, card);
+        state.incrementTurn();
         emitUpdate(io, roomId, room);
     }
   };
