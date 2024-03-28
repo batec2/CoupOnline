@@ -55,7 +55,7 @@ export const registerLobbyHandlers = (io, socket, rooms) => {
       room.state = new GameState(ids);
       // Sends sends each player their cards when game starts and the current
       // Player whos turn it is
-      emitUpdate(io, room);
+      emitUpdate(io, roomId, room);
       emitStartGame(io, roomId);
       callback({ status: 200 });
     }
@@ -69,7 +69,7 @@ export const registerLobbyHandlers = (io, socket, rooms) => {
       room.state = new GameState(ids);
       // Sends sends each player their cards when game starts and the current
       // Player whos turn it is
-      emitUpdate(io, room);
+      emitUpdate(io, roomId, room);
     }
   });
 
