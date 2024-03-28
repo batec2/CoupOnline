@@ -251,6 +251,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
                 } and ${responseId} must choose to lose a card`
               );
               // If the Person Can Block then the initial user loses a card
+              state.swapCards(socket.id, card);
               emitChooseCard(roomId, state.initialAction, state);
               return;
             }
@@ -272,6 +273,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
             if ((state.initialAction = Assassinate)) {
               state.loseCard(state.initialResponseId, 0);
               state.loseCard(state.initialResponseId, 1);
+              state.swapCards(socket.id, card);
               state.incrementTurn();
               emitUpdate(io, room);
               return;
@@ -280,6 +282,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
               state.incrementTurn();
               emitUpdate(io, room);
             }
+            state.swapCards(socket.id, card);
             handleAction(roomId, room, state);
             emitChooseCard(roomId, state.initialResponseId, state);
             return;

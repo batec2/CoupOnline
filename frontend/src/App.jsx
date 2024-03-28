@@ -21,7 +21,7 @@ const queryClient = new QueryClient({
   },
 });
 
-const Socket = io("http://localhost:8000");
+const Socket = io("http://localhost:8080");
 
 Socket.onAny((event, ...args) => {
   console.log(event, args);

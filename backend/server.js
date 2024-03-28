@@ -10,7 +10,7 @@ import { createSocketIO } from "./event-handlers/IOEvents.js";
 connectDB();
 dotenv.config();
 
-const PORT = 8000;
+const PORT = 8080;
 
 middleware.use("/games", gamesRoute);
 middleware.use("/players", playersRoute);

@@ -126,7 +126,15 @@ export class GameState {
   }
 
   loseCard(player, card) {
-    this.playerState[player].gameCards[card] = GameCard.Eliminated;
+    const loser = playerState[player];
+    loser.gameCards[card] = GameCard.Eliminated;
+    if (
+      loser.gameCards[0] === GameCard.Eliminated &&
+      loser.gameCards[1] === GameCard.Eliminated
+    ) {
+      loser.eliminated = true;
+      players = players.filter((player) => player !== player);
+    }
   }
 
   getPlayer(player) {
@@ -173,6 +181,7 @@ export class GameState {
       this.playerState[player] = { gameCards: {}, coins: 0 };
       this.playerState[player].gameCards = this.generateCards();
       this.playerState[player].coins = 8;
+      this.playerState[player].eliminated = false;
     });
   }
 
@@ -180,19 +189,54 @@ export class GameState {
     const gameCards = {};
     // Generates 2 cards
     for (let i = 0; i < 2; i++) {
-      //Select card
-      while (true) {
-        const index = Math.floor(Math.random() * this.deck.length);
-        // if there is still a card left in deck
-        if (this.deck[index] != 0) {
-          this.deck[index] -= 1;
-          gameCards[i] = index;
-          break;
-        }
-      }
+      gameCards[i] = this.selectRandomCard();
     }
     return gameCards;
   }
 
-  checkWinner() {}
+  selectRandomCard() {
+    while (true) {
+      const index = Math.floor(Math.random() * this.deck.length);
+      if (this.deck[index] != 0) {
+        this.deck[index] -= 1;
+        return index;
+      }
+    }
+  }
+
+  /**
+   * Swaps a players card with a random card and returns card from player
+   * back into the deck
+   * @param {*} player
+   * @param {*} card
+   */
+  swapCards(player, card) {
+    const swap = this.playerState[player].gameCards[card];
+    this.playerState[player].gameCards[card] = this.selectRandomCard();
+    deck[swap] += 1;
+  }
+
+  /**
+   * Checks if there is more than one player still not eliminated from the game,
+   * and returns the winner if there is one
+   * @returns {isEnd: boolean, winner?: string}
+   */
+  checkEndGame() {
+    let count = 0;
+    let winner = null;
+    Object.keys(this.playerState).forEach((player) => {
+      if (!playerState[player].eliminated) {
+        count += 1;
+        winner = player;
+      }
+    });
+    if (count <= 1) {
+      return { isEnd: true, winnder: winner };
+    }
+    return { isEnd: false, winner: null };
+  }
+
+  checkLoser(player) {
+    return this.playerState[player].eliminated;
+  }
 }
