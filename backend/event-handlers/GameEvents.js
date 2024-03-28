@@ -55,6 +55,14 @@ export const registerGameHandlers = (io, socket, rooms) => {
     });
   };
 
+  const emitExchangeCards = (roomId, state) => {
+    io.to(roomId).emit("exchange-cards", {
+      chooserId: state.initialUserId,
+      exchangeCards: state.generateCards(),
+      playersCards: state.getPlayerCards(state.initialUserId),
+    });
+  };
+
   /**
    *
    * @param {*} state
@@ -99,6 +107,9 @@ export const registerGameHandlers = (io, socket, rooms) => {
         state.initialResponseId = null;
         emitChooseCard(roomId, state.targetId, state);
         break;
+      }
+      case Exchange: {
+        emitExchangeCards(roomId, state);
       }
     }
   };

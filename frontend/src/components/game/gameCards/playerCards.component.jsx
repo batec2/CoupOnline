@@ -4,6 +4,8 @@ import ChooseCard from "@/lib/chooseCardEnum";
 import GameActions from "@/lib/actionEnum";
 import GameCard from "@/lib/cardEnum";
 import GameSectionTitle from "@/components/text/gameSectionTitle.component";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 const PlayerCards = () => {
   const {
@@ -17,7 +19,10 @@ const PlayerCards = () => {
     setTurnId,
     setInitialAction,
     setInitialUserId,
+    exchangeCardsRef,
   } = useGameContext();
+
+  const [exchangeCards, setExchangeCards] = useState(null);
 
   const chooseCardType = () => {
     switch (responseAction) {
@@ -58,7 +63,7 @@ const PlayerCards = () => {
    * @returns
    */
   const handleChooseCard = (card) => {
-    if (!isTarget) {
+    if (!isTarget || !exchangeCardsRef) {
       return;
     }
     console.log(
@@ -72,6 +77,14 @@ const PlayerCards = () => {
     setTurnId(null);
     setInitialAction(null);
     setInitialUserId(null);
+  };
+
+  const handleExchangeCard = () => {
+    socket.emit("exchange-cards", {
+      roomId: roomId,
+      selectedCards: exchangeCards.selectedCards,
+      returnedCards: exchangeCards.returnedCards,
+    });
   };
 
   const showPrompt = () => {
@@ -103,12 +116,38 @@ const PlayerCards = () => {
     }
   };
 
+  const showExchange = () => {
+    if (exchangeCardsRef.current) {
+      return (
+        <>
+          <div className="flex justify-center flex-row space-x-2">
+            <Card
+              className={cardClass(exchangeCardsRef.current[0])}
+              card={exchangeCardsRef.current[0]}
+              onClick={() => handleChooseCard(0)}
+            ></Card>
+            <Card
+              className={cardClass(exchangeCardsRef.current[1])}
+              card={exchangeCardsRef.current[1]}
+              onClick={() => handleChooseCard(1)}
+            ></Card>
+          </div>
+          <Button onClick={() => handleExchangeCard()}>
+            Confirm Selection
+          </Button>
+        </>
+      );
+    }
+    return;
+  };
+
   return (
     <div className="flex flex-col space-y-2">
       <GameSectionTitle text={"Your Cards:"} />
+      {showPrompt()}
       <div className="flex justify-center flex-row space-x-2">
         <Card
-          className="bg-cards-duke"
+          className={cardClass(gameCards[0])}
           card={gameCards[0]}
           onClick={() => handleChooseCard(0)}
         ></Card>
@@ -118,7 +157,7 @@ const PlayerCards = () => {
           onClick={() => handleChooseCard(1)}
         ></Card>
       </div>
-      {showPrompt()}
+      {showExchange()}
     </div>
   );
 };
