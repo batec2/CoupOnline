@@ -86,20 +86,20 @@ export const registerGameHandlers = (io, socket, rooms) => {
       case Income: {
         state.increasePlayerMoney(state.initialUserId, 1);
         state.incrementTurn();
-        emitUpdate(io, room);
+        emitUpdate(io, roomId, room);
         break;
       }
       case Taxes: {
         state.increasePlayerMoney(state.initialUserId, 3);
         state.incrementTurn();
-        emitUpdate(io, room);
+        emitUpdate(io, roomId, room);
         break;
       }
       case Steal: {
         state.increasePlayerMoney(state.initialUserId, 2);
         state.decreasePlayerMoney(state.targetId, 2);
         state.incrementTurn();
-        emitUpdate(io, room);
+        emitUpdate(io, roomId, room);
         break;
       }
       case Assassinate: {
@@ -204,7 +204,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
     // If a block action gets called out
     if (responseAction === Pass) {
       state.incrementTurn();
-      emitUpdate(io, room);
+      emitUpdate(io, roomId, room);
     } else if (responseAction === CalloutLie) {
       console.log(
         `${socket.id} is blocking ${state.responseId} action of ${
@@ -236,7 +236,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
         );
         state.incrementTurn();
         state.loseCard(socket.id, card);
-        emitUpdate(io, room);
+        emitUpdate(io, roomId, room);
         break;
       }
       case ChooseCard.Exchange: {
@@ -268,7 +268,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
             }
             state.incrementTurn();
             state.loseCard(socket.id, card);
-            emitUpdate(io, room);
+            emitUpdate(io, roomId, room);
             return;
           }
           // Callout happened on first response
@@ -286,12 +286,12 @@ export const registerGameHandlers = (io, socket, rooms) => {
               state.loseCard(state.initialResponseId, 1);
               state.swapCards(socket.id, card);
               state.incrementTurn();
-              emitUpdate(io, room);
+              emitUpdate(io, roomId, room);
               return;
             }
             if ((state.initialAction = Exchange)) {
               state.incrementTurn();
-              emitUpdate(io, room);
+              emitUpdate(io, roomId, room);
             }
             state.swapCards(socket.id, card);
             handleAction(roomId, room, state);
@@ -301,7 +301,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
         }
         state.incrementTurn();
         state.loseCard(state.initialUserId, card);
-        emitUpdate(io, room);
+        emitUpdate(io, roomId, room);
     }
   };
 

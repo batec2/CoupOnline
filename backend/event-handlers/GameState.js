@@ -126,14 +126,16 @@ export class GameState {
   }
 
   loseCard(player, card) {
-    const loser = playerState[player];
+    const loser = this.playerState[player];
     loser.gameCards[card] = GameCard.Eliminated;
+    //Sets the player eliminated if player losses both cards and removes them,
+    //from the turn counter
     if (
       loser.gameCards[0] === GameCard.Eliminated &&
       loser.gameCards[1] === GameCard.Eliminated
     ) {
       loser.eliminated = true;
-      players = players.filter((player) => player !== player);
+      this.players = this.players.filter((ids) => ids !== player);
     }
   }
 
@@ -216,27 +218,27 @@ export class GameState {
   swapCards(player, card) {
     const swap = this.playerState[player].gameCards[card];
     this.playerState[player].gameCards[card] = this.selectRandomCard();
-    deck[swap] += 1;
+    this.deck[swap] += 1;
   }
 
   /**
    * Checks if there is more than one player still not eliminated from the game,
    * and returns the winner if there is one
-   * @returns {isEnd: boolean, winner?: string}
+   * @returns {hasWinner: boolean, winner?: string}
    */
   checkEndGame() {
     let count = 0;
     let winner = null;
     Object.keys(this.playerState).forEach((player) => {
-      if (!playerState[player].eliminated) {
+      if (!this.playerState[player].eliminated) {
         count += 1;
         winner = player;
       }
     });
     if (count <= 1) {
-      return { isEnd: true, winnder: winner };
+      return { hasWinner: true, winner: winner };
     }
-    return { isEnd: false, winner: null };
+    return { hasWinner: false, winner: null };
   }
 
   checkLoser(player) {
