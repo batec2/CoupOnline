@@ -45,22 +45,24 @@ const RoomPage = () => {
       {!cookieExists && (
         <div>
           <p className="text-textColor-error mb-4">
-            Please log in to create a game.
+            Please log in to join a game.
           </p>
         </div>
       )}
       <div className="w-50">
         <div className="mb-4">
-          <Input
-            type="text"
-            onChange={(e) => {
-              room.current = e.target.value;
-            }}
-            onKeyPress={handleKeyPress}
-            placeholder="Room Number"
-            disabled={room.current ? true : false}
-            className="w-full px-4 py-2 border rounded-md"
-          />
+          {cookieExists && (
+            <Input
+              type="text"
+              onChange={(e) => {
+                room.current = e.target.value;
+              }}
+              onKeyPress={handleKeyPress}
+              placeholder="Room Number"
+              disabled={room.current ? true : false}
+              className="w-full px-4 py-2 border rounded-md"
+            />
+          )}
         </div>
         {cookieExists && (
           <Button
