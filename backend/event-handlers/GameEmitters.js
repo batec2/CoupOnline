@@ -4,6 +4,7 @@ export const emitStartGame = (io, roomId) => {
 
 export const emitUpdate = (io, room) => {
   const { players, state } = room;
+  console.log(players)
   Object.keys(players).forEach((player) => {
     const { gameCards, coins } = state.getPlayer(player);
     // Sends players cards

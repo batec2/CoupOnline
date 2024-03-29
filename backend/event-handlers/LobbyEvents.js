@@ -12,7 +12,17 @@ export const registerLobbyHandlers = (io, socket, rooms) => {
     }
     try {
       socket.join(roomId);
+
+      const keys = Object.keys(rooms[roomId].players)
+      for(let i = 0;i < keys.length; i++){
+        if(rooms[roomId].players[keys[i]]["userId"] === userId){
+          callback({ status: 400 });
+          return;
+        }
+      }
+
       rooms[roomId].players[socket.id] = { userId: userId };
+      console.log(rooms)
       io.to(roomId).emit("lobby-members", { lobby: rooms[roomId].players });
       callback({ status: 200 });
     } catch (e) {
