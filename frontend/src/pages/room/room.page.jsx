@@ -22,6 +22,7 @@ const RoomPage = () => {
     }
   }, []);
 
+  // Function to handle joining a room
   const handleJoin = () => {
     if (!room.current) {
       return;
@@ -29,11 +30,13 @@ const RoomPage = () => {
     navigate(`${room.current}`);
   };
 
+  // Function to handle user logout
   const handleLogout = () => {
     cookies.remove("PersonalCookie");
     navigate("/");
   };
 
+  // Function to handle 'enter' key press for joining room
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
       handleJoin();
@@ -42,6 +45,7 @@ const RoomPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
+      {/* Display message if not logged in  */}
       {!cookieExists && (
         <div>
           <p className="text-textColor-error mb-4">
@@ -82,6 +86,7 @@ const RoomPage = () => {
             Logout
           </Button>
         )}
+        {/* Button to navigate to login page if not logged in  */}
         {!cookieExists && (
           <Button
             onClick={() => navigate("/")}

@@ -22,6 +22,7 @@ const StatsTable = ({ playerStatistics, players }) => {
         </TableRow>
       </TableHeader>
       <TableBody>
+        {/* Map through player statistics and render table rows */}
         {playerStatistics.map((stats, index) => (
           <TableRow key={index}>
             <TableCell>

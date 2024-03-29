@@ -51,7 +51,6 @@ const LoginPage = () => {
           username: res.data.userName,
           screenName: res.data.screenName,
         });
-
         setLocalCookie(cookies.get("PersonalCookie"));
         navigate("/room");
       });

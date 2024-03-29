@@ -16,6 +16,7 @@ const PLAYER_ENDPOINT = "/players/";
 const GAMES_ENDPOINT = "/games/";
 
 const ProfilePage = () => {
+  // State to manage user data and error messages
   const [userData, setUserData] = useState({
     user: null,
     userGames: null,
@@ -27,7 +28,9 @@ const ProfilePage = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
+        // Check if user is logged in
         const cookie = cookies.get("PersonalCookie");
+        // Redirect to login if not
         if (!cookie) {
           setUserData((prevState) => ({
             ...prevState,
@@ -63,6 +66,7 @@ const ProfilePage = () => {
 
   const { user, userGames, errorMessage } = userData;
 
+  // Render error message if any
   if (errorMessage) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -74,7 +78,7 @@ const ProfilePage = () => {
   }
 
   if (user) {
-    // render user profile
+    // Calculate player statistics
     console.log(user.games);
     const playerStatistics = calculatePlayerStatistics({
       players: [user],
