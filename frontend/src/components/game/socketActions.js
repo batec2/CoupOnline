@@ -25,22 +25,10 @@ export const handleNormalAction = (socket, roomId, action, targetId) => {
  * @param {string} initialResponseId - Used if block is called out
  * @param {string} initialResponseAction - Id if block is called out
  */
-export const handleResponseAction = (
-  socket,
-  roomId,
-  initialUserId,
-  initialAction,
-  responseAction,
-  initialResponseId,
-  initialResponseAction
-) => {
+export const handleResponseAction = (socket, roomId, responseAction) => {
   socket.emit("response-action", {
     roomId: roomId,
-    initialUserId: initialUserId,
-    initialAction: initialAction,
     responseAction: responseAction,
-    initialResponseId: initialResponseId,
-    initialResponseAction: initialResponseAction,
   });
 };
 

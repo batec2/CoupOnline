@@ -13,7 +13,7 @@ const Winner = () => {
   const gameEndMessage = () => {
     if (socket.id === winner) {
       return (
-        <h1>YOU WIN</h1>
+        <h1 className="w-full text-center">YOU WIN</h1>
       );
     } else {
       return (
@@ -23,25 +23,29 @@ const Winner = () => {
   }
 
   return (
-    <div>
-      {gameEndMessage()}
-      <Button
-        onClick={() => {
-          handleLeave(socket, roomId);
-          navigate("/room");
-        }}
-      >
-        Leave Room
-      </Button>
-      <Button
-        onClick={() => {
-          handleReturnLobby();
-          navigate(`/room/${roomId}`)
-          terminal.log(`/room/${roomId}`)
-        }}
-      >
-        Return to Lobby
-      </Button>
+    <div className="flex flex-col items-center justify-center h-screen">
+      <div className="w-50">
+        {gameEndMessage()}
+        <Button
+          className="bg-button-redButton text-white px-4 my-4 rounded-md w-full"
+          onClick={() => {
+            handleLeave(socket, roomId);
+            navigate("/room");
+          }}
+        >
+          Leave Room
+        </Button>
+        <Button
+          className="bg-button-mainButton text-white px-4 py-2 rounded-md w-full"
+          onClick={() => {  
+            handleReturnLobby();
+            navigate(`/room/${roomId}`)
+            terminal.log(`/room/${roomId}`)
+          }}
+        >
+          Return to Lobby
+        </Button>
+      </div>
     </div>
   );
 };
