@@ -65,6 +65,10 @@ export const registerLobbyHandlers = (io, socket, rooms) => {
       room.state = new GameState(ids);
       // Sends sends each player their cards when game starts and the current
       // Player whos turn it is
+      console.log("START GAME ROOMS")
+      console.log(roomId)
+      console.log(room)
+
       emitUpdate(io, roomId, room);
       emitStartGame(io, roomId);
       callback({ status: 200 });
