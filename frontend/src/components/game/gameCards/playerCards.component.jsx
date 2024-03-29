@@ -143,7 +143,7 @@ const PlayerCards = () => {
 
   return (
     <div className="flex flex-col space-y-2">
-      <GameSectionTitle text={"Your Cards:"} />
+      <p>Your Cards:</p>
       {showPrompt()}
       <div className="flex justify-center flex-row space-x-2">
         <Card

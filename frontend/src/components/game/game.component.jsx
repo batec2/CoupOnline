@@ -1,9 +1,12 @@
 import useGameContext from "@/context/useGameContext";
 import Actions from "./gameActions/actions.component";
 import PlayerCards from "./gameCards/playerCards.component";
-import GameInfo from "./gameInfo/gameInfo.component";
+// import PlayerInfo from "./playerInfo/playerInfo.component";
+import CurrentTurnInfo from "./currentTurnInfo/currentTurnInfo.component";
 import CardList from "../cardList/cardList.component";
 import References from "./references/references.component";
+import PlayerInfo from "./playerInfo/playerInfo.component";
+import TurnHistory from "./turnHistory/turnHistory.component";
 
 //For testing only - remove later
 const discard = {
@@ -15,20 +18,19 @@ const discard = {
 };
 
 const Game = () => {
-  const { roomId, currentLobbyMembers, gameCards } = useGameContext();
+  const { roomId, currentLobbyMembers } = useGameContext();
   return (
     <div>
-      <p className="flex justify-center text-3xl font-bold">Room: {roomId}</p>
-      <p>{JSON.stringify(currentLobbyMembers)}</p>
+      <p className="text-3xl font-bold text-center">Room: {roomId}</p>
       <div className="grid grid-cols-4 border divide-y divide-x">
         <CardList items={currentLobbyMembers} context={"players"} />
         <div className="col-span-2">
-          <GameInfo />
+          <CurrentTurnInfo />
         </div>
         <CardList items={discard} context={"discard"} />
-        <PlayerCards />
+        <TurnHistory />
         <div className="col-span-2">
-          <Actions />
+          <PlayerInfo />
         </div>
         <References />
       </div>
