@@ -72,28 +72,32 @@ const LoginPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <h1 className="text-3xl font-bold mb-4">Welcome to Super Couper</h1>
-      <h2 className="text-xl mb-2">Enter your username:</h2>
-      <Input
-        type="username"
-        placeholder="User Name"
-        onChange={handleUsernameInput}
-        onKeyPress={handleKeyPress}
-        className="w-60 px-4 py-2 border rounded-md mb-4"
-      />
-      <Button
-        onClick={handleLoginClick}
-        className="bg-blue-400 text-white px-4 py-2 rounded-md mb-2"
-      >
-        Login
-      </Button>
-      <h2 className="text-xl mb-2">No account?</h2>
-      <Button
-        onClick={handleCreateClick}
-        className="bg-blue-800 text-white px-4 py-2 rounded-md"
-      >
-        Create an account
-      </Button>
+      <div className="w-50">
+        <h1 className="text-3xl font-bold mb-4 text-center">
+          Welcome to Super Couper
+        </h1>
+        <h2 className="text-xl mb-2">Enter your username:</h2>
+        <Input
+          type="username"
+          placeholder="User Name"
+          onChange={handleUsernameInput}
+          onKeyPress={handleKeyPress}
+          className="px-4 py-2 border rounded-md mb-4 w-full"
+        />
+        <Button
+          onClick={handleLoginClick}
+          className="bg-button-secondaryButton text-white px-4 py-2 rounded-md mb-2 w-full"
+        >
+          Login
+        </Button>
+        <h2 className="text-xl mb-2">No account?</h2>
+        <Button
+          onClick={handleCreateClick}
+          className="bg-button-mainButton text-white px-4 py-2 rounded-md w-full"
+        >
+          Create an account
+        </Button>
+      </div>
     </div>
   );
 };
