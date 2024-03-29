@@ -74,7 +74,7 @@ const StatsPage = () => {
       games: gamesData,
     });
     return (
-      <div className="m-16 mt-4">
+      <div className="m-16 mt-4 w-50">
         <StatsTable playerStatistics={playerStatistics} players={playersData} />
       </div>
     );

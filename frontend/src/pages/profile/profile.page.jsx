@@ -35,10 +35,6 @@ const ProfilePage = () => {
               "Please login first ... you are being redirected to the login page",
           }));
           setTimeout(() => {
-            setUserData((prevState) => ({
-              ...prevState,
-              errorMessage: null,
-            }));
             navigate("/");
           }, 1500);
           return;
@@ -68,7 +64,13 @@ const ProfilePage = () => {
   const { user, userGames, errorMessage } = userData;
 
   if (errorMessage) {
-    return <div className="text-center">{errorMessage}</div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="text-textColor-error mb-4 text-center">
+          {errorMessage}
+        </div>
+      </div>
+    );
   }
 
   if (user) {
@@ -80,7 +82,7 @@ const ProfilePage = () => {
     });
 
     return (
-      <Card className="w-[380px] mx-auto">
+      <Card className="w-[380px] mx-auto mt-8">
         <CardHeader>
           <CardTitle>
             Welcome,{" "}

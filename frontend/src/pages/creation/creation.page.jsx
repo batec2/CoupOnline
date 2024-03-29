@@ -92,21 +92,21 @@ const CreationPage = () => {
           placeholder="User Name"
           onChange={(e) => setUserName(e.target.value)}
           onKeyPress={handleKeyPress}
-          className="w-full px-4 py-2 border rounded-md mb-2"
+          className="px-4 py-2 border rounded-md mb-2 w-full"
         />
         <Input
           type="screenname"
           placeholder="Screen Name"
           onChange={(e) => setScreenName(e.target.value)}
           onKeyPress={handleKeyPress}
-          className="w-full px-4 py-2 border rounded-md mb-2"
+          className="px-4 py-2 border rounded-md mb-2 w-full"
         />
         <Input
           type="email"
           placeholder="Email"
           onChange={(e) => setEmail(e.target.value)}
           onKeyPress={handleKeyPress}
-          className="w-full px-4 py-2 border rounded-md mb-4"
+          className="px-4 py-2 border rounded-md mb-4 w-full"
         />
         <Button
           onClick={() => setCreatedCookie(true)}
