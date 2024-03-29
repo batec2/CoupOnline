@@ -2,10 +2,10 @@
 module.exports = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{js,jsx}',
-    './components/**/*.{js,jsx}',
-    './app/**/*.{js,jsx}',
-    './src/**/*.{js,jsx}',
+    "./pages/**/*.{js,jsx}",
+    "./components/**/*.{js,jsx}",
+    "./app/**/*.{js,jsx}",
+    "./src/**/*.{js,jsx}",
   ],
   prefix: "",
   theme: {
@@ -23,6 +23,14 @@ module.exports = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        textColor: {
+          error: "#FF0000",
+        },
+        button: {
+          mainButton: "#1E40AF",
+          secondaryButton: "#60a5fa",
+          redButton: "#EF4444",
+        },
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -36,7 +44,7 @@ module.exports = {
           unavailable: "#9ca3af",
           haveCard: "#16a34a",
           bluff: "#dc2626",
-          callout: "#ca8a04"
+          callout: "#ca8a04",
         },
         cards: {
           duke: "#a78bfa",
@@ -45,7 +53,7 @@ module.exports = {
           captain: "#60a5fa",
           contessa: "#f87171",
           eliminated: "#6b7280",
-          discard: "#d1d5db"
+          discard: "#d1d5db",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
@@ -67,7 +75,7 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        hover: "#d1d5db"
+        hover: "#d1d5db",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -91,4 +99,4 @@ module.exports = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
+};
