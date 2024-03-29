@@ -49,7 +49,7 @@ export const handleResponseAction = (
  * @param {Object} socket
  * @param {string} roomId
  */
-export const handleStartGame = (socket, roomId) => {
+const handleStartGame = (socket, roomId) => {
   socket.emit(
     "start-game",
     { roomId: roomId, userId: socket.id },
@@ -57,6 +57,15 @@ export const handleStartGame = (socket, roomId) => {
   );
 };
 
-export const handleLeave = (socket, roomId) => {
+const handleLeave = (socket, roomId) => {
   socket.emit("leave-room", { roomId: roomId }, handleStatus);
 };
+
+const handleReturnLobby = (socket, roomId) => {
+  socket.emit(
+    "return-lobby",
+    { roomId: roomId, userId: socket.id },
+    handleStatus)
+};
+
+export {handleStartGame, handleLeave, handleReturnLobby};

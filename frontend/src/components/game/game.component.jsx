@@ -21,13 +21,17 @@ const Game = () => {
   const { roomId, currentLobbyMembers } = useGameContext();
   return (
     <div>
-      <p className="flex-row text-3xl font-bold">Room: {roomId}</p>
-      <div className="grid grid-cols-3 border divide-y divide-x">
+      <p className="text-3xl font-bold text-center">Room: {roomId}</p>
+      <div className="grid grid-cols-4 border divide-y divide-x">
         <CardList items={currentLobbyMembers} context={"players"} />
-        <CurrentTurnInfo />
+        <div className="col-span-2">
+          <CurrentTurnInfo />
+        </div>
         <CardList items={discard} context={"discard"} />
         <TurnHistory />
-        <PlayerInfo />
+        <div className="col-span-2">
+          <PlayerInfo />
+        </div>
         <References />
       </div>
     </div>
