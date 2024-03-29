@@ -39,6 +39,11 @@ export const registerGameHandlers = (io, socket, rooms) => {
     });
   };
 
+  const nextTurn = (state, roomId, room) => {
+    state.incrementTurn();
+    emitUpdate(io, roomId, room);
+  };
+
   /**
    *
    * @param {*} initialUserId - first user in event chain
@@ -72,7 +77,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
    * @param {*} isBlocked
    * @returns
    */
-  const handleAction = (roomId, room, state) => {
+  const handleAction = (roomId, room, state, nextTurn) => {
     // if (state.isBlocked && state.initialAction === Assassinate) {
     //   state.decreasePlayerMoney(userId, 3);
     //   return;
@@ -85,21 +90,24 @@ export const registerGameHandlers = (io, socket, rooms) => {
       }
       case Income: {
         state.increasePlayerMoney(state.initialUserId, 1);
-        state.incrementTurn();
-        emitUpdate(io, roomId, room);
+        if (nextTurn) {
+          nextTurn(state, roomId, room);
+        }
         break;
       }
       case Taxes: {
         state.increasePlayerMoney(state.initialUserId, 3);
-        state.incrementTurn();
-        emitUpdate(io, roomId, room);
+        if (nextTurn) {
+          nextTurn(state, roomId, room);
+        }
         break;
       }
       case Steal: {
         state.increasePlayerMoney(state.initialUserId, 2);
         state.decreasePlayerMoney(state.targetId, 2);
-        state.incrementTurn();
-        emitUpdate(io, roomId, room);
+        if (nextTurn) {
+          nextTurn(state, roomId, room);
+        }
         break;
       }
       case Assassinate: {
@@ -147,8 +155,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
       });
       return;
     }
-
-    handleAction(roomId, room, state);
+    handleAction(roomId, room, state, true);
   };
 
   /**
@@ -195,7 +202,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
         state.incrementPassCount();
 
         if (state.passCount === state.playerCount - 1) {
-          handleAction(roomId, room, state);
+          handleAction(roomId, room, state, true);
         }
       }
       return;
@@ -280,7 +287,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
               } and ${state.initialResponseId} must choose to lose a card`
             );
             // If a player calls out an Assassin and lose, they lose both cards
-            if ((state.initialAction = Assassinate)) {
+            if (state.initialAction === Assassinate) {
               state.loseCard(state.initialResponseId, 0);
               state.loseCard(state.initialResponseId, 1);
               state.swapCards(socket.id, card);
@@ -288,12 +295,12 @@ export const registerGameHandlers = (io, socket, rooms) => {
               emitUpdate(io, roomId, room);
               return;
             }
-            if ((state.initialAction = Exchange)) {
+            if (state.initialAction === Exchange) {
               state.incrementTurn();
               emitUpdate(io, roomId, room);
             }
             state.swapCards(socket.id, card);
-            handleAction(roomId, room, state);
+            handleAction(roomId, room, state, false);
             emitChooseCard(roomId, state.initialResponseId, state);
             return;
           }
