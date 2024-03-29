@@ -56,25 +56,28 @@ const StatsPage = () => {
     },
   });
 
+  // If there are errors fetching data
   if (playersError || gamesError) {
     return (
       <div>
         <h1>Unable to retrieve stats. Error: {playersError || gamesError}</h1>
       </div>
     );
+    // If data is still pending
   } else if (playersPending || gamesPending) {
     return (
       <div className="text-center">
         <h1>Crunching the latest statistics ...</h1>
       </div>
     );
+    // If data is fetched successfully
   } else {
     const playerStatistics = calculatePlayerStatistics({
       players: playersData,
       games: gamesData,
     });
     return (
-      <div className="m-16 mt-4">
+      <div className="m-16 mt-4 w-50">
         <StatsTable playerStatistics={playerStatistics} players={playersData} />
       </div>
     );
