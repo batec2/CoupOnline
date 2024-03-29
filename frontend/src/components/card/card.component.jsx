@@ -7,7 +7,6 @@ import tombstone from "../cardList/tombstone64.png";
 import notFound from "./not-found.png";
 import GameCard from "@/lib/cardEnum";
 import CardInfo from "@/components/card/CardInfo";
-import CardActionTitle from "../text/cardActionTitle.component";
 
 import "./card.styles.css";
 import useGameContext from "@/context/useGameContext.js";
@@ -46,7 +45,7 @@ const Card = ({ card, onClick }) => {
       break;
   }
 
-  const nonTargetStyle = `card grid justify-items-center ${bgColor} border border-black px-2 py-4`;
+  const nonTargetStyle = `grid w-36 rounded-3xl justify-items-center ${bgColor} px-2 py-4 opacity-75`;
   const targetStyle = `${nonTargetStyle} hover:bg-cards-discard hover:opacity-80`;
 
   if (card == GameCard.Eliminated) {
@@ -61,9 +60,9 @@ const Card = ({ card, onClick }) => {
         onClick={() => onClick()}
         className={isTarget ? targetStyle : nonTargetStyle}
       >
-        <p className="text-xl font-bold">{cardInfo["character"]}</p>
-        <img className="justify-center" src={img} alt="char_icon" />
-        <CardActionTitle text={"Action:"} />
+        <p className="font-bold w-24 text-center">{cardInfo["character"]}</p>
+        <img className="w-24" src={img} alt="char_icon" />
+        {/* <CardActionTitle text={"Action:"} />
         <p className="font-semibold italic">
           {cardInfo["action-name"] == "" ? "N/A" : cardInfo["action-name"]}
         </p>
@@ -73,7 +72,7 @@ const Card = ({ card, onClick }) => {
         <CardActionTitle text={"Counter-action:"} />
         <p>
           {cardInfo["counteraction"] == "" ? "N/A" : cardInfo["counteraction"]}
-        </p>
+        </p> */}
       </div>
     );
   }

@@ -19,12 +19,28 @@ export const handleNormalAction = (socket, roomId, action, targetId) => {
  * Sends an response action with the Id of the player being blocked
  * @param {Object} socket - Global Socket Object
  * @param {string} roomId - Current room id
+ * @param {string} initialUserId - Id of the player being blocked/responded
+ * @param {string} initialAction - Action being responded to
  * @param {string} responseAction - Block/response action
+ * @param {string} initialResponseId - Used if block is called out
+ * @param {string} initialResponseAction - Id if block is called out
  */
-export const handleResponseAction = (socket, roomId, responseAction) => {
+export const handleResponseAction = (
+  socket,
+  roomId,
+  initialUserId,
+  initialAction,
+  responseAction,
+  initialResponseId,
+  initialResponseAction
+) => {
   socket.emit("response-action", {
     roomId: roomId,
+    initialUserId: initialUserId,
+    initialAction: initialAction,
     responseAction: responseAction,
+    initialResponseId: initialResponseId,
+    initialResponseAction: initialResponseAction,
   });
 };
 
