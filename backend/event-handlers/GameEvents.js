@@ -39,7 +39,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
     });
   };
 
-  const nextTurn = (state, roomId, room) => {
+  const nextTurnAndUpdate = (state, roomId, room) => {
     state.incrementTurn();
     emitUpdate(io, roomId, room);
   };
@@ -91,14 +91,14 @@ export const registerGameHandlers = (io, socket, rooms) => {
       case Income: {
         state.increasePlayerMoney(state.initialUserId, 1);
         if (nextTurn) {
-          nextTurn(state, roomId, room);
+          nextTurnAndUpdate(state, roomId, room);
         }
         break;
       }
       case Taxes: {
         state.increasePlayerMoney(state.initialUserId, 3);
         if (nextTurn) {
-          nextTurn(state, roomId, room);
+          nextTurnAndUpdate(state, roomId, room);
         }
         break;
       }
@@ -106,7 +106,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
         state.increasePlayerMoney(state.initialUserId, 2);
         state.decreasePlayerMoney(state.targetId, 2);
         if (nextTurn) {
-          nextTurn(state, roomId, room);
+          nextTurnAndUpdate(state, roomId, room);
         }
         break;
       }
@@ -210,8 +210,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
 
     // If a block action gets called out
     if (responseAction === Pass) {
-      state.incrementTurn();
-      emitUpdate(io, roomId, room);
+      nextTurnAndUpdate(state, roomId, room);
     } else if (responseAction === CalloutLie) {
       console.log(
         `${socket.id} is blocking ${state.initialResponseAction} action of ${
@@ -242,8 +241,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
           }`
         );
         state.loseCard(socket.id, card);
-        state.incrementTurn();
-        emitUpdate(io, roomId, room);
+        nextTurnAndUpdate(state, roomId, room);
         break;
       }
 
@@ -273,8 +271,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
               return;
             }
             state.loseCard(socket.id, card);
-            state.incrementTurn();
-            emitUpdate(io, roomId, room);
+            nextTurnAndUpdate(state, roomId, room);
             return;
           }
           // Callout happened on first response
@@ -291,13 +288,11 @@ export const registerGameHandlers = (io, socket, rooms) => {
               state.loseCard(state.initialResponseId, 0);
               state.loseCard(state.initialResponseId, 1);
               state.swapCards(socket.id, card);
-              state.incrementTurn();
-              emitUpdate(io, roomId, room);
+              nextTurnAndUpdate(state, roomId, room);
               return;
             }
             if (state.initialAction === Exchange) {
-              state.incrementTurn();
-              emitUpdate(io, roomId, room);
+              nextTurnAndUpdate(state, roomId, room);
             }
             state.swapCards(socket.id, card);
             handleAction(roomId, room, state, false);
@@ -306,8 +301,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
           }
         }
         state.loseCard(state.initialUserId, card);
-        state.incrementTurn();
-        emitUpdate(io, roomId, room);
+        nextTurnAndUpdate(state, roomId, room);
     }
   };
 
