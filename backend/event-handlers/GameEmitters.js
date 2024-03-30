@@ -4,10 +4,15 @@ export const emitStartGame = (io, roomId) => {
 
 export const emitUpdate = (io, roomId, room) => {
   const { players, state } = room;
-
-  if(players !== undefined) {
+  const { hasWinner, winner } = state.checkEndGame();
+  if (hasWinner) {
+    console.log(`${winner} has won the game!`);
+    io.to(roomId).emit("end-game", { winner: winner });
+    return;
+  }
+  if (players !== undefined) {
     Object.keys(players).forEach((player) => {
-      const {gameCards, coins} = state.getPlayer(player);
+      const { gameCards, coins } = state.getPlayer(player);
       // Sends players cards
       // Starts the game for players and sends player id of first turn\
       io.to(player).emit("update-state", {
