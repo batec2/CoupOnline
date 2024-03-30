@@ -9,6 +9,7 @@ import Cookie from "universal-cookie";
 const cookie = new Cookie();
 export const useGameEvents = (gameState) => {
   const {
+    setWinner,
     socket,
     roomId,
     setLobbyMembers,
@@ -21,6 +22,7 @@ export const useGameEvents = (gameState) => {
     setCoins,
     setResponseAction,
     setIsResponding,
+    exchangeCardsRef,
     responseIdRef,
   } = gameState;
   const localCookie = cookie.get("PersonalCookie");
@@ -73,6 +75,16 @@ export const useGameEvents = (gameState) => {
       setIsTarget(false);
     };
 
+    const onExchangeCardEvent = ({ chooserId, exchangeCards, playerCards }) => {
+      console.log(`${chooserId} is choosing 2 cards`);
+      exchangeCardsRef.current = exchangeCards;
+      if (chooserId === socket.id) {
+        setIsTarget(true);
+        return;
+      }
+      setIsTarget(false);
+    };
+
     const onUpdateState = ({ gameCards, turnId, coins }) => {
       setGameCards(gameCards);
       setTurnId(turnId);
@@ -101,6 +113,10 @@ export const useGameEvents = (gameState) => {
       setIsResponding(false);
     };
 
+    const onEndGame = ({ winner }) => {
+      setWinner(winner);
+    };
+
     socket.connect();
     socket.emit(
       "join-room",
@@ -111,8 +127,10 @@ export const useGameEvents = (gameState) => {
     socket.on("start-game", onStartEvent);
     socket.on("choose-response", onChooseResponseEvent);
     socket.on("choose-card", onChooseCardEvent);
+    socket.on("exchange-cards", onExchangeCardEvent);
     socket.on("update-state", onUpdateState);
     socket.on("blocked", onBlocked);
+    socket.on("end-game", onEndGame);
 
     // Removes all event listeners when component is removed
     return () => {
@@ -120,7 +138,10 @@ export const useGameEvents = (gameState) => {
       socket.off("start-game", onStartEvent);
       socket.off("choose-response", onChooseResponseEvent);
       socket.off("choose-card", onChooseCardEvent);
+      socket.off("exchange-cards", onExchangeCardEvent);
       socket.off("update-state", onUpdateState);
+      socket.off("blocked", onBlocked);
+      socket.off("end-game", onEndGame);
       socket.disconnect();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
