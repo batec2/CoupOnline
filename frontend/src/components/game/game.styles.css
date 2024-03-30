@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 .game-panels {
-  @apply sm:order-3 md:order-1  border m-1 rounded-sm  bg-black bg-opacity-30;
+  @apply border m-1 rounded-sm  bg-black bg-opacity-30 shadow-md;
 }
