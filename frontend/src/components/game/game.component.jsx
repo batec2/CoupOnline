@@ -1,7 +1,4 @@
 import useGameContext from "@/context/useGameContext";
-import Actions from "./gameActions/actions.component";
-import PlayerCards from "./gameCards/playerCards.component";
-// import PlayerInfo from "./playerInfo/playerInfo.component";
 import CurrentTurnInfo from "./currentTurnInfo/currentTurnInfo.component";
 import CardList from "../cardList/cardList.component";
 import References from "./references/references.component";
@@ -20,7 +17,7 @@ const discard = {
 const Game = () => {
   const { roomId, currentLobbyMembers } = useGameContext();
   return (
-    <div>
+    <div className="h-screen">
       <p className="text-3xl font-bold text-center">Room: {roomId}</p>
       <div className="grid grid-cols-4 border divide-y divide-x">
         <CardList items={currentLobbyMembers} context={"players"} />
