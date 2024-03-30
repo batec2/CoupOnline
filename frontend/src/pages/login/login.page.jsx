@@ -51,7 +51,6 @@ const LoginPage = () => {
           username: res.data.userName,
           screenName: res.data.screenName,
         });
-
         setLocalCookie(cookies.get("PersonalCookie"));
         navigate("/room");
       });
@@ -71,8 +70,8 @@ const LoginPage = () => {
   }, [LocalCookie]);
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <div className="w-50">
+    <div className="flex flex-col items-center justify-center min-h-screen">
+      <div className="w-full max-w-sm px-4">
         <h1 className="text-3xl font-bold mb-4 text-center">
           Welcome to Super Couper
         </h1>
