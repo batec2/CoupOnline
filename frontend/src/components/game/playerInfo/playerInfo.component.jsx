@@ -7,7 +7,7 @@ const PlayerInfo = () => {
   const { coins } = useGameContext();
 
   return (
-    <div>
+    <div className="p-1">
       <GameSectionTitle text={"Your Info:"} />
       <p>Coins: {coins}</p>
       <PlayerCards />

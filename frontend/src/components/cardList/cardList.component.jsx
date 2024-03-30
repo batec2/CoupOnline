@@ -13,7 +13,7 @@ const CardList = ({ items, context }) => {
   const title = context == "players" ? "Players:" : "Discarded Cards:";
 
   return (
-    <div>
+    <div className="p-1">
       <GameSectionTitle text={title} />
       <div className="flex flex-col w-40 space-y-1">
         {keys.map((key) => (
