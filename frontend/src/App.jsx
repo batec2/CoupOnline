@@ -42,7 +42,7 @@ function App() {
             <Route path="room/:roomId" element={<LobbyPage />}></Route>
             <Route path="global-stats" element={<StatsPage />}></Route>
             <Route path="profile" element={<ProfilePage />}></Route>
-            <Route path="test" element={<TestPage />} />
+            {/* <Route path="test" element={<TestPage />} /> */}
           </Routes>
         </SocketContext.Provider>
       </QueryClientProvider>

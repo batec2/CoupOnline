@@ -64,14 +64,14 @@ const RoomPage = () => {
               onKeyPress={handleKeyPress}
               placeholder="Room Number"
               disabled={room.current ? true : false}
-              className="w-full px-4 py-2 border rounded-md"
+              className="w-full px-4 py-2 border rounded-md text-textColor-dark"
             />
           )}
         </div>
         {cookieExists && (
           <Button
             onClick={handleJoin}
-            className="bg-button-mainButton text-white px-4 py-2 rounded-md w-full"
+            className ="px-4 py-2 rounded-md w-full"
             disabled={!cookieExists}
           >
             {room.current ? "Leave Room" : "Join Room"}
@@ -80,7 +80,7 @@ const RoomPage = () => {
         {cookieExists && (
           <Button
             onClick={handleLogout}
-            className="bg-button-redButton text-white px-4 py-2 my-4 rounded-md w-full"
+            className="bg-button-redButton px-4 py-2 my-4 rounded-md w-full"
             disabled={!cookieExists}
           >
             Logout
@@ -90,7 +90,7 @@ const RoomPage = () => {
         {!cookieExists && (
           <Button
             onClick={() => navigate("/")}
-            className="bg-button-mainButton text-white rounded-md w-full"
+            className="rounded-md w-full"
           >
             Login
           </Button>

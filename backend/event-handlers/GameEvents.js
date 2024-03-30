@@ -78,10 +78,6 @@ export const registerGameHandlers = (io, socket, rooms) => {
    * @returns
    */
   const handleAction = (roomId, room, state, nextTurn) => {
-    // if (state.isBlocked && state.initialAction === Assassinate) {
-    //   state.decreasePlayerMoney(userId, 3);
-    //   return;
-    // }
     switch (state.initialAction) {
       case Coup: {
         state.decreasePlayerMoney(state.initialUserId, 7);
@@ -305,7 +301,16 @@ export const registerGameHandlers = (io, socket, rooms) => {
     }
   };
 
+  const onExchangeCards = ({ roomId, chosenCards, returnedCards }) => {
+    const room = rooms[roomId];
+    const state = room.state;
+    state.exchangeCards(socket.id, chosenCards);
+    state.returnCards(returnedCards);
+    nextTurnAndUpdate(state, roomId, room);
+  };
+
   socket.on("normal-action", onNormalAction);
   socket.on("response-action", onResponseAction);
   socket.on("choose-card", onChooseCard);
+  socket.on("exchange-cards", onExchangeCards);
 };

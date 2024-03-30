@@ -185,7 +185,7 @@ export class GameState {
     this.players.forEach((player) => {
       this.playerState[player] = { gameCards: {}, coins: 0 };
       this.playerState[player].gameCards = this.generateCards();
-      this.playerState[player].coins = 14;
+      this.playerState[player].coins = 8;
       this.playerState[player].eliminated = false;
     });
   }
@@ -243,5 +243,15 @@ export class GameState {
 
   checkLoser(player) {
     return this.playerState[player].eliminated;
+  }
+
+  returnCards(returnedCards) {
+    returnedCards.forEach((card) => (this.deck[card] += 1));
+  }
+
+  exchangeCards(player, chosenCards) {
+    for (let i = 0; i < 2; i++) {
+      this.playerState[player].gameCards[i] = chosenCards[i];
+    }
   }
 }

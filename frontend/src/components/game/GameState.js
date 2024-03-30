@@ -37,7 +37,7 @@ export const useGameState = () => {
   const [coins, setCoins] = useState(0);
   const [isResponding, setIsResponding] = useState(false);
   const [responseAction, setResponseAction] = useState(null);
-  const exchangeCardsRef = useRef(null);
+  const [exchangeCards, setExchangeCards] = useState(null);
   const responseIdRef = useRef(null);
   const socket = useContext(SocketContext);
   const { roomId } = useParams();
@@ -65,7 +65,8 @@ export const useGameState = () => {
     setIsResponding: setIsResponding,
     responseAction: responseAction,
     setResponseAction: setResponseAction,
-    exchangeCardsRef: exchangeCardsRef,
+    exchangeCards: exchangeCards,
+    setExchangeCards: setExchangeCards,
     responseIdRef: responseIdRef,
     socket: socket,
     roomId: roomId,
