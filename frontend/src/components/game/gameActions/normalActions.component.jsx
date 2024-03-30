@@ -126,7 +126,7 @@ const NormalActions = () => {
         <ActionButton
           buttonClass={buttonClass(GameActions.Income)}
           onClick={() => onIncomeClick()}
-          text={buttonClass(GameActions.Income)}
+          text={"Income"}
         />
         <ActionButton
           buttonClass={buttonClass(GameActions.Coup)}
