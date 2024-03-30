@@ -81,18 +81,18 @@ const LoginPage = () => {
           placeholder="User Name"
           onChange={handleUsernameInput}
           onKeyPress={handleKeyPress}
-          className="px-4 py-2 border rounded-md mb-4 w-full"
+          className="px-4 py-2 border rounded-md mb-4 w-full text-textColor-dark"
         />
         <Button
           onClick={handleLoginClick}
-          className="bg-button-secondaryButton text-white px-4 py-2 rounded-md mb-2 w-full"
+          className="bg-button-secondaryButton px-4 py-2 rounded-md mb-2 w-full"
         >
           Login
         </Button>
         <h2 className="text-xl mb-2">No account?</h2>
         <Button
           onClick={handleCreateClick}
-          className="bg-button-mainButton text-white px-4 py-2 rounded-md w-full"
+          className="px-4 py-2 rounded-md w-full"
         >
           Create an account
         </Button>
