@@ -11,8 +11,8 @@ import CardInfo from "@/components/card/CardInfo";
 import "./card.styles.css";
 import useGameContext from "@/context/useGameContext.js";
 
-const Card = ({ card, onClick }) => {
-  const { isTarget } = useGameContext();
+const Card = ({ card, onClick, active, number }) => {
+  const { isTarget, exchangeCards } = useGameContext();
   let img = notFound;
   let bgColor = "bg-cards-duke";
 
@@ -21,23 +21,23 @@ const Card = ({ card, onClick }) => {
   switch (card) {
     case GameCard.Duke:
       img = duke;
-      bgColor = "bg-cards-duke ";
+      bgColor = active[number] ? "bg-cards-active" : "bg-cards-duke ";
       break;
     case GameCard.Assassin:
       img = assassin;
-      bgColor = "bg-cards-assassin";
+      bgColor = active[number] ? "bg-cards-active" : "bg-cards-assassin";
       break;
     case GameCard.Ambassador:
       img = ambassador;
-      bgColor = "bg-cards-ambassador";
+      bgColor = active[number] ? "bg-cards-active" : "bg-cards-ambassador";
       break;
     case GameCard.Captain:
       img = captain;
-      bgColor = `bg-cards-captain`;
+      bgColor = active[number] ? "bg-cards-active" : `bg-cards-captain`;
       break;
     case GameCard.Contessa:
       img = contessa;
-      bgColor = `bg-cards-contessa`;
+      bgColor = active[number] ? "bg-cards-active" : `bg-cards-contessa`;
       break;
     case GameCard.Eliminated:
       img = tombstone;
@@ -57,8 +57,11 @@ const Card = ({ card, onClick }) => {
   } else {
     return (
       <div
-        onClick={() => onClick()}
-        className={isTarget ? targetStyle : nonTargetStyle}
+        onClick={() => {
+          onClick();
+          console.log(active[number]);
+        }}
+        className={isTarget || exchangeCards ? targetStyle : nonTargetStyle}
       >
         <p className="font-bold w-24 text-center">{cardInfo["character"]}</p>
         <img className="w-24" src={img} alt="char_icon" />

@@ -19,14 +19,17 @@ const PlayerCards = () => {
     setTurnId,
     setInitialAction,
     setInitialUserId,
-    exchangeCardsRef,
+    exchangeCards,
+    setExchangeCards,
   } = useGameContext();
 
-  const [selectedNumber, setSelectedNumber] = useState(0);
-  const [cardOne, setCardOne] = useState(false);
-  const [cardTwo, setCardTwo] = useState(false);
-  const [cardThree, setCardThree] = useState(false);
-  const [cardFour, setCardFour] = useState(false);
+  const [currentSelected, setCurrentSelected] = useState(0);
+  const [selectedCards, setSelectedCards] = useState([
+    false,
+    false,
+    false,
+    false,
+  ]);
 
   const chooseCardType = () => {
     switch (responseAction) {
@@ -66,29 +69,41 @@ const PlayerCards = () => {
    * @param {*} chooseActionType - Type of card selection action ex: loose/show/exchange
    * @returns
    */
-  const handleChooseCard = (card) => {
-    if (!isTarget || !exchangeCardsRef) {
+  const handleChooseCard = (card, cardNumber) => {
+    if (isTarget) {
+      console.log(
+        `${currentTurnId} is choosing ${card}, ${chooseCardType()},${initialAction}`
+      );
+      socket.emit("choose-card", {
+        roomId: roomId,
+        card: card,
+        chooseActionType: chooseCardType(),
+      });
+      setTurnId(null);
+      setInitialAction(null);
+      setInitialUserId(null);
       return;
+    } else if (exchangeCards) {
+      setCurrentSelected(
+        selectedCards[cardNumber] ? currentSelected - 1 : currentSelected + 1
+      );
+      const cards = selectedCards;
+      cards[cardNumber] = !selectedCards[cardNumber];
+      setSelectedCards(cards);
     }
-    console.log(
-      `${currentTurnId} is choosing ${card}, ${chooseCardType()},${initialAction}`
-    );
-    socket.emit("choose-card", {
-      roomId: roomId,
-      card: card,
-      chooseActionType: chooseCardType(),
-    });
-    setTurnId(null);
-    setInitialAction(null);
-    setInitialUserId(null);
   };
 
   const handleExchangeCard = () => {
-    socket.emit("exchange-cards", {
-      roomId: roomId,
-      selectedCards: exchangeCards.selectedCards,
-      returnedCards: exchangeCards.returnedCards,
-    });
+    if (currentSelected === 2) {
+      console.log("submit");
+      socket.emit("exchange-cards", {
+        roomId: roomId,
+        // selectedCards: exchangeCards.selectedCards,
+        // returnedCards: exchangeCards.returnedCards,
+      });
+      setExchangeCards(null);
+      setSelectedCards([false, false, false, false]);
+    }
   };
 
   const showPrompt = () => {
@@ -114,9 +129,6 @@ const PlayerCards = () => {
       case GameCard.Contessa: {
         return "bg-cards-contessa";
       }
-      case 30: {
-        return "bg-cards-active";
-      }
       default: {
         return "bg-actions-normal";
       }
@@ -124,28 +136,29 @@ const PlayerCards = () => {
   };
 
   const showExchange = () => {
-    if (exchangeCardsRef.current) {
+    if (exchangeCards) {
       return (
         <>
           <div className="flex justify-center flex-row space-x-2">
             <Card
-              className={cardClass(cardOne ? 30 : exchangeCardsRef.current[0])}
-              card={exchangeCardsRef.current[0]}
-              onClick={() => {
-                handleChooseCard(0);
-                setCardOne(true);
-              }}
+              className={cardClass(exchangeCards[0])}
+              card={exchangeCards[0]}
+              active={selectedCards}
+              number={2}
+              onClick={() => handleChooseCard(0, 2)}
             ></Card>
             <Card
-              className={cardClass(cardTwo ? 30 : exchangeCardsRef.current[1])}
-              card={exchangeCardsRef.current[1]}
-              onClick={() => {
-                handleChooseCard(1);
-                setCardTwo(true);
-              }}
+              className={cardClass(exchangeCards[1])}
+              card={exchangeCards[1]}
+              active={selectedCards}
+              number={3}
+              onClick={() => handleChooseCard(1, 3)}
             ></Card>
           </div>
-          <Button onClick={() => handleExchangeCard()}>
+          <Button
+            className={currentSelected === 2 ? "bg-green-700" : "bg-gray-500"}
+            onClick={() => handleExchangeCard()}
+          >
             Confirm Selection
           </Button>
         </>
@@ -160,20 +173,18 @@ const PlayerCards = () => {
       {showPrompt()}
       <div className="flex justify-center flex-row space-x-2">
         <Card
-          className={cardClass(cardThree ? 30 : gameCards[0])}
+          className={cardClass(gameCards[0])}
           card={gameCards[0]}
-          onClick={() => {
-            handleChooseCard(0);
-            setCardThree(true);
-          }}
+          active={selectedCards}
+          number={0}
+          onClick={() => handleChooseCard(0, 0)}
         ></Card>
         <Card
-          className={cardClass(cardFour ? 30 : gameCards[1])}
+          className={cardClass(gameCards[1])}
           card={gameCards[1]}
-          onClick={() => {
-            handleChooseCard(1);
-            setCardFour(true);
-          }}
+          active={selectedCards}
+          number={1}
+          onClick={() => handleChooseCard(1, 1)}
         ></Card>
       </div>
       {showExchange()}

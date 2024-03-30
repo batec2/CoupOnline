@@ -13,7 +13,7 @@ const PlayerInfo = () => {
       <PlayerCards />
       <Actions />
     </div>
-  )
-} 
+  );
+};
 
 export default PlayerInfo;
