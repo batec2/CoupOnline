@@ -3,7 +3,7 @@ import Game from "@/components/game/game.component";
 import { GameStateContext } from "@/context/GameStateContext";
 import { useGameEvents } from "@/components/game/GameEvent";
 import { useGameState } from "../../components/game/GameState";
-import Winner from "@/components/winner/winner.component";
+import GameEnd from "@/components/gameEnd/gameEnd.component";
 const LobbyPage = () => {
   const gameState = useGameState();
   useGameEvents(gameState);
@@ -19,7 +19,7 @@ const LobbyPage = () => {
     return (
       <>
         <GameStateContext.Provider value={gameState}>
-          <Winner></Winner>
+          <GameEnd></GameEnd>
         </GameStateContext.Provider>
       </>
     );

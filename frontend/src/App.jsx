@@ -30,6 +30,7 @@ Socket.onAny((event, ...args) => {
 function App() {
   // const Socket = io("http://localhost:8080", { autoConnect: false });
   return (
+    <div className="bg-page text-textColor-base">
     <BrowserRouter>
       <DropDownMenu />
       <QueryClientProvider client={queryClient} contextSharing={true}>
@@ -46,6 +47,7 @@ function App() {
         </SocketContext.Provider>
       </QueryClientProvider>
     </BrowserRouter>
+    </div>
   );
 }
 

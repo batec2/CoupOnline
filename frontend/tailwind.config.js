@@ -18,16 +18,19 @@ module.exports = {
     },
     extend: {
       colors: {
+        page: "#0f172a",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         textColor: {
+          base: "#f8fafc",
+          dark: "#000000",
           error: "#FF0000",
         },
         button: {
-          mainButton: "#1E40AF",
+          mainButton: "#abcdef",
           secondaryButton: "#60a5fa",
           redButton: "#EF4444",
         },

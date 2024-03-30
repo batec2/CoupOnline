@@ -45,8 +45,8 @@ const Card = ({ card, onClick }) => {
       break;
   }
 
-  const nonTargetStyle = `grid w-36 rounded-3xl justify-items-center ${bgColor} px-2 py-4 opacity-75`;
-  const targetStyle = `${nonTargetStyle} hover:bg-cards-discard hover:opacity-80`;
+  const nonTargetStyle = `grid w-36 rounded-3xl justify-items-center ${bgColor} px-2 py-4 bg-opacity-80`;
+  const targetStyle = `${nonTargetStyle} hover:bg-cards-discard hover:bg-opacity-80`;
 
   if (card == GameCard.Eliminated) {
     return (
