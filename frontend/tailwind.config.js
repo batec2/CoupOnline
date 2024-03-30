@@ -47,7 +47,7 @@ module.exports = {
           foreground: "hsl(var(--secondary-foreground))",
         },
         actions: {
-          normal: "#000000",
+          normal: "#ffffff",
           unavailable: "#9ca3af",
           haveCard: "#16a34a",
           bluff: "#dc2626",
