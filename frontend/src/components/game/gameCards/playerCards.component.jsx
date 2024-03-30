@@ -22,7 +22,11 @@ const PlayerCards = () => {
     exchangeCardsRef,
   } = useGameContext();
 
-  const [exchangeCards, setExchangeCards] = useState(null);
+  const [selectedNumber, setSelectedNumber] = useState(0);
+  const [cardOne, setCardOne] = useState(false);
+  const [cardTwo, setCardTwo] = useState(false);
+  const [cardThree, setCardThree] = useState(false);
+  const [cardFour, setCardFour] = useState(false);
 
   const chooseCardType = () => {
     switch (responseAction) {
@@ -110,6 +114,9 @@ const PlayerCards = () => {
       case GameCard.Contessa: {
         return "bg-cards-contessa";
       }
+      case 30: {
+        return "bg-cards-active";
+      }
       default: {
         return "bg-actions-normal";
       }
@@ -122,14 +129,20 @@ const PlayerCards = () => {
         <>
           <div className="flex justify-center flex-row space-x-2">
             <Card
-              className={cardClass(exchangeCardsRef.current[0])}
+              className={cardClass(cardOne ? 30 : exchangeCardsRef.current[0])}
               card={exchangeCardsRef.current[0]}
-              onClick={() => handleChooseCard(0)}
+              onClick={() => {
+                handleChooseCard(0);
+                setCardOne(true);
+              }}
             ></Card>
             <Card
-              className={cardClass(exchangeCardsRef.current[1])}
+              className={cardClass(cardTwo ? 30 : exchangeCardsRef.current[1])}
               card={exchangeCardsRef.current[1]}
-              onClick={() => handleChooseCard(1)}
+              onClick={() => {
+                handleChooseCard(1);
+                setCardTwo(true);
+              }}
             ></Card>
           </div>
           <Button onClick={() => handleExchangeCard()}>
@@ -147,14 +160,20 @@ const PlayerCards = () => {
       {showPrompt()}
       <div className="flex justify-center flex-row space-x-2">
         <Card
-          className={cardClass(gameCards[0])}
+          className={cardClass(cardThree ? 30 : gameCards[0])}
           card={gameCards[0]}
-          onClick={() => handleChooseCard(0)}
+          onClick={() => {
+            handleChooseCard(0);
+            setCardThree(true);
+          }}
         ></Card>
         <Card
-          className={cardClass(gameCards[1])}
+          className={cardClass(cardFour ? 30 : gameCards[1])}
           card={gameCards[1]}
-          onClick={() => handleChooseCard(1)}
+          onClick={() => {
+            handleChooseCard(1);
+            setCardFour(true);
+          }}
         ></Card>
       </div>
       {showExchange()}
