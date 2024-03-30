@@ -60,10 +60,10 @@ import useGameContext from "@/context/useGameContext";
 const References = () => {
   const { socket, roomId } = useGameContext();
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 p-2">
       <GameSectionTitle text={"References:"} />
       <div className ="flex flex-row justify-center">
-        <div className="flex flex-col space-y-2 w-60">
+        <div className="flex flex-col space-y-2 w-60 m-4">
           <Dialog>
             <DialogTrigger asChild>
               <Button className="bg-button-mainButton text-textColor-dark">Actions</Button>

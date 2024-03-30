@@ -34,7 +34,7 @@
 
     --radius: 0.5rem;
 
-    background-color: rgb(0, 0, 0); 
+    background-color: #0f172a; 
   }
 
   .dark {
@@ -74,8 +74,5 @@
   }
   body {
     @apply bg-background text-foreground;
-  }
-  html {
-    @apply text-purple-100
   }
 }

@@ -40,7 +40,7 @@ const CurrentTurnInfo = () => {
   }
 
   return (
-    <div>
+    <div className="p-1">
       <GameSectionTitle text={"Current Turn Info:"} />
       {displayCurrentTurnPlayer()}
       {displayInitialAction()}
