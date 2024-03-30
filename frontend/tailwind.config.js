@@ -13,10 +13,10 @@ module.exports = {
       center: true,
       padding: "2rem",
       screens: {
-        'sm': '640px',
-        'md': '768px',
-        'lg': '1024px',
-        'xl': '1280px',
+        sm: "640px",
+        md: "768px",
+        lg: "1024px",
+        xl: "1280px",
         "2xl": "1400px",
       },
     },
@@ -33,6 +33,7 @@ module.exports = {
           dark: "#000000",
           error: "#FF0000",
         },
+        gameui: { background: "#02007A2" },
         button: {
           mainButton: "#abcdef",
           secondaryButton: "#60a5fa",
@@ -61,7 +62,7 @@ module.exports = {
           contessa: "#f87171",
           eliminated: "#6b7280",
           discard: "#d1d5db",
-          active: "#15bd5e",
+          active: "#cc1616",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",

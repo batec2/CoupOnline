@@ -94,14 +94,32 @@ const PlayerCards = () => {
   };
 
   const handleExchangeCard = () => {
+    console.log(currentSelected);
     if (currentSelected === 2) {
-      console.log("submit");
+      const chosenCards = [];
+      const returnedCards = [];
+      for (let i = 0; i < 4; i++) {
+        if (i < 2) {
+          if (!selectedCards[i]) {
+            chosenCards.push(gameCards[i]);
+          } else {
+            returnedCards.push(gameCards[i]);
+          }
+        } else {
+          if (!selectedCards[i]) {
+            chosenCards.push(exchangeCards[i - 2]);
+          } else {
+            returnedCards.push(exchangeCards[i - 2]);
+          }
+        }
+      }
       socket.emit("exchange-cards", {
         roomId: roomId,
-        // selectedCards: exchangeCards.selectedCards,
-        // returnedCards: exchangeCards.returnedCards,
+        chosenCards: chosenCards,
+        returnedCards: returnedCards,
       });
       setExchangeCards(null);
+      setCurrentSelected(0);
       setSelectedCards([false, false, false, false]);
     }
   };
