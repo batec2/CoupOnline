@@ -30,6 +30,7 @@ Socket.onAny((event, ...args) => {
 function App() {
   // const Socket = io("http://localhost:8080", { autoConnect: false });
   return (
+    <div className="bg-page text-textColor-base">
     <BrowserRouter>
       <DropDownMenu />
       <QueryClientProvider client={queryClient} contextSharing={true}>
@@ -41,11 +42,12 @@ function App() {
             <Route path="room/:roomId" element={<LobbyPage />}></Route>
             <Route path="global-stats" element={<StatsPage />}></Route>
             <Route path="profile" element={<ProfilePage />}></Route>
-            <Route path="test" element={<TestPage />} />
+            {/* <Route path="test" element={<TestPage />} /> */}
           </Routes>
         </SocketContext.Provider>
       </QueryClientProvider>
     </BrowserRouter>
+    </div>
   );
 }
 

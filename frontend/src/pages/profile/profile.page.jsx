@@ -16,6 +16,7 @@ const PLAYER_ENDPOINT = "/players/";
 const GAMES_ENDPOINT = "/games/";
 
 const ProfilePage = () => {
+  // State to manage user data and error messages
   const [userData, setUserData] = useState({
     user: null,
     userGames: null,
@@ -27,7 +28,9 @@ const ProfilePage = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
+        // Check if user is logged in
         const cookie = cookies.get("PersonalCookie");
+        // Redirect to login if not
         if (!cookie) {
           setUserData((prevState) => ({
             ...prevState,
@@ -35,10 +38,6 @@ const ProfilePage = () => {
               "Please login first ... you are being redirected to the login page",
           }));
           setTimeout(() => {
-            setUserData((prevState) => ({
-              ...prevState,
-              errorMessage: null,
-            }));
             navigate("/");
           }, 1500);
           return;
@@ -67,12 +66,19 @@ const ProfilePage = () => {
 
   const { user, userGames, errorMessage } = userData;
 
+  // Render error message if any
   if (errorMessage) {
-    return <div className="text-center">{errorMessage}</div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="text-textColor-error mb-4 text-center">
+          {errorMessage}
+        </div>
+      </div>
+    );
   }
 
   if (user) {
-    // render user profile
+    // Calculate player statistics
     console.log(user.games);
     const playerStatistics = calculatePlayerStatistics({
       players: [user],
@@ -80,7 +86,7 @@ const ProfilePage = () => {
     });
 
     return (
-      <Card className="w-[380px] mx-auto">
+      <Card className="w-[380px] mx-auto mt-8">
         <CardHeader>
           <CardTitle>
             Welcome,{" "}

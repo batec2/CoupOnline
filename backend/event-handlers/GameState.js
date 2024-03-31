@@ -244,4 +244,14 @@ export class GameState {
   checkLoser(player) {
     return this.playerState[player].eliminated;
   }
+
+  returnCards(returnedCards) {
+    returnedCards.forEach((card) => (this.deck[card] += 1));
+  }
+
+  exchangeCards(player, chosenCards) {
+    for (let i = 0; i < 2; i++) {
+      this.playerState[player].gameCards[i] = chosenCards[i];
+    }
+  }
 }

@@ -39,6 +39,11 @@ export const registerGameHandlers = (io, socket, rooms) => {
     });
   };
 
+  const nextTurnAndUpdate = (state, roomId, room) => {
+    state.incrementTurn();
+    emitUpdate(io, roomId, room);
+  };
+
   /**
    *
    * @param {*} initialUserId - first user in event chain
@@ -72,11 +77,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
    * @param {*} isBlocked
    * @returns
    */
-  const handleAction = (roomId, room, state) => {
-    // if (state.isBlocked && state.initialAction === Assassinate) {
-    //   state.decreasePlayerMoney(userId, 3);
-    //   return;
-    // }
+  const handleAction = (roomId, room, state, nextTurn) => {
     switch (state.initialAction) {
       case Coup: {
         state.decreasePlayerMoney(state.initialUserId, 7);
@@ -85,21 +86,24 @@ export const registerGameHandlers = (io, socket, rooms) => {
       }
       case Income: {
         state.increasePlayerMoney(state.initialUserId, 1);
-        state.incrementTurn();
-        emitUpdate(io, roomId, room);
+        if (nextTurn) {
+          nextTurnAndUpdate(state, roomId, room);
+        }
         break;
       }
       case Taxes: {
         state.increasePlayerMoney(state.initialUserId, 3);
-        state.incrementTurn();
-        emitUpdate(io, roomId, room);
+        if (nextTurn) {
+          nextTurnAndUpdate(state, roomId, room);
+        }
         break;
       }
       case Steal: {
         state.increasePlayerMoney(state.initialUserId, 2);
         state.decreasePlayerMoney(state.targetId, 2);
-        state.incrementTurn();
-        emitUpdate(io, roomId, room);
+        if (nextTurn) {
+          nextTurnAndUpdate(state, roomId, room);
+        }
         break;
       }
       case Assassinate: {
@@ -147,8 +151,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
       });
       return;
     }
-
-    handleAction(roomId, room, state);
+    handleAction(roomId, room, state, true);
   };
 
   /**
@@ -195,7 +198,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
         state.incrementPassCount();
 
         if (state.passCount === state.playerCount - 1) {
-          handleAction(roomId, room, state);
+          handleAction(roomId, room, state, true);
         }
       }
       return;
@@ -203,12 +206,11 @@ export const registerGameHandlers = (io, socket, rooms) => {
 
     // If a block action gets called out
     if (responseAction === Pass) {
-      state.incrementTurn();
-      emitUpdate(io, roomId, room);
+      nextTurnAndUpdate(state, roomId, room);
     } else if (responseAction === CalloutLie) {
       console.log(
-        `${socket.id} is blocking ${state.responseId} action of ${
-          GameActions[state.responseAction]
+        `${socket.id} is blocking ${state.initialResponseAction} action of ${
+          GameActions[state.initialResponseAction]
         }`
       );
       emitChooseCard(roomId, state.initialResponseId, state);
@@ -234,14 +236,11 @@ export const registerGameHandlers = (io, socket, rooms) => {
             CardInfo[state.getPlayerCard(socket.id, card)].character
           }`
         );
-        state.incrementTurn();
         state.loseCard(socket.id, card);
-        emitUpdate(io, roomId, room);
+        nextTurnAndUpdate(state, roomId, room);
         break;
       }
-      case ChooseCard.Exchange: {
-        break;
-      }
+
       case ChooseCard.Show:
         {
           // card shown gets checked
@@ -259,16 +258,16 @@ export const registerGameHandlers = (io, socket, rooms) => {
               console.log(
                 `${socket.id} showed the proper card for ${
                   GameActions[state.initialResponseAction]
-                } and ${responseId} must choose to lose a card`
+                } and ${state.initialUserId} must choose to lose a card`
               );
               // If the Person Can Block then the initial user loses a card
+              state.initialResponseAction = GameActions.LooseCallout;
               state.swapCards(socket.id, card);
-              emitChooseCard(roomId, state.initialAction, state);
+              emitChooseCard(roomId, state.initialUserId, state);
               return;
             }
-            state.incrementTurn();
             state.loseCard(socket.id, card);
-            emitUpdate(io, roomId, room);
+            nextTurnAndUpdate(state, roomId, room);
             return;
           }
           // Callout happened on first response
@@ -281,31 +280,37 @@ export const registerGameHandlers = (io, socket, rooms) => {
               } and ${state.initialResponseId} must choose to lose a card`
             );
             // If a player calls out an Assassin and lose, they lose both cards
-            if ((state.initialAction = Assassinate)) {
+            if (state.initialAction === Assassinate) {
               state.loseCard(state.initialResponseId, 0);
               state.loseCard(state.initialResponseId, 1);
               state.swapCards(socket.id, card);
-              state.incrementTurn();
-              emitUpdate(io, roomId, room);
+              nextTurnAndUpdate(state, roomId, room);
               return;
             }
-            if ((state.initialAction = Exchange)) {
-              state.incrementTurn();
-              emitUpdate(io, roomId, room);
+            if (state.initialAction === Exchange) {
+              nextTurnAndUpdate(state, roomId, room);
             }
             state.swapCards(socket.id, card);
-            handleAction(roomId, room, state);
+            handleAction(roomId, room, state, false);
             emitChooseCard(roomId, state.initialResponseId, state);
             return;
           }
         }
-        state.incrementTurn();
         state.loseCard(state.initialUserId, card);
-        emitUpdate(io, roomId, room);
+        nextTurnAndUpdate(state, roomId, room);
     }
+  };
+
+  const onExchangeCards = ({ roomId, chosenCards, returnedCards }) => {
+    const room = rooms[roomId];
+    const state = room.state;
+    state.exchangeCards(socket.id, chosenCards);
+    state.returnCards(returnedCards);
+    nextTurnAndUpdate(state, roomId, room);
   };
 
   socket.on("normal-action", onNormalAction);
   socket.on("response-action", onResponseAction);
   socket.on("choose-card", onChooseCard);
+  socket.on("exchange-cards", onExchangeCards);
 };

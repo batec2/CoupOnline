@@ -51,7 +51,6 @@ const LoginPage = () => {
           username: res.data.userName,
           screenName: res.data.screenName,
         });
-
         setLocalCookie(cookies.get("PersonalCookie"));
         navigate("/room");
       });
@@ -71,8 +70,8 @@ const LoginPage = () => {
   }, [LocalCookie]);
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <div className="w-50">
+    <div className="flex flex-col items-center justify-center min-h-screen">
+      <div className="w-full max-w-sm px-4">
         <h1 className="text-3xl font-bold mb-4 text-center">
           Welcome to Super Couper
         </h1>
@@ -82,18 +81,18 @@ const LoginPage = () => {
           placeholder="User Name"
           onChange={handleUsernameInput}
           onKeyPress={handleKeyPress}
-          className="px-4 py-2 border rounded-md mb-4 w-full"
+          className="px-4 py-2 border rounded-md mb-4 w-full text-textColor-dark"
         />
         <Button
           onClick={handleLoginClick}
-          className="bg-button-secondaryButton text-white px-4 py-2 rounded-md mb-2 w-full"
+          className="bg-button-secondaryButton px-4 py-2 rounded-md mb-2 w-full"
         >
           Login
         </Button>
         <h2 className="text-xl mb-2">No account?</h2>
         <Button
           onClick={handleCreateClick}
-          className="bg-button-mainButton text-white px-4 py-2 rounded-md w-full"
+          className="px-4 py-2 rounded-md w-full"
         >
           Create an account
         </Button>

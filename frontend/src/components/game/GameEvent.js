@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import handleStatus from "@/lib/handleStatus";
 import GameActions from "@/lib/actionEnum";
 import Cookie from "universal-cookie";
+import { useNavigate } from "react-router-dom";
 /**
  * Sets up socket listeners for gamestate variables
  * @param {*} gameState
@@ -22,14 +23,21 @@ export const useGameEvents = (gameState) => {
     setCoins,
     setResponseAction,
     setIsResponding,
-    exchangeCardsRef,
+    setExchangeCards,
     responseIdRef,
   } = gameState;
   const localCookie = cookie.get("PersonalCookie");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const onLobbyEvent = ({ lobby }) => {
       setLobbyMembers(lobby);
+    };
+
+    const handleStatusOnRoomJoin = (status) => {
+      if (status.status === 400) {
+        navigate("/room");
+      }
     };
 
     const onStartEvent = () => {
@@ -77,17 +85,15 @@ export const useGameEvents = (gameState) => {
 
     const onExchangeCardEvent = ({ chooserId, exchangeCards, playerCards }) => {
       console.log(`${chooserId} is choosing 2 cards`);
-      exchangeCardsRef.current = exchangeCards;
       if (chooserId === socket.id) {
-        setIsTarget(true);
-        return;
+        setExchangeCards(exchangeCards);
       }
-      setIsTarget(false);
     };
 
     const onUpdateState = ({ gameCards, turnId, coins }) => {
       setGameCards(gameCards);
       setTurnId(turnId);
+      setExchangeCards.current = null;
       setIsTarget(false);
       setInitialAction(null);
       setInitialUserId(null);
@@ -121,7 +127,7 @@ export const useGameEvents = (gameState) => {
     socket.emit(
       "join-room",
       { roomId: roomId, userId: localCookie["username"] },
-      handleStatus
+      handleStatusOnRoomJoin
     );
     socket.on("lobby-members", onLobbyEvent);
     socket.on("start-game", onStartEvent);

@@ -13,21 +13,29 @@ module.exports = {
       center: true,
       padding: "2rem",
       screens: {
+        sm: "640px",
+        md: "768px",
+        lg: "1024px",
+        xl: "1280px",
         "2xl": "1400px",
       },
     },
     extend: {
       colors: {
+        page: "#0f172a",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         textColor: {
+          base: "#f8fafc",
+          dark: "#000000",
           error: "#FF0000",
         },
+        gameui: { background: "#02007A2" },
         button: {
-          mainButton: "#1E40AF",
+          mainButton: "#abcdef",
           secondaryButton: "#60a5fa",
           redButton: "#EF4444",
         },
@@ -40,7 +48,7 @@ module.exports = {
           foreground: "hsl(var(--secondary-foreground))",
         },
         actions: {
-          normal: "#000000",
+          normal: "#ffffff",
           unavailable: "#9ca3af",
           haveCard: "#16a34a",
           bluff: "#dc2626",
@@ -54,6 +62,7 @@ module.exports = {
           contessa: "#f87171",
           eliminated: "#6b7280",
           discard: "#d1d5db",
+          active: "#cc1616",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",

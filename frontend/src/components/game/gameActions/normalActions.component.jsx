@@ -28,7 +28,10 @@ const NormalActions = () => {
         }
       }
       //Can always declare income or foreign aid
-      case GameActions.Income || GameActions.Aid: {
+      case GameActions.Income: {
+        return ButtonClass.Normal;
+      }
+      case GameActions.Aid: {
         return ButtonClass.Normal;
       }
       //Taxes are legit if have duke, bluff if not
