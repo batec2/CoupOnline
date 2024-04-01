@@ -1,5 +1,5 @@
 import ActionTable from "../../components/actionTable/actionTable.component";
-import CardList from "../../components/cardList/cardList.component";
+import CardList from "../../components/cardList/playerList.component";
 import Card from "../../components/card/card.component";
 import CardInfo from "@/components/card/CardInfo";
 import GameCard from "@/lib/cardEnum";

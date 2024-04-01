@@ -29,14 +29,31 @@ const CurrentTurnInfo = () => {
     }
   }
 
-  const displayResponseAction = () => {
+  const displayResponseActionInitial = () => {
     if(!initialAction) {
       return <></>
     } else if (!responseAction) {
       return <p>Waiting for Responses.</p>
     } else {
-      return <p>Response Action: {GameActions[responseAction]} by ...</p>
+      return <p>Initial Response Action: {GameActions[responseAction]} by ...</p>
     }
+  }
+
+  const displayResponseActionSecondary = () => {
+    if(!initialAction) {
+      return <></>
+    } else if (!responseAction) {
+      return <p>Waiting for Responses.</p>
+    } else {
+      return <p>Secondary Response Action: {GameActions[responseAction]} by ...</p>
+    }
+  }
+  
+  const displayShownCard = () => {
+    return <p>PLAYER shows CARD</p>
+  }
+  const displayCardLost = () => {
+    return <p>PLAYER has chosen to discard CARD</p>
   }
 
   return (
@@ -44,7 +61,6 @@ const CurrentTurnInfo = () => {
       <GameSectionTitle text={"Current Turn Info:"} />
       {displayCurrentTurnPlayer()}
       {displayInitialAction()}
-      {displayResponseAction()}
     </div>
   );
 };

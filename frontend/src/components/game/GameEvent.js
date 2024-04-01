@@ -23,6 +23,7 @@ export const useGameEvents = (gameState) => {
     setInitialAction,
     setIsTarget,
     setCoins,
+    setDiscardDeck,
     setResponseAction,
     setIsResponding,
     setExchangeCards,
@@ -104,6 +105,7 @@ export const useGameEvents = (gameState) => {
       responseIdRef.current = null;
       setResponseAction(null);
       setCoins(coins);
+      setDiscardDeck(discardDeck);
       console.log(discardDeck);
     };
 
