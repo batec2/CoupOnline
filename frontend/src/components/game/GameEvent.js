@@ -3,6 +3,8 @@ import handleStatus from "@/lib/handleStatus";
 import GameActions from "@/lib/actionEnum";
 import Cookie from "universal-cookie";
 import { useNavigate } from "react-router-dom";
+import usePlayerState from "./PlayerState";
+import { terminal } from "virtual:terminal";
 /**
  * Sets up socket listeners for gamestate variables
  * @param {*} gameState
@@ -28,7 +30,8 @@ export const useGameEvents = (gameState) => {
   } = gameState;
   const localCookie = cookie.get("PersonalCookie");
   const navigate = useNavigate();
-
+  const { setInLobby } = usePlayerState();
+  
   useEffect(() => {
     const onLobbyEvent = ({ lobby }) => {
       setLobbyMembers(lobby);
@@ -41,6 +44,7 @@ export const useGameEvents = (gameState) => {
     };
 
     const onStartEvent = () => {
+      setInLobby(false);
       setGameStart(true);
     };
 
