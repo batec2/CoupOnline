@@ -21,7 +21,7 @@ import {
 
 const DropDownMenu = () => {
   return (
-    <div className="pt-4 pl-4 text-textColor-dark">
+    <div className="pt-4 pl-4 text-textColor-dark bg-primary">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline" className="p-5">

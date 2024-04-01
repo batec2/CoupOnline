@@ -62,7 +62,8 @@ module.exports = {
           contessa: "#f87171",
           eliminated: "#6b7280",
           discard: "#d1d5db",
-          active: "#cc1616",
+          active: "#16a34a",
+          inactive: "#cc1616",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",

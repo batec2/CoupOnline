@@ -45,6 +45,14 @@ const Card = ({ card, onClick, active, number }) => {
       break;
   }
 
+  if (exchangeCards) {
+    if (active[number]) {
+      bgColor = "bg-cards-active"
+    } else {
+      bgColor = "bg-cards-inactive"
+    }
+  }
+
   const nonTargetStyle = `grid w-36 rounded-3xl justify-items-center ${bgColor} px-2 py-4 bg-opacity-70`;
   const targetStyle = `${nonTargetStyle} hover:bg-cards-discard hover:bg-opacity-70`;
 
@@ -65,17 +73,6 @@ const Card = ({ card, onClick, active, number }) => {
       >
         <p className="font-bold w-24 text-center">{cardInfo["character"]}</p>
         <img className="w-24 rounded-md" src={img} alt="char_icon" />
-        {/* <CardActionTitle text={"Action:"} />
-        <p className="font-semibold italic">
-          {cardInfo["action-name"] == "" ? "N/A" : cardInfo["action-name"]}
-        </p>
-        <p>
-          {cardInfo["action-effect"] == "" ? "N/A" : cardInfo["action-effect"]}
-        </p>
-        <CardActionTitle text={"Counter-action:"} />
-        <p>
-          {cardInfo["counteraction"] == "" ? "N/A" : cardInfo["counteraction"]}
-        </p> */}
       </div>
     );
   }

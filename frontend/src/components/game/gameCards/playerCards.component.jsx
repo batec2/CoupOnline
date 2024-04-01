@@ -125,8 +125,14 @@ const PlayerCards = () => {
   };
 
   const showPrompt = () => {
-    if (isTarget) {
-      return <p className="font-bold">Please Select a Card to Lose</p>;
+    if (exchangeCards) {
+      return <p className="font-bold">Select Two Cards to Keep:</p>;
+    } else if (isTarget) {
+      if (responseAction == GameActions.CalloutLie) {
+        return <p className="font-bold">Select a Card to Show:</p>;
+      } else {
+        return <p className="font-bold">Please Select a Card to Lose:</p>;
+      }
     }
   };
 
