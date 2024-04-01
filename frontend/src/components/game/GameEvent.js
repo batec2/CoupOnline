@@ -90,7 +90,7 @@ export const useGameEvents = (gameState) => {
       }
     };
 
-    const onUpdateState = ({ gameCards, turnId, coins }) => {
+    const onUpdateState = ({ gameCards, turnId, coins, discardDeck }) => {
       setGameCards(gameCards);
       setTurnId(turnId);
       setExchangeCards.current = null;
@@ -100,6 +100,7 @@ export const useGameEvents = (gameState) => {
       responseIdRef.current = null;
       setResponseAction(null);
       setCoins(coins);
+      console.log(discardDeck);
     };
 
     const onBlocked = ({
