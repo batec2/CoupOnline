@@ -2,7 +2,6 @@ import useGameContext from "@/context/useGameContext.js";
 import Card from "@/components/card/card.component";
 import ChooseCard from "@/lib/chooseCardEnum";
 import GameActions from "@/lib/actionEnum";
-import GameCard from "@/lib/cardEnum";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
@@ -139,28 +138,6 @@ const PlayerCards = () => {
     }
   };
 
-  const cardClass = (card) => {
-    switch (card) {
-      case GameCard.Duke: {
-        return "bg-cards-duke";
-      }
-      case GameCard.Assassin: {
-        return "bg-cards-assassin";
-      }
-      case GameCard.Ambassador: {
-        return "bg-cards-ambassador";
-      }
-      case GameCard.Captain: {
-        return "bg-cards-captain";
-      }
-      case GameCard.Contessa: {
-        return "bg-cards-contessa";
-      }
-      default: {
-        return "bg-actions-normal";
-      }
-    }
-  };
 
   /**
    * Generates card images and confirmation button when exchanging cards
@@ -172,14 +149,12 @@ const PlayerCards = () => {
         <>
           <div className="flex justify-center flex-row space-x-2">
             <Card
-              className={cardClass(exchangeCards[0])}
               card={exchangeCards[0]}
               active={selectedCards}
               number={2}
               onClick={() => handleChooseCard(0, 2)}
             ></Card>
             <Card
-              className={cardClass(exchangeCards[1])}
               card={exchangeCards[1]}
               active={selectedCards}
               number={3}
@@ -204,14 +179,12 @@ const PlayerCards = () => {
       {showPrompt()}
       <div className="flex justify-center flex-row space-x-2">
         <Card
-          className={cardClass(gameCards[0])}
           card={gameCards[0]}
           active={selectedCards}
           number={0}
           onClick={() => handleChooseCard(0, 0)}
         ></Card>
         <Card
-          className={cardClass(gameCards[1])}
           card={gameCards[1]}
           active={selectedCards}
           number={1}
