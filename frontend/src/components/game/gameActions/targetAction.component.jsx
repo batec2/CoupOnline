@@ -2,6 +2,12 @@ import { handleNormalAction } from "@/components/game/socketActions";
 import { Button } from "@/components/ui/button";
 import useGameContext from "@/context/useGameContext";
 
+/**
+ * Generates collection of buttons for players that can be targeted by a normal
+ * or response action
+ * @param {*} param0 
+ * @returns React UI element containing a button for each targetable players
+ */
 const TargetAction = ({ action }) => {
   const {
     socket,

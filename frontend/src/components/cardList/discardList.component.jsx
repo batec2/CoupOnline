@@ -4,12 +4,11 @@ import useGameContext from "@/context/useGameContext";
 import GameCard from "@/lib/cardEnum";
 
 /**
- * List of players and remaining cards
- * @param {String} placeholder - The placeholder text
- * @returns Textfield
+ * Generates UI element for discarded card list
+ * @returns UI element for discarded cards
  */
 const DiscardList = () => {
-  const  { discardDeck, coins } = useGameContext();
+  const  { discardDeck } = useGameContext();
 
   return (
     <div className="p-1">

@@ -19,6 +19,10 @@ import GameSectionTitle from "@/components/text/gameSectionTitle.component";
 import { Button } from "@/components/ui/button";
 import useGameContext from "@/context/useGameContext";
 
+/**
+ * Generates collection of references for the player (rules and game actions)
+ * @returns React UI element for reference view
+ */
 const References = () => {
   const { socket, roomId } = useGameContext();
   return (

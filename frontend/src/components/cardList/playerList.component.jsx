@@ -3,9 +3,8 @@ import GameSectionTitle from "../text/gameSectionTitle.component";
 import useGameContext from "@/context/useGameContext";
 
 /**
- * List of players and remaining cards
- * @param {String} placeholder - The placeholder text
- * @returns Textfield
+ * Generates UI element showing list of players and their remaining cards
+ * @returns React UI elment PlayerCardList
  */
 const PlayerCardList = () => {
 

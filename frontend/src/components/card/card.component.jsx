@@ -11,6 +11,14 @@ import CardInfo from "@/components/card/CardInfo";
 import "./card.styles.css";
 import useGameContext from "@/context/useGameContext.js";
 
+/**
+ * 
+ * @param {Number} card the cards index in the cardEnum object
+ * @param {function} onClick the function to execute when the car
+ * @param {active} boolean whether the card is active or not (has onClick behaviour)
+ * @param {Number} number the index of the card in the player's list of current cards
+ * @returns 
+ */
 const Card = ({ card, onClick, active, number }) => {
   const { isTarget, exchangeCards } = useGameContext();
   let img = notFound;
@@ -18,26 +26,27 @@ const Card = ({ card, onClick, active, number }) => {
 
   let cardInfo = CardInfo[card];
 
+  //Set default background color based on type of cards
   switch (card) {
     case GameCard.Duke:
       img = duke;
-      bgColor = active[number] ? "bg-cards-active" : "bg-cards-duke ";
+      bgColor = "bg-cards-duke ";
       break;
     case GameCard.Assassin:
       img = assassin;
-      bgColor = active[number] ? "bg-cards-active" : "bg-cards-assassin";
+      bgColor = "bg-cards-assassin";
       break;
     case GameCard.Ambassador:
       img = ambassador;
-      bgColor = active[number] ? "bg-cards-active" : "bg-cards-ambassador";
+      bgColor = "bg-cards-ambassador";
       break;
     case GameCard.Captain:
       img = captain;
-      bgColor = active[number] ? "bg-cards-active" : `bg-cards-captain`;
+      bgColor = "bg-cards-captain";
       break;
     case GameCard.Contessa:
       img = contessa;
-      bgColor = active[number] ? "bg-cards-active" : `bg-cards-contessa`;
+      bgColor = "bg-cards-contessa";
       break;
     case GameCard.Eliminated:
       img = tombstone;
@@ -45,7 +54,8 @@ const Card = ({ card, onClick, active, number }) => {
       break;
   }
 
-  if (exchangeCards) {
+  //Change background colour when exchanging, to differentiate between kept and discarded cards
+  if (exchangeCards && card != GameCard.Eliminated) {
     if (active[number]) {
       bgColor = "bg-cards-active"
     } else {

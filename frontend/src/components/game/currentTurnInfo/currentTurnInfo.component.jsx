@@ -2,6 +2,10 @@ import GameSectionTitle from "@/components/text/gameSectionTitle.component";
 import useGameContext from "@/context/useGameContext";
 import GameActions from "@/lib/actionEnum";
 
+/**
+ * Generates view that shows information about the current game turn
+ * @returns React UI element for current turn info view
+ */
 const CurrentTurnInfo = () => {
   const { currentLobbyMembers, initialUserId, currentTurnId, initialAction, 
           responseAction, responseIdRef} = useGameContext();

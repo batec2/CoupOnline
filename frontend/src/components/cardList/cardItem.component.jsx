@@ -2,13 +2,13 @@ import card from "./card32inv.png";
 import tombstone from "./tombstone32inv.png";0
 
 /**
- * Player Overview for list of players
+ * UI element for a car/player name and number of cards
  * @param {String} player Player object, containing player name and number of cards
  * @returns PlayerItem React component
  */
 const CardItem = ({ item, count, context }) => { 
   const displayCards = (count, context) => {
-    if(context == "discard" || count > 0) {
+    if(context == "discard" || count > 0) { //Displaying number of cards
       return (
         <div className="flex flex-row">
           {Array.from({ length: count }, (e, idx) => (
@@ -16,7 +16,7 @@ const CardItem = ({ item, count, context }) => {
         ))}
         </div>
       )
-    } else {
+    } else { //Displaying players, if no cards show tombstone image
       
       return (
         <img className="imgCard" src={tombstone} alt="dead" />

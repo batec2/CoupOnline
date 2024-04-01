@@ -6,9 +6,9 @@ import ButtonClass from "@/lib/buttonClassEnum.js";
 import ActionButton from "./actionButton.component.jsx";
 
 /**
- *
- * @param {*} param0
- * @returns
+ * Generates collection of buttons for actions a player can take on in response
+ * to an action declared during another player's turn
+ * @returns React UI element with collection of buttons
  */
 const ResponseActions = () => {
   const {

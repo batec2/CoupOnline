@@ -6,6 +6,10 @@ import { terminal } from "virtual:terminal"
 import { useRef } from "react";
 import usePlayerState from "../game/PlayerState";
 
+/**
+ * Generates React element for the game over screen
+ * @returns GameEnd react UI element
+ */
 const GameEnd = () => {
   const { winner, socket, roomId } = useGameContext();
   const { setInLobby } = usePlayerState();

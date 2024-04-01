@@ -3,6 +3,11 @@ import PlayerCards from "../gameCards/playerCards.component";
 import Actions from "../gameActions/actions.component";
 import GameSectionTitle from "@/components/text/gameSectionTitle.component";
 
+/**
+ * Generates a players information view, showing their cards, coins, and current
+ * actions they can take
+ * @returns React UI element for player information window
+ */
 const PlayerInfo = () => {
   const { coins } = useGameContext();
 

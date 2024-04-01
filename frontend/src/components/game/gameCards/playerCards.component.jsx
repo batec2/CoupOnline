@@ -3,7 +3,6 @@ import Card from "@/components/card/card.component";
 import ChooseCard from "@/lib/chooseCardEnum";
 import GameActions from "@/lib/actionEnum";
 import GameCard from "@/lib/cardEnum";
-import GameSectionTitle from "@/components/text/gameSectionTitle.component";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
@@ -31,6 +30,10 @@ const PlayerCards = () => {
     false,
   ]);
 
+  /**
+   * Determines what happens with a chosen card (lost, exchanged, or shown)
+   * @returns Integer value corresponding to chooseCardEnum
+   */
   const chooseCardType = () => {
     switch (responseAction) {
       case GameActions.Coup: {
@@ -63,12 +66,12 @@ const PlayerCards = () => {
     }
   };
 
-  /**
-   *
-   * @param {*} card - Card being chosen
-   * @param {*} chooseActionType - Type of card selection action ex: loose/show/exchange
-   * @returns
-   */
+/**
+ * 
+ * @param {*} card 
+ * @param {*} cardNumber 
+ * @returns 
+ */
   const handleChooseCard = (card, cardNumber) => {
     if (isTarget) {
       console.log(
@@ -159,6 +162,10 @@ const PlayerCards = () => {
     }
   };
 
+  /**
+   * Generates card images and confirmation button when exchanging cards
+   * @returns The exchange card elemnts
+   */
   const showExchange = () => {
     if (exchangeCards) {
       return (
