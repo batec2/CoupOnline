@@ -57,14 +57,14 @@ const Card = ({ card, onClick, active, number }) => {
   //Change background colour when exchanging, to differentiate between kept and discarded cards
   if (exchangeCards && card != GameCard.Eliminated) {
     if (active[number]) {
-      bgColor = "bg-cards-active"
+      bgColor = "bg-cards-return"
     } else {
-      bgColor = "bg-cards-inactive"
+      bgColor = "bg-cards-keep"
     }
   }
 
   const nonTargetStyle = `grid w-36 rounded-3xl justify-items-center ${bgColor} px-2 py-4 bg-opacity-70`;
-  const targetStyle = `${nonTargetStyle} hover:bg-cards-discard hover:bg-opacity-70`;
+  const targetStyle = `${nonTargetStyle} hover:bg-opacity-70`;
 
   if (card == GameCard.Eliminated) {
     return (

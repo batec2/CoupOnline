@@ -128,7 +128,7 @@ const PlayerCards = () => {
 
   const showPrompt = () => {
     if (exchangeCards) {
-      return <p className="font-bold">Select Two Cards to Keep:</p>;
+      return <p className="font-bold">Select Two Cards to Discard:</p>;
     } else if (isTarget) {
       if (responseAction == GameActions.CalloutLie) {
         return <p className="font-bold">Select a Card to Show:</p>;
@@ -162,7 +162,7 @@ const PlayerCards = () => {
             ></Card>
           </div>
           <Button
-            className={currentSelected === 2 ? "bg-green-700" : "bg-gray-500"}
+            className={currentSelected === 2 ? "bg-actions-normal" : "bg-actions-unavailable"}
             onClick={() => handleExchangeCard()}
           >
             Confirm Selection
