@@ -1,31 +1,35 @@
-import card from "./card32.png";
-import tombstone from "./tombstone32.png";
+import card from "./card32inv.png";
+import tombstone from "./tombstone32inv.png";0
 
 /**
- * Player Overview for list of players
+ * UI element for a car/player name and number of cards
  * @param {String} player Player object, containing player name and number of cards
  * @returns PlayerItem React component
  */
-const CardItem = ({ item, count, context }) => {
-  if (count > 0) {
-    return (
-      <div className="grid grid-cols-5">
-        <p className="text-right col-span-3">{item}</p>
-        {/* {Array.from({ length: count }, (e) => (
-          <img key={e} className="flex flex-row" src={card} alt="card" />
-        ))} */}
-      </div>
-    );
-  } else if (context == "players") {
-    return (
-      <div className="flex flex-row">
-        <p className="textPName">{item}</p>
+const CardItem = ({ item, count, context }) => { 
+  const displayCards = (count, context) => {
+    if(context == "discard" || count > 0) { //Displaying number of cards
+      return (
+        <div className="flex flex-row">
+          {Array.from({ length: count }, (e, idx) => (
+          <img key={idx} className="flex flex-row" src={card} alt="card" fill="white" />
+        ))}
+        </div>
+      )
+    } else { //Displaying players, if no cards show tombstone image
+      
+      return (
         <img className="imgCard" src={tombstone} alt="dead" />
-      </div>
-    );
-  } else {
-    return;
+      )
+    }
   }
+
+  return (
+    <div className="flex flex-row min-h-8">
+      <p className="textPName w-24 text-right">{item}</p>
+      {displayCards(count,context)}    
+    </div>
+  );
 };
 
 export default CardItem;

@@ -2,8 +2,6 @@ import useGameContext from "@/context/useGameContext.js";
 import Card from "@/components/card/card.component";
 import ChooseCard from "@/lib/chooseCardEnum";
 import GameActions from "@/lib/actionEnum";
-import GameCard from "@/lib/cardEnum";
-import GameSectionTitle from "@/components/text/gameSectionTitle.component";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
@@ -31,6 +29,10 @@ const PlayerCards = () => {
     false,
   ]);
 
+  /**
+   * Determines what happens with a chosen card (lost, exchanged, or shown)
+   * @returns Integer value corresponding to chooseCardEnum
+   */
   const chooseCardType = () => {
     switch (responseAction) {
       case GameActions.Coup: {
@@ -63,12 +65,12 @@ const PlayerCards = () => {
     }
   };
 
-  /**
-   *
-   * @param {*} card - Card being chosen
-   * @param {*} chooseActionType - Type of card selection action ex: loose/show/exchange
-   * @returns
-   */
+/**
+ * 
+ * @param {*} card 
+ * @param {*} cardNumber 
+ * @returns 
+ */
   const handleChooseCard = (card, cardNumber) => {
     if (isTarget) {
       console.log(
@@ -125,48 +127,34 @@ const PlayerCards = () => {
   };
 
   const showPrompt = () => {
-    if (isTarget) {
-      return <p className="font-bold">Please Select a Card to Lose</p>;
-    }
-  };
-
-  const cardClass = (card) => {
-    switch (card) {
-      case GameCard.Duke: {
-        return "bg-cards-duke";
-      }
-      case GameCard.Assassin: {
-        return "bg-cards-assassin";
-      }
-      case GameCard.Ambassador: {
-        return "bg-cards-ambassador";
-      }
-      case GameCard.Captain: {
-        return "bg-cards-captain";
-      }
-      case GameCard.Contessa: {
-        return "bg-cards-contessa";
-      }
-      default: {
-        return "bg-actions-normal";
+    if (exchangeCards) {
+      return <p className="font-bold">Select Two Cards to Discard:</p>;
+    } else if (isTarget) {
+      if (responseAction == GameActions.CalloutLie) {
+        return <p className="font-bold">Select a Card to Show:</p>;
+      } else {
+        return <p className="font-bold">Please Select a Card to Lose:</p>;
       }
     }
   };
 
+
+  /**
+   * Generates card images and confirmation button when exchanging cards
+   * @returns The exchange card elemnts
+   */
   const showExchange = () => {
     if (exchangeCards) {
       return (
         <>
           <div className="flex justify-center flex-row space-x-2">
             <Card
-              className={cardClass(exchangeCards[0])}
               card={exchangeCards[0]}
               active={selectedCards}
               number={2}
               onClick={() => handleChooseCard(0, 2)}
             ></Card>
             <Card
-              className={cardClass(exchangeCards[1])}
               card={exchangeCards[1]}
               active={selectedCards}
               number={3}
@@ -174,7 +162,7 @@ const PlayerCards = () => {
             ></Card>
           </div>
           <Button
-            className={currentSelected === 2 ? "bg-green-700" : "bg-gray-500"}
+            className={currentSelected === 2 ? "bg-actions-normal" : "bg-actions-unavailable"}
             onClick={() => handleExchangeCard()}
           >
             Confirm Selection
@@ -191,14 +179,12 @@ const PlayerCards = () => {
       {showPrompt()}
       <div className="flex justify-center flex-row space-x-2">
         <Card
-          className={cardClass(gameCards[0])}
           card={gameCards[0]}
           active={selectedCards}
           number={0}
           onClick={() => handleChooseCard(0, 0)}
         ></Card>
         <Card
-          className={cardClass(gameCards[1])}
           card={gameCards[1]}
           active={selectedCards}
           number={1}

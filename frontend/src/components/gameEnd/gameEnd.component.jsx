@@ -4,9 +4,15 @@ import { handleLeave, handleReturnLobby } from "@/components/game/socketActions"
 import { useNavigate } from "react-router-dom";
 import { terminal } from "virtual:terminal"
 import { useRef } from "react";
+import usePlayerState from "../game/PlayerState";
 
+/**
+ * Generates React element for the game over screen
+ * @returns GameEnd react UI element
+ */
 const GameEnd = () => {
   const { winner, socket, roomId } = useGameContext();
+  const { setInLobby } = usePlayerState();
   const navigate = useNavigate();
   const room = useRef();
 
@@ -29,6 +35,7 @@ const GameEnd = () => {
         <Button
           className="bg-button-mainButton text-white px-4 py-2 rounded-md w-full"
           onClick={() => {  
+            setInLobby(true);
             handleReturnLobby();
             navigate(`/room/${roomId}`)
             terminal.log(`/room/${roomId}`)
@@ -39,6 +46,7 @@ const GameEnd = () => {
         <Button
           className="bg-button-redButton text-white px-4 my-4 rounded-md w-full"
           onClick={() => {
+
             handleLeave(socket, roomId);
             navigate("/room");
           }}

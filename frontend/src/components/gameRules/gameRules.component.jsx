@@ -1,3 +1,8 @@
+/**
+ * Reference list of Coup game rules
+ * @returns HTML code for the game rules document
+ */
+
 const GameRules = () => {
   return (
     <div>

@@ -1,9 +1,17 @@
 import { Button } from "../../ui/button";
 import ButtonClass from "@/lib/buttonClassEnum";
 
+/**
+ * Generates a button for one of the actions the player can perform
+ * @param {Number} buttonClass integer corresponding to item in buttonClassenum
+ * @param {function} onClick function to execute when the button is clicked
+ * @param {String} text text to display on the button 
+ * @returns 
+ */
 const ActionButton = ({ buttonClass, onClick, text }) => {
   let buttonColor = "";
 
+  //Button colour depends on class of button
   switch (buttonClass) {
     case ButtonClass.Normal: {
       buttonColor = "bg-actions-normal";
@@ -26,12 +34,13 @@ const ActionButton = ({ buttonClass, onClick, text }) => {
     }
   }
 
-  let cName = `${buttonColor} w-40 hover:${buttonColor} hover:opacity-70`;
+  let cName = `${buttonColor} w-40 hover:opacity-50`;
+  
   return (
     <Button
       className={cName}
       onClick={() => {
-        if (buttonClass != ButtonClass.Unavailable) {
+        if (buttonClass != ButtonClass.Unavailable) { //Clicking unavailable button does nothing
           onClick();
         }
       }}
