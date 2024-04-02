@@ -37,7 +37,6 @@ const login = async (req, res) => {
 }
 
 const logout = async (req, res) => {
-  console.log(req.session)
   req.session.destroy((err) => {
     if (err){
       res.status(500).send(err);
@@ -46,12 +45,11 @@ const logout = async (req, res) => {
       res.status(200).send()
     }
   })
-  console.log(req.session)
 
 }
 const checkForValidSession = (req, res) => {
   const curUser = req.session.user
-  console.log(curUser)
+
   if (curUser){
     res.status(200).send(req.session.user)
   }else {
