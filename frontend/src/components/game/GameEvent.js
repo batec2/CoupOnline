@@ -7,6 +7,7 @@ import usePlayerState from "./PlayerState";
 import { terminal } from "virtual:terminal";
 import Cookies from "universal-cookie";
 import { io } from "socket.io-client";
+import ChooseCard from "@/lib/chooseCardEnum";
 /**
  * Sets up socket listeners for gamestate variables
  * @param {*} gameState
@@ -30,6 +31,7 @@ export const useGameEvents = (gameState) => {
     setExchangeCards,
     responseIdRef,
     setIsTarget,
+    setChooseType,
   } = gameState;
 
   const cookie = new Cookie();
@@ -95,19 +97,21 @@ export const useGameEvents = (gameState) => {
      */
     const onChooseCardEvent = ({
       chooserId,
+      chooseType,
       initialUserId,
       initialAction,
       responseId,
       responseAction,
     }) => {
       console.log(
-        `${chooserId} is choosing a card, initial action: ${GameActions[initialAction]}, responseAction: ${GameActions[responseAction]}`
+        `${chooserId} is choosing a card, initial action: ${GameActions[initialAction]}, responseAction: ${GameActions[responseAction]}, choose type ${ChooseCard.chooseType}`
       );
       setIsResponding(false);
       setTurnId(chooserId);
+      setChooseType(chooseType);
       setInitialUserId(initialUserId);
       setInitialAction(initialAction);
-      setResponseAction(responseAction ? responseAction : initialAction);
+      setResponseAction(responseAction);
       responseIdRef.current = responseId;
 
       if (chooserId === socket.current.id) {
@@ -117,9 +121,10 @@ export const useGameEvents = (gameState) => {
       setIsChoosing(false);
     };
 
-    const onExchangeCardEvent = ({ chooserId, exchangeCards, playerCards }) => {
+    const onExchangeCardEvent = ({ chooserId, exchangeCards }) => {
       console.log(`${chooserId} is choosing 2 cards`);
       if (chooserId === socket.current.id) {
+        setChooseType(ChooseCard.Exchange);
         setExchangeCards(exchangeCards);
       }
     };
@@ -136,7 +141,7 @@ export const useGameEvents = (gameState) => {
       setCoins(coins);
       setDiscardDeck(discardDeck);
       setIsTarget(false);
-      console.log(discardDeck);
+      setChooseType(null);
     };
 
     const onBlocked = ({

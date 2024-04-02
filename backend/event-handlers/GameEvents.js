@@ -26,9 +26,10 @@ export const registerGameHandlers = (io, socket, rooms) => {
    * @param {*} responseId - responding user
    * @param {*} responseAction - responding action
    */
-  const emitChooseCard = (roomId, chooserId, type, state) => {
+  const emitChooseCard = (roomId, chooserId, chooseType, state) => {
     io.to(roomId).emit("choose-card", {
       chooserId: chooserId,
+      chooseType: chooseType,
       initialUserId: state.initialUserId,
       initialAction: state.initialAction,
       responseId: state.initialResponseId,
