@@ -20,6 +20,8 @@ export class GameState {
   initialAction = null;
   initialResponseId = null;
   initialResponseAction = null;
+  secondaryResponseId = null;
+  secondaryResponseAction = null;
   isBlocked = false;
 
   constructor(players) {
@@ -77,6 +79,14 @@ export class GameState {
     return this.initialResponseAction;
   }
 
+  get secondaryResponseId() {
+    return this.secondaryResponseId;
+  }
+
+  get secondaryResponseAction() {
+    return this.secondaryResponseAction;
+  }
+
   get isBlocked() {
     return this.isBlocked;
   }
@@ -106,6 +116,14 @@ export class GameState {
     this.initialResponseAction = initialResponseAction;
   }
 
+  set secondaryResponseId(secondaryResponseId) {
+    this.secondaryResponseId = secondaryResponseId;
+  }
+
+  set secondaryResponseAction(secondaryResponseAction) {
+    this.secondaryResponseAction = secondaryResponseAction;
+  }
+
   set isBlocked(isBlocked) {
     this.isBlocked = isBlocked;
   }
@@ -115,7 +133,9 @@ export class GameState {
     this.initialUserId = null;
     this.initialAction = null;
     this.initialResponseId = null;
-    this.initialResponseId = null;
+    this.initialResponseAction = null;
+    this.secondaryResponseId = null;
+    this.secondaryResponseAction = null;
     this.isBlocked = false;
   }
 
