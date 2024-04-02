@@ -3,6 +3,8 @@ import handleStatus from "@/lib/handleStatus";
 import GameActions from "@/lib/actionEnum";
 import Cookie from "universal-cookie";
 import { useNavigate } from "react-router-dom";
+import usePlayerState from "./PlayerState";
+import { terminal } from "virtual:terminal";
 import Cookies from "universal-cookie";
 import { io } from "socket.io-client";
 /**
@@ -22,6 +24,7 @@ export const useGameEvents = (gameState) => {
     setInitialAction,
     setIsTarget,
     setCoins,
+    setDiscardDeck,
     setResponseAction,
     setIsResponding,
     setExchangeCards,
@@ -31,6 +34,7 @@ export const useGameEvents = (gameState) => {
   const cookie = new Cookie();
   const localCookie = cookie.get("PersonalCookie");
   const navigate = useNavigate();
+  const { setInLobby } = usePlayerState();
   const cookies = new Cookies();
 
   useEffect(() => {
@@ -58,6 +62,7 @@ export const useGameEvents = (gameState) => {
     };
 
     const onStartEvent = () => {
+      setInLobby(false);
       setGameStart(true);
     };
 
@@ -117,6 +122,7 @@ export const useGameEvents = (gameState) => {
       responseIdRef.current = null;
       setResponseAction(null);
       setCoins(coins);
+      setDiscardDeck(discardDeck);
       console.log(discardDeck);
     };
 

@@ -71,10 +71,10 @@ const LoginPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
-      <div className="w-full max-w-sm px-4">
-        <h1 className="text-3xl font-bold mb-4 text-center">
+      <h1 className="text-3xl font-bold mb-4 text-center">
           Welcome to Super Couper
-        </h1>
+      </h1>
+      <div className="w-full max-w-sm px-4">  
         <h2 className="text-xl mb-2">Enter your username:</h2>
         <Input
           type="username"

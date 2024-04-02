@@ -7,6 +7,10 @@ import GameCard from "@/lib/cardEnum";
 import ActionButton from "./actionButton.component";
 import ButtonClass from "@/lib/buttonClassEnum";
 
+/**
+ * Generates collection of buttons for actions a player can take on their turn
+ * @returns React UI element with collection of buttons
+ */
 const NormalActions = () => {
   const { socket, roomId, coins, gameCards, setTurnId } = useGameContext();
   const [showTarget, setShowTarget] = useState(false);

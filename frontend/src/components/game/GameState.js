@@ -35,6 +35,7 @@ export const useGameState = (socketRef) => {
   const [initialUserId, setInitialUserId] = useState(null);
   const [isTarget, setIsTarget] = useState(false);
   const [coins, setCoins] = useState(0);
+  const [discardDeck, setDiscardDeck] = useState([0,0,0,0,0])
   const [isResponding, setIsResponding] = useState(false);
   const [responseAction, setResponseAction] = useState(null);
   const [exchangeCards, setExchangeCards] = useState(null);
@@ -61,6 +62,8 @@ export const useGameState = (socketRef) => {
     setIsTarget: setIsTarget,
     coins: coins,
     setCoins: setCoins,
+    discardDeck: discardDeck,
+    setDiscardDeck: setDiscardDeck,
     isResponding: isResponding,
     setIsResponding: setIsResponding,
     responseAction: responseAction,

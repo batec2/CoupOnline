@@ -49,7 +49,7 @@ module.exports = {
         },
         actions: {
           normal: "#ffffff",
-          unavailable: "#9ca3af",
+          unavailable: "#6b7280",
           haveCard: "#16a34a",
           bluff: "#dc2626",
           callout: "#ca8a04",
@@ -61,8 +61,9 @@ module.exports = {
           captain: "#60a5fa",
           contessa: "#f87171",
           eliminated: "#6b7280",
-          discard: "#d1d5db",
-          active: "#cc1616",
+          hover: "#e5e7eb",
+          keep: "#16a34a",
+          return: "#cc1616",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
