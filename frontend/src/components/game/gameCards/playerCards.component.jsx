@@ -126,7 +126,11 @@ const PlayerCards = () => {
 
   const showPrompt = () => {
     if (isTarget) {
-      return <p className="font-bold">Please Select a Card to Lose</p>;
+      return (
+        <p className="font-bold">{`Please Select a Card to ${
+          chooseCardType() === ChooseCard.Show ? "SHOW" : "LOOSE"
+        }`}</p>
+      );
     }
   };
 
