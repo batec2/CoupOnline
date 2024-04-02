@@ -22,7 +22,7 @@ export class GameState {
   initialResponseAction = null;
   secondaryResponseId = null;
   secondaryResponseAction = null;
-  isBlocked = false;
+  isInitialActionResolved = false;
 
   constructor(players) {
     this.playerCount = players.length;
@@ -87,8 +87,8 @@ export class GameState {
     return this.secondaryResponseAction;
   }
 
-  get isBlocked() {
-    return this.isBlocked;
+  get isInitialActionResolved() {
+    return this.isInitialActionResolved;
   }
 
   get discardDeck() {
@@ -124,8 +124,8 @@ export class GameState {
     this.secondaryResponseAction = secondaryResponseAction;
   }
 
-  set isBlocked(isBlocked) {
-    this.isBlocked = isBlocked;
+  set isInitialActionResolved(isInitialActionResolved) {
+    this.isInitialActionResolved = isInitialActionResolved;
   }
 
   resetTurnState() {
@@ -136,7 +136,7 @@ export class GameState {
     this.initialResponseAction = null;
     this.secondaryResponseId = null;
     this.secondaryResponseAction = null;
-    this.isBlocked = false;
+    this.isInitialActionResolved = false;
   }
 
   /**
