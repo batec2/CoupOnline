@@ -19,7 +19,7 @@ const PlayerCards = () => {
     setInitialUserId,
     exchangeCards,
     setExchangeCards,
-    chooseCardType,
+    chooseType,
   } = useGameContext();
 
   const [currentSelected, setCurrentSelected] = useState(0);
@@ -39,12 +39,12 @@ const PlayerCards = () => {
   const handleChooseCard = (card, cardNumber) => {
     if (isChoosing) {
       console.log(
-        `${socket.id} is choosing ${card}, ${ChooseCard[chooseCardType]},${initialAction}`
+        `${socket.current.id} is choosing ${card}, ${ChooseCard[chooseType]},${initialAction}`
       );
       socket.current.emit("choose-card", {
         roomId: roomId,
         card: card,
-        chooseActionType: chooseCardType,
+        chooseActionType: chooseType,
       });
       setTurnId(null);
       setInitialAction(null);
@@ -95,7 +95,7 @@ const PlayerCards = () => {
     if (exchangeCards) {
       return <p className="font-bold">Select Two Cards to Discard:</p>;
     } else if (isChoosing) {
-      if (chooseCardType === ChooseCard.Show) {
+      if (chooseType === ChooseCard.Show) {
         return <p className="font-bold">Select a Card to Show:</p>;
       } else {
         return <p className="font-bold">Select a Card to Lose:</p>;

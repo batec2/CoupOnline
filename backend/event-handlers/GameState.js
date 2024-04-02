@@ -164,6 +164,7 @@ export class GameState {
       loser.gameCards[1] === GameCard.Eliminated
     ) {
       loser.eliminated = true;
+      this.playerCount -= 1;
       this.players = this.players.filter((ids) => ids !== player);
     }
   }
@@ -196,7 +197,7 @@ export class GameState {
   }
 
   incrementTurn() {
-    if (this.currentPlayer === this.playerCount - 1) {
+    if (this.currentPlayer >= this.playerCount - 1) {
       this.currentPlayer = 0;
     } else {
       this.currentPlayer += 1;
@@ -282,5 +283,9 @@ export class GameState {
     for (let i = 0; i < 2; i++) {
       this.playerState[player].gameCards[i] = chosenCards[i];
     }
+  }
+
+  getPlayerCoins(player) {
+    this.playerState[player].coins;
   }
 }

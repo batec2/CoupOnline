@@ -104,7 +104,7 @@ export const useGameEvents = (gameState) => {
       responseAction,
     }) => {
       console.log(
-        `${chooserId} is choosing a card, initial action: ${GameActions[initialAction]}, responseAction: ${GameActions[responseAction]}, choose type ${ChooseCard.chooseType}`
+        `${chooserId} is choosing a card, initial action: ${GameActions[initialAction]}, responseAction: ${GameActions[responseAction]}, choose type ${ChooseCard[chooseType]}`
       );
       setIsResponding(false);
       setTurnId(chooserId);
@@ -142,6 +142,13 @@ export const useGameEvents = (gameState) => {
       setDiscardDeck(discardDeck);
       setIsTarget(false);
       setChooseType(null);
+    };
+
+    const onPartialUpdate = ({ gameCards, turnId, coins, discardDeck }) => {
+      setGameCards(gameCards);
+      setTurnId(turnId);
+      setCoins(coins);
+      setDiscardDeck(discardDeck);
     };
 
     const onBlocked = ({
@@ -182,6 +189,7 @@ export const useGameEvents = (gameState) => {
     socket.current.on("choose-card", onChooseCardEvent);
     socket.current.on("exchange-cards", onExchangeCardEvent);
     socket.current.on("update-state", onUpdateState);
+    socket.current.on("partial-update-state", onPartialUpdate);
     socket.current.on("blocked", onBlocked);
     socket.current.on("end-game", onEndGame);
 
