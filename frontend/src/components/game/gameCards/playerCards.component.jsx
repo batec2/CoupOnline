@@ -130,10 +130,10 @@ const PlayerCards = () => {
     if (exchangeCards) {
       return <p className="font-bold">Select Two Cards to Discard:</p>;
     } else if (isTarget) {
-      if (responseAction == GameActions.CalloutLie) {
+      if (chooseCardType() === ChooseCard.Show) {
         return <p className="font-bold">Select a Card to Show:</p>;
       } else {
-        return <p className="font-bold">Please Select a Card to Lose:</p>;
+        return <p className="font-bold">Select a Card to Lose:</p>;
       }
     }
   };
