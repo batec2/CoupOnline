@@ -8,10 +8,11 @@ export class GameState {
   players = [];
   playerState = {};
   deck = [3, 3, 3, 3, 3];
+  discardDeck = [0, 0, 0, 0, 0];
   roundNumber = 0;
   round = {};
   passCount = 0;
-
+  discarded;
   // Turn State
   targetId = null;
   initialUserId = null;
@@ -79,6 +80,10 @@ export class GameState {
     return this.isBlocked;
   }
 
+  get discardDeck() {
+    return this.discardDeck;
+  }
+
   set targetId(targetId) {
     this.targetId = targetId;
   }
@@ -127,6 +132,7 @@ export class GameState {
 
   loseCard(player, card) {
     const loser = this.playerState[player];
+    this.discardDeck[loser.gameCards[card]] += 1;
     loser.gameCards[card] = GameCard.Eliminated;
     //Sets the player eliminated if player losses both cards and removes them,
     //from the turn counter

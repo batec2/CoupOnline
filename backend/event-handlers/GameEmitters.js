@@ -19,6 +19,7 @@ export const emitUpdate = (io, roomId, room) => {
         gameCards: gameCards,
         turnId: state.currentTurnId,
         coins: coins,
+        discardDeck: state.discardDeck,
       });
     });
 
