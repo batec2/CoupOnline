@@ -6,6 +6,7 @@ export class GameState {
   currentPlayer = 0;
   playerCount = 0;
   players = [];
+  playersUUID = [];
   playerState = {};
   deck = [3, 3, 3, 3, 3];
   discardDeck = [0, 0, 0, 0, 0];
@@ -83,6 +84,8 @@ export class GameState {
   get discardDeck() {
     return this.discardDeck;
   }
+
+  get playerCardCount() {}
 
   set targetId(targetId) {
     this.targetId = targetId;

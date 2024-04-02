@@ -34,6 +34,7 @@ const rooms = {};
 const io = createSocketIO(httpServer, rooms);
 
 const onConnection = (socket) => {
+  console.log(socket.handshake.headers.id, socket.handshake.headers.username);
   registerLobbyHandlers(io, socket, rooms);
   registerGameHandlers(io, socket, rooms);
   console.log(`${socket.id} connected`);

@@ -4,7 +4,7 @@ import ResponseActions from "./responseActions.component";
 
 const Actions = () => {
   const { socket, isResponding, currentTurnId, isTarget } = useGameContext();
-  if (socket.id === currentTurnId && !isTarget) {
+  if (socket.current.id === currentTurnId && !isTarget) {
     return <NormalActions></NormalActions>;
   } else if (isResponding) {
     return <ResponseActions></ResponseActions>;

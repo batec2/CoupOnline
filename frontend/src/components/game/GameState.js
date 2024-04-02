@@ -25,7 +25,7 @@ import { useParams } from "react-router-dom";
  *
  * @returns {GameState}
  */
-export const useGameState = () => {
+export const useGameState = (socketRef) => {
   const [winner, setWinner] = useState(null);
   const [currentLobbyMembers, setLobbyMembers] = useState(null);
   const [gameStart, setGameStart] = useState(false);
@@ -39,7 +39,7 @@ export const useGameState = () => {
   const [responseAction, setResponseAction] = useState(null);
   const [exchangeCards, setExchangeCards] = useState(null);
   const responseIdRef = useRef(null);
-  const socket = useContext(SocketContext);
+  const socket = useRef(null);
   const { roomId } = useParams();
 
   return {

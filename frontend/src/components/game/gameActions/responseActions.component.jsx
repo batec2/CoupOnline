@@ -71,7 +71,7 @@ const ResponseActions = () => {
 
   const onResponseClick = (gameAction) => {
     setIsResponding(false);
-    handleResponseAction(socket, roomId, gameAction);
+    handleResponseAction(socket.current, roomId, gameAction);
   };
 
   const canCallout = () => {
