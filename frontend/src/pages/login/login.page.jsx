@@ -4,7 +4,7 @@ import { terminal } from "virtual:terminal";
 import verifyAccount from "../../actions/verifyAccount";
 import Cookies from "universal-cookie";
 import retrieveAccountById from "../../actions/retrieveAccountById.js";
-import retrieveAccountByName from "../../actions/retrieveAccountByName.js";
+import loginCall from "../../actions/retrieveAccountByName.js";
 import { Button } from "@/components/ui/button.jsx";
 import { Input } from "@/components/ui/input.jsx";
 
@@ -42,9 +42,9 @@ const LoginPage = () => {
 
   const login = async () => {
     const verif = await verifyAccount(username.current, setVerified);
-    terminal.log(verif);
     if (verif) {
-      retrieveAccountByName(username.current).then((res) => {
+
+      loginCall(username.current).then((res) => {
         cookies.set("PersonalCookie", {
           id: res.data._id,
           username: res.data.userName,
@@ -60,6 +60,10 @@ const LoginPage = () => {
   };
 
   useEffect(() => {
+
+
+
+
     if (LocalCookie !== undefined) {
       retrieveAccountById(LocalCookie).then((res) => {
         // setUsername(res.data.username);

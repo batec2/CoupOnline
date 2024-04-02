@@ -1,8 +1,9 @@
 import axios from "axios";
 
-const retrieveAccountByName = async (username) => {
+const loginCall = async (username) => {
+
   const response = await axios.get(
-    `http://localhost:8080/players/byName/${username}`
+    `http://localhost:8080/players/login/${username}`
   );
   if (response.status === 200) {
     return response;
@@ -11,4 +12,4 @@ const retrieveAccountByName = async (username) => {
   }
 };
 
-export default retrieveAccountByName;
+export default loginCall;

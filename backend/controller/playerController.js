@@ -42,7 +42,7 @@ export const getPlayers = async (req, res) => {
  */
 export const getPlayer = async (req, res) => {
   const { id } = req.params;
-  console.log(id);
+
   try {
     const player = await getPlayerFromRepo({ _id: id });
     if (!player) {
@@ -63,7 +63,6 @@ export const getPlayer = async (req, res) => {
  */
 export const getPlayerByUsername = async (req, res) => {
   const { username } = req.params;
-  console.log(username);
   try {
     const user = await getPlayerFromRepo({ userName: username });
     if (user) {
