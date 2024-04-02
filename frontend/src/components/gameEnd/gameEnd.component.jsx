@@ -33,7 +33,7 @@ const GameEnd = () => {
         {gameEndMessage()}
         <Button
           className="bg-button-mainButton text-white px-4 py-2 rounded-md w-full"
-          onClick={() => {  
+          onClick={() => {
             setInLobby(true);
             handleReturnLobby();
             navigate(`/room/${roomId}`);
