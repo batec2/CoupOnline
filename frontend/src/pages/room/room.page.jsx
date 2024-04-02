@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logoutCall from "@/actions/logout.js";
 import Cookies from "universal-cookie";
+import checkIfActiveSession from "@/actions/checkIfActiveSession.js";
 
 const cookies = new Cookies();
 
@@ -15,14 +16,25 @@ const RoomPage = () => {
   const room = useRef();
   const navigate = useNavigate();
   const [cookieExists, setCookieExists] = useState(true);
+  const [localCookie, setLocalCookie] = useState(undefined);
 
   // Checks if a cookie exists for a user, if not, logs then out
   useEffect(() => {
     const cookie = cookies.get("PersonalCookie");
+    setLocalCookie(cookie)
     if (!cookie) {
       setCookieExists(false); // Update state when cookie doesn't exist
     }
   }, []);
+
+  useEffect(() => {
+    checkIfActiveSession().then((res) => {
+      if (res === undefined){
+        logoutCall()
+        navigate("/")
+      }
+    })
+  }, [localCookie]);
 
   // Function to handle joining a room
   const handleJoin = () => {
