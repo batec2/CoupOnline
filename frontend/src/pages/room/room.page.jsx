@@ -17,7 +17,8 @@ const RoomPage = () => {
 
   // Checks if a cookie exists for a user, if not, logs then out
   useEffect(() => {
-    if (cookies.get("PersonalCookie") === undefined) {
+    const cookie = cookies.get("PersonalCookie");
+    if (!cookie) {
       setCookieExists(false); // Update state when cookie doesn't exist
     }
   }, []);
@@ -71,7 +72,7 @@ const RoomPage = () => {
         {cookieExists && (
           <Button
             onClick={handleJoin}
-            className ="px-4 py-2 rounded-md w-full"
+            className="px-4 py-2 rounded-md w-full"
             disabled={!cookieExists}
           >
             {room.current ? "Leave Room" : "Join Room"}
@@ -88,10 +89,7 @@ const RoomPage = () => {
         )}
         {/* Button to navigate to login page if not logged in  */}
         {!cookieExists && (
-          <Button
-            onClick={() => navigate("/")}
-            className="rounded-md w-full"
-          >
+          <Button onClick={() => navigate("/")} className="rounded-md w-full">
             Login
           </Button>
         )}

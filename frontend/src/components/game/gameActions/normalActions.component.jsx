@@ -85,7 +85,7 @@ const NormalActions = () => {
   };
 
   const onIncomeClick = () => {
-    handleNormalAction(socket, roomId, GameActions.Income, null);
+    handleNormalAction(socket.current, roomId, GameActions.Income, null);
     setTurnId(null);
     setShowTarget(false);
   };
@@ -106,19 +106,19 @@ const NormalActions = () => {
   };
 
   const onTaxClick = () => {
-    handleNormalAction(socket, roomId, GameActions.Taxes, null);
+    handleNormalAction(socket.current, roomId, GameActions.Taxes, null);
     setTurnId(null);
     setShowTarget(false);
   };
 
   const onExchangeClick = () => {
-    handleNormalAction(socket, roomId, GameActions.Exchange, null);
+    handleNormalAction(socket.current, roomId, GameActions.Exchange, null);
     setTurnId(null);
     setShowTarget(false);
   };
 
   const onAidClick = () => {
-    handleNormalAction(socket, roomId, GameActions.Aid, null);
+    handleNormalAction(socket.current, roomId, GameActions.Aid, null);
     setTurnId(null);
     setShowTarget(false);
   };
