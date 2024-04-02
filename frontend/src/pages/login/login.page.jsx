@@ -7,6 +7,7 @@ import retrieveAccountById from "../../actions/retrieveAccountById.js";
 import loginCall from "../../actions/retrieveAccountByName.js";
 import { Button } from "@/components/ui/button.jsx";
 import { Input } from "@/components/ui/input.jsx";
+import checkIfLoggedInCall from "@/actions/checkIfActiveSession.js";
 
 const cookies = new Cookies();
 
@@ -45,8 +46,9 @@ const LoginPage = () => {
     if (verif) {
 
       loginCall(username.current).then((res) => {
+        console.log(res)
         cookies.set("PersonalCookie", {
-          id: res.data._id,
+          id: res.data.id,
           username: res.data.userName,
           screenName: res.data.screenName,
         });
@@ -60,17 +62,12 @@ const LoginPage = () => {
   };
 
   useEffect(() => {
-
-
-
-
-    if (LocalCookie !== undefined) {
-      retrieveAccountById(LocalCookie).then((res) => {
-        // setUsername(res.data.username);
+    checkIfLoggedInCall().then((res) => {
+      if(res.status === 200){
         username.current = res.data.username;
         navigate("/room");
-      });
-    }
+      }
+    })
   }, [LocalCookie]);
 
   return (

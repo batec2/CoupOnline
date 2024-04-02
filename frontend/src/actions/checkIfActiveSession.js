@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const logoutCall = async () => {
+const checkIfLoggedInCall = async () => {
   const response = await axios.get(
-    `http://localhost:8080/loginLogout/logout/`
+    `http://localhost:8080/loginLogout/checkLogin/`
   ,{ withCredentials: true });
   if (response.status === 200) {
     return response;
@@ -11,4 +11,4 @@ const logoutCall = async () => {
   }
 };
 
-export default logoutCall;
+export default checkIfLoggedInCall;

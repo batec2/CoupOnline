@@ -6,7 +6,7 @@ import session from "express-session"
 import { default as connectMongoDBSession} from "connect-mongodb-session"
 
 const SESS_SECRET = "test"
-const COOKIE_NAME = "test"
+const COOKIE_NAME = "AxiosCookie"
 const MAX_AGE = 1000 * 60 * 60 * 3
 const MongoURI = "mongodb://localhost:27017/couponline"
 
@@ -21,8 +21,9 @@ const app = express();
 
 app.use(
   cors({
-    origin: "*",
+    origin: "http://localhost:5173, ",
     methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
+    credentials: true
   })
 );
 
@@ -33,7 +34,7 @@ app.use(express.urlencoded({ extended: true })); //query string
 app.use(session({
     name: COOKIE_NAME,
     secret: SESS_SECRET,
-    resave: true,
+    resave: false,
     saveUninitialized: false,
     store: mongoDBstore,
     cookie: {

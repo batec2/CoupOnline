@@ -18,12 +18,14 @@ const login = async (req, res) => {
       handlePlayerNotFound(res, id);
     } else{
       const userInfo = {
-          _id: player._id,
+          id: player._id,
           userName: player.userName,
           screenName: player.screenName,
         }
       req.session.user = userInfo
       res.status(200).send(userInfo)
+
+
     }
   } catch (error) {
     handleError(
@@ -35,7 +37,7 @@ const login = async (req, res) => {
 }
 
 const logout = async (req, res) => {
-  console.log("ONPATH")
+  console.log(req.session)
   req.session.destroy((err) => {
     if (err){
       res.status(500).send(err);
@@ -44,9 +46,17 @@ const logout = async (req, res) => {
       res.status(200).send()
     }
   })
+  console.log(req.session)
+
 }
 const checkForValidSession = (req, res) => {
-
+  const curUser = req.session.user
+  console.log(curUser)
+  if (curUser){
+    res.status(200).send(req.session.user)
+  }else {
+    res.status(401).send()
+  }
 }
 
 export {login, logout, checkForValidSession}

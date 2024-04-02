@@ -42,6 +42,7 @@ export const getPlayers = async (req, res) => {
  */
 export const getPlayer = async (req, res) => {
   const { id } = req.params;
+  console.log(req.session)
 
   try {
     const player = await getPlayerFromRepo({ _id: id });
@@ -63,6 +64,8 @@ export const getPlayer = async (req, res) => {
  */
 export const getPlayerByUsername = async (req, res) => {
   const { username } = req.params;
+  console.log(req.session)
+
   try {
     const user = await getPlayerFromRepo({ userName: username });
     if (user) {
