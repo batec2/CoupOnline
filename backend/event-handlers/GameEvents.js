@@ -155,6 +155,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
       socket.to(roomId).emit("choose-response", {
         initialUserId: state.initialUserId,
         initialAction: state.initialAction,
+        targetId: state.targetId,
       });
       return;
     }
@@ -188,6 +189,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
             GameActions[state.initialAction]
           }`
         );
+        state.resetPassCount();
         emitBlockAction(roomId, state);
       }
       // If response is a callout askes the initial user to show a card
@@ -197,6 +199,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
             GameActions[state.initialAction]
           }`
         );
+        state.resetPassCount();
         emitChooseCard(roomId, state.initialUserId, state);
       }
       // If all players pass the initial action goes through
@@ -213,13 +216,19 @@ export const registerGameHandlers = (io, socket, rooms) => {
 
     // If a block action gets called out
     if (responseAction === Pass) {
-      nextTurnAndUpdate(state, roomId, room);
+      console.log(`${responseId} is passing`);
+      state.incrementPassCount();
+
+      if (state.passCount === state.playerCount - 1) {
+        handleAction(roomId, room, state, true);
+      }
     } else if (responseAction === CalloutLie) {
       console.log(
         `${socket.id} is blocking ${state.initialResponseAction} action of ${
           GameActions[state.initialResponseAction]
         }`
       );
+      state.resetPassCount();
       emitChooseCard(roomId, state.initialResponseId, state);
     }
   };

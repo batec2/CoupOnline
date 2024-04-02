@@ -8,7 +8,7 @@ import { useState } from "react";
 const PlayerCards = () => {
   const {
     gameCards,
-    isTarget,
+    isChoosing,
     socket,
     roomId,
     responseAction,
@@ -72,7 +72,7 @@ const PlayerCards = () => {
    * @returns
    */
   const handleChooseCard = (card, cardNumber) => {
-    if (isTarget) {
+    if (isChoosing) {
       console.log(
         `${currentTurnId} is choosing ${card}, ${chooseCardType()},${initialAction}`
       );
@@ -129,7 +129,7 @@ const PlayerCards = () => {
   const showPrompt = () => {
     if (exchangeCards) {
       return <p className="font-bold">Select Two Cards to Discard:</p>;
-    } else if (isTarget) {
+    } else if (isChoosing) {
       if (chooseCardType() === ChooseCard.Show) {
         return <p className="font-bold">Select a Card to Show:</p>;
       } else {

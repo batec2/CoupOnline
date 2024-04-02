@@ -12,15 +12,15 @@ import "./card.styles.css";
 import useGameContext from "@/context/useGameContext.js";
 
 /**
- * 
+ *
  * @param {Number} card the cards index in the cardEnum object
  * @param {function} onClick the function to execute when the car
  * @param {active} boolean whether the card is active or not (has onClick behaviour)
  * @param {Number} number the index of the card in the player's list of current cards
- * @returns 
+ * @returns
  */
 const Card = ({ card, onClick, active, number }) => {
-  const { isTarget, exchangeCards } = useGameContext();
+  const { isChoosing, exchangeCards } = useGameContext();
   let img = notFound;
   let bgColor = "bg-cards-duke";
 
@@ -57,9 +57,9 @@ const Card = ({ card, onClick, active, number }) => {
   //Change background colour when exchanging, to differentiate between kept and discarded cards
   if (exchangeCards && card != GameCard.Eliminated) {
     if (active[number]) {
-      bgColor = "bg-cards-return"
+      bgColor = "bg-cards-return";
     } else {
-      bgColor = "bg-cards-keep"
+      bgColor = "bg-cards-keep";
     }
   }
 
@@ -79,7 +79,7 @@ const Card = ({ card, onClick, active, number }) => {
           onClick();
           console.log(active[number]);
         }}
-        className={isTarget || exchangeCards ? targetStyle : nonTargetStyle}
+        className={isChoosing || exchangeCards ? targetStyle : nonTargetStyle}
       >
         <p className="font-bold w-24 text-center">{cardInfo["character"]}</p>
         <img className="w-24 rounded-md" src={img} alt="char_icon" />

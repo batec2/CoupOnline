@@ -22,13 +22,14 @@ export const useGameEvents = (gameState) => {
     setTurnId,
     setInitialUserId,
     setInitialAction,
-    setIsTarget,
+    setIsChoosing,
     setCoins,
     setDiscardDeck,
     setResponseAction,
     setIsResponding,
     setExchangeCards,
     responseIdRef,
+    setIsTarget,
   } = gameState;
 
   const cookie = new Cookie();
@@ -38,6 +39,7 @@ export const useGameEvents = (gameState) => {
   const cookies = new Cookies();
 
   useEffect(() => {
+    // Creates socket client if there is not socket object
     if (!socket.current) {
       const cookie = cookies.get("PersonalCookie");
       socket.current = io("http://localhost:8080", {
@@ -66,10 +68,20 @@ export const useGameEvents = (gameState) => {
       setGameStart(true);
     };
 
-    const onChooseResponseEvent = ({ initialUserId, initialAction }) => {
+    const onChooseResponseEvent = ({
+      initialUserId,
+      initialAction,
+      targetId,
+    }) => {
+      console.log(
+        `Choose a response to ${initialUserId}'s action of ${GameActions[initialAction]}, ${targetId} is the target`
+      );
       setInitialAction(initialAction);
       setInitialUserId(initialUserId);
       setIsResponding(true);
+      if (socket.current.id === targetId) {
+        setIsTarget(true);
+      }
     };
 
     /**
@@ -99,10 +111,10 @@ export const useGameEvents = (gameState) => {
       responseIdRef.current = responseId;
 
       if (chooserId === socket.current.id) {
-        setIsTarget(true);
+        setIsChoosing(true);
         return;
       }
-      setIsTarget(false);
+      setIsChoosing(false);
     };
 
     const onExchangeCardEvent = ({ chooserId, exchangeCards, playerCards }) => {
@@ -116,13 +128,14 @@ export const useGameEvents = (gameState) => {
       setGameCards(gameCards);
       setTurnId(turnId);
       setExchangeCards.current = null;
-      setIsTarget(false);
+      setIsChoosing(false);
       setInitialAction(null);
       setInitialUserId(null);
       responseIdRef.current = null;
       setResponseAction(null);
       setCoins(coins);
       setDiscardDeck(discardDeck);
+      setIsTarget(false);
       console.log(discardDeck);
     };
 
@@ -132,10 +145,15 @@ export const useGameEvents = (gameState) => {
       responseId,
       responseAction,
     }) => {
+      console.log(
+        `${initialUserId}'s action of ${GameActions[initialAction]} is being blocked by ${responseId} with action of ${GameActions[responseAction]}`
+      );
       setInitialUserId(initialUserId);
       setInitialAction(initialAction);
       responseIdRef.current = responseId;
       setResponseAction(responseAction);
+
+      // Everyone other than the blocker can respond to the block
       if (responseId !== socket.current.id) {
         setIsResponding(true);
         return;

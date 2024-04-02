@@ -25,7 +25,7 @@ import { useParams } from "react-router-dom";
  *
  * @returns {GameState}
  */
-export const useGameState = (socketRef) => {
+export const useGameState = () => {
   const [winner, setWinner] = useState(null);
   const [currentLobbyMembers, setLobbyMembers] = useState(null);
   const [gameStart, setGameStart] = useState(false);
@@ -33,9 +33,10 @@ export const useGameState = (socketRef) => {
   const [gameCards, setGameCards] = useState(null);
   const [initialAction, setInitialAction] = useState(null);
   const [initialUserId, setInitialUserId] = useState(null);
+  const [isChoosing, setIsChoosing] = useState(false);
   const [isTarget, setIsTarget] = useState(false);
   const [coins, setCoins] = useState(0);
-  const [discardDeck, setDiscardDeck] = useState([0,0,0,0,0])
+  const [discardDeck, setDiscardDeck] = useState([0, 0, 0, 0, 0]);
   const [isResponding, setIsResponding] = useState(false);
   const [responseAction, setResponseAction] = useState(null);
   const [exchangeCards, setExchangeCards] = useState(null);
@@ -58,8 +59,8 @@ export const useGameState = (socketRef) => {
     setInitialAction: setInitialAction,
     initialUserId: initialUserId,
     setInitialUserId: setInitialUserId,
-    isTarget: isTarget,
-    setIsTarget: setIsTarget,
+    isChoosing: isChoosing,
+    setIsChoosing: setIsChoosing,
     coins: coins,
     setCoins: setCoins,
     discardDeck: discardDeck,
@@ -71,6 +72,8 @@ export const useGameState = (socketRef) => {
     exchangeCards: exchangeCards,
     setExchangeCards: setExchangeCards,
     responseIdRef: responseIdRef,
+    isTarget: isTarget,
+    setIsTarget: setIsTarget,
     socket: socket,
     roomId: roomId,
   };
