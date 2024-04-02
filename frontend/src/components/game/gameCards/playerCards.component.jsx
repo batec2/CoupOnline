@@ -76,7 +76,7 @@ const PlayerCards = () => {
       console.log(
         `${currentTurnId} is choosing ${card}, ${chooseCardType()},${initialAction}`
       );
-      socket.emit("choose-card", {
+      socket.current.emit("choose-card", {
         roomId: roomId,
         card: card,
         chooseActionType: chooseCardType(),
@@ -115,7 +115,7 @@ const PlayerCards = () => {
           }
         }
       }
-      socket.emit("exchange-cards", {
+      socket.current.emit("exchange-cards", {
         roomId: roomId,
         chosenCards: chosenCards,
         returnedCards: returnedCards,

@@ -11,8 +11,8 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger
-} from "@/components/ui/dialog"
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import ActionTable from "@/components/actionTable/actionTable.component";
 import GameRules from "@/components/gameRules/gameRules.component";
 import GameSectionTitle from "@/components/text/gameSectionTitle.component";
@@ -28,11 +28,13 @@ const References = () => {
   return (
     <div className="space-y-2 p-2">
       <GameSectionTitle text={"References:"} />
-      <div className ="flex flex-row justify-center">
+      <div className="flex flex-row justify-center">
         <div className="flex flex-col space-y-2 w-60 m-4">
           <Dialog>
             <DialogTrigger asChild>
-              <Button className="bg-button-mainButton text-textColor-dark">Actions</Button>
+              <Button className="bg-button-mainButton text-textColor-dark">
+                Actions
+              </Button>
             </DialogTrigger>
             <DialogContent className="max-w-full w-fit">
               <ActionTable />
@@ -40,16 +42,18 @@ const References = () => {
           </Dialog>
           <Dialog>
             <DialogTrigger asChild>
-              <Button className="bg-button-mainButton text-textColor-dark">Rules</Button>
+              <Button className="bg-button-mainButton text-textColor-dark">
+                Rules
+              </Button>
             </DialogTrigger>
             <DialogContent className="max-w-full w-fit max-h-full">
               <GameRules />
             </DialogContent>
           </Dialog>
           <Button
-            className = "bg-button-secondaryButton text-textColor-dark"
+            className="bg-button-secondaryButton text-textColor-dark"
             onClick={() => {
-              socket.emit("reset-game", { roomId: roomId }, () => {
+              socket.current.emit("reset-game", { roomId: roomId }, () => {
                 console.log("reset");
               });
             }}

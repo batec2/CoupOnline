@@ -4,12 +4,13 @@ import GameActions from "@/lib/actionEnum";
 import Cookie from "universal-cookie";
 import { useNavigate } from "react-router-dom";
 import usePlayerState from "./PlayerState";
+import Cookies from "universal-cookie";
+import { io } from "socket.io-client";
 import { terminal } from "virtual:terminal";
 /**
  * Sets up socket listeners for gamestate variables
  * @param {*} gameState
  */
-const cookie = new Cookie();
 export const useGameEvents = (gameState) => {
   const {
     setWinner,
@@ -29,11 +30,27 @@ export const useGameEvents = (gameState) => {
     setExchangeCards,
     responseIdRef,
   } = gameState;
+
+  const cookie = new Cookie();
   const localCookie = cookie.get("PersonalCookie");
   const navigate = useNavigate();
   const { setInLobby } = usePlayerState();
-  
+  const cookies = new Cookies();
+
   useEffect(() => {
+    if (!socket.current) {
+      const cookie = cookies.get("PersonalCookie");
+      socket.current = io("http://localhost:8080", {
+        extraHeaders: {
+          id: cookie._id,
+          username: cookie.userName,
+          screenName: cookie.screenName,
+        },
+      });
+      console.log(socket.current);
+      // socket.current.join("asd");
+    }
+
     const onLobbyEvent = ({ lobby }) => {
       setLobbyMembers(lobby);
     };
@@ -81,7 +98,7 @@ export const useGameEvents = (gameState) => {
       setResponseAction(responseAction ? responseAction : initialAction);
       responseIdRef.current = responseId;
 
-      if (chooserId === socket.id) {
+      if (chooserId === socket.current.id) {
         setIsTarget(true);
         return;
       }
@@ -90,7 +107,7 @@ export const useGameEvents = (gameState) => {
 
     const onExchangeCardEvent = ({ chooserId, exchangeCards, playerCards }) => {
       console.log(`${chooserId} is choosing 2 cards`);
-      if (chooserId === socket.id) {
+      if (chooserId === socket.current.id) {
         setExchangeCards(exchangeCards);
       }
     };
@@ -119,7 +136,7 @@ export const useGameEvents = (gameState) => {
       setInitialAction(initialAction);
       responseIdRef.current = responseId;
       setResponseAction(responseAction);
-      if (initialUserId === socket.id) {
+      if (responseId !== socket.current.id) {
         setIsResponding(true);
         return;
       }
@@ -130,32 +147,32 @@ export const useGameEvents = (gameState) => {
       setWinner(winner);
     };
 
-    socket.connect();
-    socket.emit(
+    socket.current.connect();
+    socket.current.emit(
       "join-room",
       { roomId: roomId, userId: localCookie["username"] },
       handleStatusOnRoomJoin
     );
-    socket.on("lobby-members", onLobbyEvent);
-    socket.on("start-game", onStartEvent);
-    socket.on("choose-response", onChooseResponseEvent);
-    socket.on("choose-card", onChooseCardEvent);
-    socket.on("exchange-cards", onExchangeCardEvent);
-    socket.on("update-state", onUpdateState);
-    socket.on("blocked", onBlocked);
-    socket.on("end-game", onEndGame);
+    socket.current.on("lobby-members", onLobbyEvent);
+    socket.current.on("start-game", onStartEvent);
+    socket.current.on("choose-response", onChooseResponseEvent);
+    socket.current.on("choose-card", onChooseCardEvent);
+    socket.current.on("exchange-cards", onExchangeCardEvent);
+    socket.current.on("update-state", onUpdateState);
+    socket.current.on("blocked", onBlocked);
+    socket.current.on("end-game", onEndGame);
 
     // Removes all event listeners when component is removed
     return () => {
-      socket.off("lobby-members", onLobbyEvent);
-      socket.off("start-game", onStartEvent);
-      socket.off("choose-response", onChooseResponseEvent);
-      socket.off("choose-card", onChooseCardEvent);
-      socket.off("exchange-cards", onExchangeCardEvent);
-      socket.off("update-state", onUpdateState);
-      socket.off("blocked", onBlocked);
-      socket.off("end-game", onEndGame);
-      socket.disconnect();
+      socket.current.off("lobby-members", onLobbyEvent);
+      socket.current.off("start-game", onStartEvent);
+      socket.current.off("choose-response", onChooseResponseEvent);
+      socket.current.off("choose-card", onChooseCardEvent);
+      socket.current.off("exchange-cards", onExchangeCardEvent);
+      socket.current.off("update-state", onUpdateState);
+      socket.current.off("blocked", onBlocked);
+      socket.current.off("end-game", onEndGame);
+      socket.current.disconnect();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
