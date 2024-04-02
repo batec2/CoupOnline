@@ -1,9 +1,8 @@
 import axios from "axios";
 
-const loginCall = async (username) => {
-
+const logoutCall = async () => {
   const response = await axios.get(
-    `http://localhost:8080/loginLogout/login/${username}`
+    `http://localhost:8080/loginLogout/logout/`
   );
   if (response.status === 200) {
     return response;
@@ -12,4 +11,4 @@ const loginCall = async (username) => {
   }
 };
 
-export default loginCall;
+export default logoutCall;

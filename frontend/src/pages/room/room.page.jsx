@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import logoutCall from "@/actions/logout.js";
 import Cookies from "universal-cookie";
 
 const cookies = new Cookies();
@@ -33,8 +34,12 @@ const RoomPage = () => {
 
   // Function to handle user logout
   const handleLogout = () => {
-    cookies.remove("PersonalCookie");
-    navigate("/");
+    logoutCall().then(() => {
+        cookies.remove("PersonalCookie")
+        navigate("/")
+      }
+    );
+
   };
 
   // Function to handle 'enter' key press for joining room

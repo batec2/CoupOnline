@@ -7,9 +7,7 @@ import {
   createPlayer,
   getPlayerByUsername,
 } from "../controller/playerController.js";
-import {
-  login
-} from "../controller/loginLogoutController.js"
+
 import checkForNeededPlayerFields from "../middleware/checkForValidPlayer.js";
 
 const router = express.Router();
@@ -19,7 +17,6 @@ router.get("/", getPlayers);
 router.get("/byId/:id", getPlayer);
 router.get("/byName/:username", getPlayerByUsername);
 router.get("/:id", getPlayer);
-router.get("/login/:username", login);
 router.patch("/:id", updatePlayer);
 router.delete("/:id", deletePlayer);
 router.post("/", checkForNeededPlayerFields, createPlayer);

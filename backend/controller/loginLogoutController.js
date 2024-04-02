@@ -14,7 +14,6 @@ const login = async (req, res) => {
   const { username } = req.params;
   try {
     const player = await getPlayerFromRepo({ userName: username });
-    console.log("IS BEING RUN")
     if (!player) {
       handlePlayerNotFound(res, id);
     } else{
@@ -25,7 +24,6 @@ const login = async (req, res) => {
         }
       req.session.user = userInfo
       res.status(200).send(userInfo)
-
     }
   } catch (error) {
     handleError(
@@ -37,10 +35,18 @@ const login = async (req, res) => {
 }
 
 const logout = async (req, res) => {
-
+  console.log("ONPATH")
+  req.session.destroy((err) => {
+    if (err){
+      res.status(500).send(err);
+    }else{
+      res.clearCookie("session-id")
+      res.status(200).send()
+    }
+  })
 }
 const checkForValidSession = (req, res) => {
 
 }
 
-export {login, checkForValidSession}
+export {login, logout, checkForValidSession}
