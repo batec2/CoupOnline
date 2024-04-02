@@ -12,17 +12,14 @@ export const registerLobbyHandlers = (io, socket, rooms) => {
     }
     try {
       socket.join(roomId);
-
-      const keys = Object.keys(rooms[roomId].players)
-      for(let i = 0;i < keys.length; i++){
-        if(rooms[roomId].players[keys[i]]["userId"] === userId){
+      const keys = Object.keys(rooms[roomId].players);
+      for (let i = 0; i < keys.length; i++) {
+        if (rooms[roomId].players[keys[i]]["userId"] === userId) {
           callback({ status: 400 });
           return;
         }
       }
-
       rooms[roomId].players[socket.id] = { userId: userId };
-      console.log(rooms)
       io.to(roomId).emit("lobby-members", { lobby: rooms[roomId].players });
       callback({ status: 200 });
     } catch (e) {
@@ -53,8 +50,7 @@ export const registerLobbyHandlers = (io, socket, rooms) => {
   });
 
   socket.on("start-game", ({ roomId }, callback) => {
-    console.log(roomId);
-    console.log("start-game");
+    console.log(`Room: ${roomId} Start Game`);
     if (!rooms[roomId]) {
       return;
     }
@@ -65,9 +61,9 @@ export const registerLobbyHandlers = (io, socket, rooms) => {
       room.state = new GameState(ids);
       // Sends sends each player their cards when game starts and the current
       // Player whos turn it is
-      console.log("START GAME ROOMS")
-      console.log(roomId)
-      console.log(room)
+      // console.log("START GAME ROOMS")
+      // console.log(roomId)
+      // console.log(room)
 
       emitUpdate(io, roomId, room);
       emitStartGame(io, roomId);

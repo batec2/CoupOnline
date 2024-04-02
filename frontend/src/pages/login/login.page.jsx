@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { terminal } from "virtual:terminal";
-
 import verifyAccount from "../../actions/verifyAccount";
 import Cookies from "universal-cookie";
 import retrieveAccountById from "../../actions/retrieveAccountById.js";
@@ -51,6 +50,7 @@ const LoginPage = () => {
           username: res.data.userName,
           screenName: res.data.screenName,
         });
+        //Creates socketio client and connects to server
         setLocalCookie(cookies.get("PersonalCookie"));
         navigate("/room");
       });

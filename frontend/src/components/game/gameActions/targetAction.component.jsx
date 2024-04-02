@@ -20,14 +20,14 @@ const TargetAction = ({ action }) => {
 
   const buttons = [];
   Object.keys(currentLobbyMembers).forEach((member) => {
-    if (member === socket.id) {
+    if (member === socket.current.id) {
       return;
     }
     buttons.push(
       <Button
         className="w-40"
         onClick={() => {
-          handleNormalAction(socket, roomId, action, member);
+          handleNormalAction(socket.current, roomId, action, member);
           setTurnId(null);
         }}
         key={member}

@@ -65,18 +65,18 @@ const PlayerCards = () => {
     }
   };
 
-/**
- * 
- * @param {*} card 
- * @param {*} cardNumber 
- * @returns 
- */
+  /**
+   *
+   * @param {*} card
+   * @param {*} cardNumber
+   * @returns
+   */
   const handleChooseCard = (card, cardNumber) => {
     if (isTarget) {
       console.log(
         `${currentTurnId} is choosing ${card}, ${chooseCardType()},${initialAction}`
       );
-      socket.emit("choose-card", {
+      socket.current.emit("choose-card", {
         roomId: roomId,
         card: card,
         chooseActionType: chooseCardType(),
@@ -115,7 +115,7 @@ const PlayerCards = () => {
           }
         }
       }
-      socket.emit("exchange-cards", {
+      socket.current.emit("exchange-cards", {
         roomId: roomId,
         chosenCards: chosenCards,
         returnedCards: returnedCards,
@@ -137,7 +137,6 @@ const PlayerCards = () => {
       }
     }
   };
-
 
   /**
    * Generates card images and confirmation button when exchanging cards
@@ -162,7 +161,11 @@ const PlayerCards = () => {
             ></Card>
           </div>
           <Button
-            className={currentSelected === 2 ? "bg-actions-normal" : "bg-actions-unavailable"}
+            className={
+              currentSelected === 2
+                ? "bg-actions-normal"
+                : "bg-actions-unavailable"
+            }
             onClick={() => handleExchangeCard()}
           >
             Confirm Selection
