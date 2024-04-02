@@ -20,7 +20,9 @@ export class GameState {
   initialAction = null;
   initialResponseId = null;
   initialResponseAction = null;
-  isBlocked = false;
+  secondaryResponseId = null;
+  secondaryResponseAction = null;
+  isInitialActionResolved = false;
 
   constructor(players) {
     this.playerCount = players.length;
@@ -77,8 +79,16 @@ export class GameState {
     return this.initialResponseAction;
   }
 
-  get isBlocked() {
-    return this.isBlocked;
+  get secondaryResponseId() {
+    return this.secondaryResponseId;
+  }
+
+  get secondaryResponseAction() {
+    return this.secondaryResponseAction;
+  }
+
+  get isInitialActionResolved() {
+    return this.isInitialActionResolved;
   }
 
   get discardDeck() {
@@ -106,8 +116,16 @@ export class GameState {
     this.initialResponseAction = initialResponseAction;
   }
 
-  set isBlocked(isBlocked) {
-    this.isBlocked = isBlocked;
+  set secondaryResponseId(secondaryResponseId) {
+    this.secondaryResponseId = secondaryResponseId;
+  }
+
+  set secondaryResponseAction(secondaryResponseAction) {
+    this.secondaryResponseAction = secondaryResponseAction;
+  }
+
+  set isInitialActionResolved(isInitialActionResolved) {
+    this.isInitialActionResolved = isInitialActionResolved;
   }
 
   resetTurnState() {
@@ -115,8 +133,10 @@ export class GameState {
     this.initialUserId = null;
     this.initialAction = null;
     this.initialResponseId = null;
-    this.initialResponseId = null;
-    this.isBlocked = false;
+    this.initialResponseAction = null;
+    this.secondaryResponseId = null;
+    this.secondaryResponseAction = null;
+    this.isInitialActionResolved = false;
   }
 
   /**
@@ -144,6 +164,7 @@ export class GameState {
       loser.gameCards[1] === GameCard.Eliminated
     ) {
       loser.eliminated = true;
+      this.playerCount -= 1;
       this.players = this.players.filter((ids) => ids !== player);
     }
   }
@@ -176,7 +197,7 @@ export class GameState {
   }
 
   incrementTurn() {
-    if (this.currentPlayer === this.playerCount - 1) {
+    if (this.currentPlayer >= this.playerCount - 1) {
       this.currentPlayer = 0;
     } else {
       this.currentPlayer += 1;
@@ -262,5 +283,9 @@ export class GameState {
     for (let i = 0; i < 2; i++) {
       this.playerState[player].gameCards[i] = chosenCards[i];
     }
+  }
+
+  getPlayerCoins(player) {
+    this.playerState[player].coins;
   }
 }

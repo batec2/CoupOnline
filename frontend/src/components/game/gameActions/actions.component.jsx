@@ -7,8 +7,8 @@ import ResponseActions from "./responseActions.component";
  * @returns Current Actions React Component
  */
 const Actions = () => {
-  const { socket, isResponding, currentTurnId, isTarget } = useGameContext();
-  if (socket.current.id === currentTurnId && !isTarget) {
+  const { socket, isResponding, currentTurnId, isChoosing } = useGameContext();
+  if (socket.current.id === currentTurnId && !isChoosing) {
     return <NormalActions></NormalActions>;
   } else if (isResponding) {
     return <ResponseActions></ResponseActions>;
