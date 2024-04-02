@@ -79,6 +79,13 @@ export const registerGameHandlers = (io, socket, rooms) => {
    */
   const handleAction = (roomId, room, state, nextTurn) => {
     switch (state.initialAction) {
+      case Aid: {
+        state.increasePlayerMoney(state.initialUserId, 2);
+        if (nextTurn) {
+          nextTurnAndUpdate(state, roomId, room);
+        }
+        break;
+      }
       case Coup: {
         state.decreasePlayerMoney(state.initialUserId, 7);
         emitChooseCard(roomId, state.targetId, state);
