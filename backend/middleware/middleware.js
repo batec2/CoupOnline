@@ -7,7 +7,7 @@ import { default as connectMongoDBSession} from "connect-mongodb-session"
 
 const SESS_SECRET = "test"
 const COOKIE_NAME = "AxiosCookie"
-const MAX_AGE = 1000 * 20 * 1 * 1
+const MAX_AGE = 1000 * 60 * 60 * 3
 const MongoURI = "mongodb://localhost:27017/couponline"
 
 const MongoDBStore = connectMongoDBSession(session)
