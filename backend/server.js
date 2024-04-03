@@ -1,6 +1,8 @@
 import dotenv from "dotenv";
 import playersRoute from "./route/players.route.js";
 import gamesRoute from "./route/games.route.js";
+import loginLogoutRoute from "./route/loginLogout.route.js";
+
 import { connectDB } from "./database/database.js";
 import middleware from "./middleware/middleware.js";
 import { registerLobbyHandlers } from "./event-handlers/LobbyEvents.js";
@@ -14,6 +16,7 @@ const PORT = 8080;
 
 middleware.use("/games", gamesRoute);
 middleware.use("/players", playersRoute);
+middleware.use("/loginLogout", loginLogoutRoute);
 
 //Defaults if can't match route
 middleware.use((req, res) => {

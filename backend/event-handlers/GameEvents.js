@@ -102,10 +102,11 @@ export const registerGameHandlers = (io, socket, rooms) => {
       }
       case Income: {
         console.log(`${state.initialUserId} is Choosing to get Income`);
-        if (state.getPlayerCoins >= 10) {
-          return;
+        if (state.getPlayerCoins(state.initialUserId) < 10) {
+          state.increasePlayerMoney(state.initialUserId, 1);
+        } else {
+          console.log(`${state.initialUserId} has 10 or more coins and is unable to take income`)
         }
-        state.increasePlayerMoney(state.initialUserId, 1);
         if (nextTurn) {
           nextTurnAndUpdate(state, roomId, room);
         }

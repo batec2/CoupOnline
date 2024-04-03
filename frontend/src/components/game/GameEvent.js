@@ -1,13 +1,12 @@
 import { useEffect } from "react";
-import handleStatus from "@/lib/handleStatus";
 import GameActions from "@/lib/actionEnum";
 import Cookie from "universal-cookie";
 import { useNavigate } from "react-router-dom";
 import usePlayerState from "./PlayerState";
-import { terminal } from "virtual:terminal";
 import Cookies from "universal-cookie";
 import { io } from "socket.io-client";
 import ChooseCard from "@/lib/chooseCardEnum";
+
 /**
  * Sets up socket listeners for gamestate variables
  * @param {*} gameState
@@ -32,6 +31,7 @@ export const useGameEvents = (gameState) => {
     responseIdRef,
     setIsTarget,
     setChooseType,
+    setPlayerCardCount,
   } = gameState;
 
   const cookie = new Cookie();
@@ -148,7 +148,7 @@ export const useGameEvents = (gameState) => {
       setDiscardDeck(discardDeck);
       setIsTarget(false);
       setChooseType(null);
-      console.log(playerCardCount);
+      setPlayerCardCount(playerCardCount);
     };
 
     const onPartialUpdate = ({
@@ -162,7 +162,7 @@ export const useGameEvents = (gameState) => {
       setTurnId(turnId);
       setCoins(coins);
       setDiscardDeck(discardDeck);
-      console.log(playerCardCount);
+      setPlayerCardCount(playerCardCount);
     };
 
     const onBlocked = ({

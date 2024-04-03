@@ -8,9 +8,9 @@ import useGameContext from "@/context/useGameContext";
  */
 const PlayerCardList = () => {
 
-  const {currentLobbyMembers} = useGameContext();
+  const {currentLobbyMembers, playerCardCount} = useGameContext();
   const members = Object.keys(currentLobbyMembers);
-  
+
   return (
     <div className="p-1">
       <GameSectionTitle text={"Player Cards Remaining:"} />
@@ -19,7 +19,7 @@ const PlayerCardList = () => {
           <CardItem
             key={member}
             item={currentLobbyMembers[member].userId}
-            count={2}
+            count={playerCardCount[member]}
             context={"players"}
           />
         ))}
