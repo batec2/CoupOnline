@@ -21,7 +21,7 @@ const ActionTimeout = ({callback}) => {
   return (
     <div>
       <p>Time Remaining:</p>
-      <Progress value={progress}/>
+      <Progress className="w-full" value={progress}/>
     </div>
   )
 }
