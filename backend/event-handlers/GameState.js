@@ -286,7 +286,7 @@ export class GameState {
   }
 
   getPlayerCoins(player) {
-    this.playerState[player].coins;
+    return this.playerState[player].coins;
   }
 
   getPlayerCardCount() {

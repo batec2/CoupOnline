@@ -1,7 +1,6 @@
 import useGameContext from "@/context/useGameContext.js";
 import Card from "@/components/card/card.component";
 import ChooseCard from "@/lib/chooseCardEnum";
-import GameActions from "@/lib/actionEnum";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
