@@ -149,7 +149,6 @@ export const useGameEvents = (gameState) => {
       setIsTarget(false);
       setChooseType(null);
       setPlayerCardCount(playerCardCount);
-      console.log(playerCardCount);
     };
 
     const onPartialUpdate = ({
@@ -164,7 +163,6 @@ export const useGameEvents = (gameState) => {
       setCoins(coins);
       setDiscardDeck(discardDeck);
       setPlayerCardCount(playerCardCount);
-      console.log(playerCardCount);
     };
 
     const onBlocked = ({
