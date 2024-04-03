@@ -16,11 +16,13 @@ const TargetAction = ({ action }) => {
     setTurnId,
     setInitialAction,
     setInitialUserId,
+    playerCardCount
   } = useGameContext();
 
   const buttons = [];
   Object.keys(currentLobbyMembers).forEach((member) => {
-    if (member === socket.current.id) {
+    if (member === socket.current.id
+        || playerCardCount[member] === 0) {
       return;
     }
     buttons.push(

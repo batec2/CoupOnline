@@ -1,14 +1,15 @@
 import useGameContext from "@/context/useGameContext.js";
 import Card from "@/components/card/card.component";
 import ChooseCard from "@/lib/chooseCardEnum";
-import GameActions from "@/lib/actionEnum";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import ActionTimeout from "../gameActions/actionTimeout.component";
+import GameCard from "@/lib/cardEnum";
 
 const PlayerCards = () => {
   const {
     gameCards,
-    isTarget,
+    isChoosing,
     socket,
     roomId,
     responseAction,
@@ -19,6 +20,7 @@ const PlayerCards = () => {
     setInitialUserId,
     exchangeCards,
     setExchangeCards,
+    chooseType,
   } = useGameContext();
 
   const [currentSelected, setCurrentSelected] = useState(0);
@@ -30,56 +32,20 @@ const PlayerCards = () => {
   ]);
 
   /**
-   * Determines what happens with a chosen card (lost, exchanged, or shown)
-   * @returns Integer value corresponding to chooseCardEnum
-   */
-  const chooseCardType = () => {
-    switch (responseAction) {
-      case GameActions.Coup: {
-        return ChooseCard.Loose;
-      }
-      case GameActions.LooseCallout: {
-        return ChooseCard.Loose;
-      }
-      case GameActions.Exchange: {
-        return ChooseCard.Exchange;
-      }
-      case GameActions.Assassinate: {
-        return ChooseCard.Loose;
-      }
-      case GameActions.CalloutLie: {
-        return ChooseCard.Show;
-      }
-      case GameActions.BlockAssassinate: {
-        return ChooseCard.Show;
-      }
-      case GameActions.BlockAid: {
-        return ChooseCard.Show;
-      }
-      case GameActions.BlockStealAsAmbass: {
-        return ChooseCard.Show;
-      }
-      case GameActions.BlockStealAsCaptain: {
-        return ChooseCard.Show;
-      }
-    }
-  };
-
-  /**
    *
    * @param {*} card
    * @param {*} cardNumber
    * @returns
    */
   const handleChooseCard = (card, cardNumber) => {
-    if (isTarget) {
+    if (isChoosing) {
       console.log(
-        `${currentTurnId} is choosing ${card}, ${chooseCardType()},${initialAction}`
+        `${socket.current.id} is choosing ${card}, ${ChooseCard[chooseType]},${initialAction}`
       );
       socket.current.emit("choose-card", {
         roomId: roomId,
         card: card,
-        chooseActionType: chooseCardType(),
+        chooseActionType: chooseType,
       });
       setTurnId(null);
       setInitialAction(null);
@@ -129,14 +95,22 @@ const PlayerCards = () => {
   const showPrompt = () => {
     if (exchangeCards) {
       return <p className="font-bold">Select Two Cards to Discard:</p>;
-    } else if (isTarget) {
-      if (chooseCardType() === ChooseCard.Show) {
+    } else if (isChoosing) {
+      if (chooseType === ChooseCard.Show) {
         return <p className="font-bold">Select a Card to Show:</p>;
       } else {
         return <p className="font-bold">Select a Card to Lose:</p>;
       }
     }
   };
+
+  const timeoutChooseDiscard = () => {
+    if (gameCards[0] === GameCard.Eliminated) {
+      handleChooseCard(1, 1);
+    } else {
+      handleChooseCard(0, 0);
+    }
+  }
 
   /**
    * Generates card images and confirmation button when exchanging cards
@@ -195,6 +169,9 @@ const PlayerCards = () => {
         ></Card>
       </div>
       {showExchange()}
+      {(isChoosing && chooseType === ChooseCard.Loose) 
+        ? <ActionTimeout callback={() => timeoutChooseDiscard()} /> 
+        : <></>}
     </div>
   );
 };

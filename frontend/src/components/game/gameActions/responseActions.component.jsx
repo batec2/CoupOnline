@@ -4,6 +4,7 @@ import { handleResponseAction } from "@/components/game/socketActions.js";
 import GameCard from "@/lib/cardEnum.js";
 import ButtonClass from "@/lib/buttonClassEnum.js";
 import ActionButton from "./actionButton.component.jsx";
+import ActionTimeout from "./actionTimeout.component.jsx";
 
 /**
  * Generates collection of buttons for actions a player can take on in response
@@ -18,8 +19,10 @@ const ResponseActions = () => {
     gameCards,
     responseAction,
     setIsResponding,
+    isTarget,
   } = useGameContext();
 
+  console.log(isTarget);
   //Detemines button colour based on whether player has appropriate card or not
   const buttonClass = (button) => {
     switch (button) {
@@ -82,24 +85,32 @@ const ResponseActions = () => {
     }
   };
 
+  // Assassinate can only be blocked by the target
   const canBlockAssassinate = () => {
-    if (initialAction == GameActions.Assassinate && responseAction == null) {
+    if (
+      initialAction == GameActions.Assassinate &&
+      responseAction == null &&
+      isTarget
+    ) {
       return true;
     } else {
       return false;
     }
   };
-
+  // Steal can only be blocked by the target
+  const canBlockSteal = () => {
+    if (
+      initialAction == GameActions.Steal &&
+      responseAction == null &&
+      isTarget
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
   const canBlockAid = () => {
     if (initialAction == GameActions.Aid && responseAction == null) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
-  const canBlockSteal = () => {
-    if (initialAction == GameActions.Steal && responseAction == null) {
       return true;
     } else {
       return false;
@@ -160,6 +171,7 @@ const ResponseActions = () => {
           text={"Pass"}
         />
       </div>
+      <ActionTimeout callback={() => onResponseClick(GameActions.Pass)} />
     </div>
   );
 };

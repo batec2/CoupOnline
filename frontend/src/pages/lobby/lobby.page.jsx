@@ -4,6 +4,9 @@ import { GameStateContext } from "@/context/GameStateContext";
 import { useGameEvents } from "@/components/game/GameEvent";
 import { useGameState } from "../../components/game/GameState";
 import GameEnd from "@/components/gameEnd/gameEnd.component";
+import {useEffect} from "react";
+import checkIfActiveSession from "@/actions/checkIfActiveSession.js";
+import logoutCall from "@/actions/logout.js";
 
 const LobbyPage = () => {
   const gameState = useGameState();

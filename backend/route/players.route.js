@@ -7,6 +7,7 @@ import {
   createPlayer,
   getPlayerByUsername,
 } from "../controller/playerController.js";
+
 import checkForNeededPlayerFields from "../middleware/checkForValidPlayer.js";
 
 const router = express.Router();
