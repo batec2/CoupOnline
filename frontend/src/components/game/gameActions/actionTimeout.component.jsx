@@ -5,7 +5,7 @@ import { Progress } from "@/components/ui/progress";
 const ActionTimeout = ({callback}) => {
   const timeout = 30000;
   const [progress, setProgress] = useState(0);
-  const interval = 0.5
+  const interval = 5
 
   useEffect( () => {
     const timer = setInterval(() => {
