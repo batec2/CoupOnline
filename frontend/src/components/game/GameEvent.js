@@ -129,7 +129,13 @@ export const useGameEvents = (gameState) => {
       }
     };
 
-    const onUpdateState = ({ gameCards, turnId, coins, discardDeck }) => {
+    const onUpdateState = ({
+      gameCards,
+      turnId,
+      coins,
+      discardDeck,
+      playerCardCount,
+    }) => {
       setGameCards(gameCards);
       setTurnId(turnId);
       setExchangeCards.current = null;
@@ -142,13 +148,21 @@ export const useGameEvents = (gameState) => {
       setDiscardDeck(discardDeck);
       setIsTarget(false);
       setChooseType(null);
+      console.log(playerCardCount);
     };
 
-    const onPartialUpdate = ({ gameCards, turnId, coins, discardDeck }) => {
+    const onPartialUpdate = ({
+      gameCards,
+      turnId,
+      coins,
+      discardDeck,
+      playerCardCount,
+    }) => {
       setGameCards(gameCards);
       setTurnId(turnId);
       setCoins(coins);
       setDiscardDeck(discardDeck);
+      console.log(playerCardCount);
     };
 
     const onBlocked = ({
@@ -201,6 +215,7 @@ export const useGameEvents = (gameState) => {
       socket.current.off("choose-card", onChooseCardEvent);
       socket.current.off("exchange-cards", onExchangeCardEvent);
       socket.current.off("update-state", onUpdateState);
+      socket.current.off("partial-update-state", onPartialUpdate);
       socket.current.off("blocked", onBlocked);
       socket.current.off("end-game", onEndGame);
       socket.current.disconnect();
