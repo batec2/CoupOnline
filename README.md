@@ -1,101 +1,64 @@
 # CoupOnline
 
-A web application version of the card game Coup.  Created using vite react frontend, express node.js backend, and mongoDB database.
+CoupOnline is a web application version of the popular card game Coup. It has been developed using Vite React for the frontend, Express Node.js for the backend, and MongoDB for the database.
 
-## Must Haves
-- Gameplay (<a href="https://www.qugs.org/rules/r131357.pdf">rules</a>)
-  - Game is consistent with the rules of the card game Coup, and has all the 
-    features usually available to the players.
-- Rooms 
-  - Players can enter a room code and connect to the same room as their friends
-- Saved Games
-  - Games are saved into the database to be accessed at the later time
-- Usernames
-  - When the player first enters the game then they are able to select a custom
-    username.
-- Publishing Games
-  - Once a game is finished the results are published to the database
+## Gameplay
 
-## Nice To Haves
-- Leader Board
-- Player Accounts/Profiles
-- Game Chat
-- Public Lobbies
-- Matchmaking
-- Custom Visuals (Animations, Card images, profile pics, room)
-- Suspend/resume game
-- Stepwise replay previous games
-- Ready status
+CoupOnline follows the rules of the original card game Coup.
 
-## Technologies
-- NodeJS
-- React
-- SQL
-- SocketIO
-- ExpressJS
-## Available Scripts
+[Rules](https://www.qugs.org/rules/r131357.pdf)
 
-In the project directory, you can run:
+### Features
 
-### `npm start`
+- **Rooms:** Players can enter a room code and connect with others.
+- **Usernames:** Players can select custom usernames when they enter the game.
+- **Global Leaderboard** Players can see a global statistics.
+- **Player Accounts/Profiles** Players can access their own records.
+  
+## Technologies Used
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Express Node.js**
+- **React Vite**
+- **MongoDB**
+- **Socket.IO**
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Additional Features (Future Implementations)
+- **Publishing Games:** After a game is completed, the results are published to the database.
+- **Saved Games:** Games are saved in the database, allowing players to resume them at a later time.
+- **Game Chat**
+- **Public Lobbies**
+- **Matchmaking**
+- **Custom Visuals:** Including animations, card images, profile pictures, and room aesthetics.
+- **Suspend/Resume Game:** Ability to pause and resume ongoing games.
+- **Stepwise Replay:** Replay previous games step by step.
+- **Ready Status:** Indication of player readiness for the next phase or game.
 
-### `npm test`
+## Screenshots
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<img width="1420" alt="Screenshot3" src="https://github.com/batec2/CoupOnline/assets/97869609/1ced77d6-e383-456d-ab5d-73f85b4e07a8">
+<br>
+<img width="420" alt="Screenshot1" src="https://github.com/batec2/CoupOnline/assets/97869609/45f4f0e6-9d0a-42ff-80a1-08ded899fc71">
+<br>
+<img width="420" alt="Screenshot2" src="https://github.com/batec2/CoupOnline/assets/97869609/58dbf0c1-37cf-4c09-9095-e83642c1fa27">
+<br>
 
-### `npm run build`
+## Installation on local machine
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Clone the repository:
+```
+git clone https://github.com/batec2/CoupOnline
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+2. Navigate to the project frontend and install dependencies and start the frontend: 
+```
+cd frontend
+npm i
+npm run dev
+```
+3. Navigate to the project backend, install dependencies and start the backend: 
+```
+cd backend
+npm i
+nodemon server.js
+```
+4. Open your web browser and navigate to [http://localhost:5173](http://localhost:5173).
