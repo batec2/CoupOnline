@@ -7,13 +7,14 @@ import ResponseActions from "./responseActions.component";
  * @returns Current Actions React Component
  */
 const Actions = () => {
-  const { socket, isResponding, currentTurnId, isChoosing } = useGameContext();
+  const { socket, isResponding, currentTurnId, isChoosing, playerCardCount } = useGameContext();
   if (socket.current.id === currentTurnId && !isChoosing) {
     return <NormalActions></NormalActions>;
+  } else if (playerCardCount[socket.current.id] === 0) {
+    return <h2>You're dead homie</h2>
   } else if (isResponding) {
     return <ResponseActions></ResponseActions>;
-  }
-  return <h2>Not your turn bro</h2>;
+  } else { return <h2>Not your turn bro</h2>; }
 };
 
 export default Actions;
