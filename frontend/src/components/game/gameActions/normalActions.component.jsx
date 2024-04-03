@@ -126,13 +126,17 @@ const NormalActions = () => {
   };
 
   return (
-    <div className="flex flex-col space-x-2 space-y-2">
+    <div className="space-x-2 space-y-2">
       <p>Actions:</p>
-      <div className="flex flex-row space-x-2">
         <ActionButton
           buttonClass={buttonClass(GameActions.Income)}
           onClick={() => onIncomeClick()}
           text={"Income"}
+        />
+        <ActionButton
+          buttonClass={buttonClass(GameActions.Aid)}
+          onClick={() => onAidClick()}
+          text={"Foreign Aid"}
         />
         <ActionButton
           buttonClass={buttonClass(GameActions.Coup)}
@@ -140,33 +144,25 @@ const NormalActions = () => {
           text={"Coup"}
         />
         <ActionButton
-          buttonClass={buttonClass(GameActions.Assassinate)}
-          onClick={() => onAssassinateClick()}
-          text={"Assassinate"}
-        />
-        <ActionButton
-          buttonClass={buttonClass(GameActions.Steal)}
-          onClick={() => onStealClick()}
-          text={"Steal"}
-        />
-      </div>
-      <div className="flex flex-row space-x-2">
-        <ActionButton
-          buttonClass={buttonClass(GameActions.Aid)}
-          onClick={() => onAidClick()}
-          text={"Foreign Aid"}
-        />
-        <ActionButton
           buttonClass={buttonClass(GameActions.Taxes)}
           onClick={() => onTaxClick()}
           text={"Taxes"}
         />
         <ActionButton
+          buttonClass={buttonClass(GameActions.Assassinate)}
+          onClick={() => onAssassinateClick()}
+          text={"Assassinate"}
+        />
+        <ActionButton
           buttonClass={buttonClass(GameActions.Exchange)}
           onClick={() => onExchangeClick()}
           text={"Exchange Influence"}
-        />
-      </div>
+        /> 
+        <ActionButton
+          buttonClass={buttonClass(GameActions.Steal)}
+          onClick={() => onStealClick()}
+          text={"Steal"}
+        /> 
       {showTarget ? (
         <>
           <div className="space-y-8 space-x-2">
