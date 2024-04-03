@@ -4,6 +4,7 @@ import { handleResponseAction } from "@/components/game/socketActions.js";
 import GameCard from "@/lib/cardEnum.js";
 import ButtonClass from "@/lib/buttonClassEnum.js";
 import ActionButton from "./actionButton.component.jsx";
+import ActionTimeout from "./actionTimeout.component.jsx";
 
 /**
  * Generates collection of buttons for actions a player can take on in response
@@ -160,6 +161,7 @@ const ResponseActions = () => {
           text={"Pass"}
         />
       </div>
+      <ActionTimeout callback={() => onResponseClick(GameActions.Pass)} />
     </div>
   );
 };

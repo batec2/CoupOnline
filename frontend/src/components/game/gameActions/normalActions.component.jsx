@@ -6,6 +6,8 @@ import { useRef, useState } from "react";
 import GameCard from "@/lib/cardEnum";
 import ActionButton from "./actionButton.component";
 import ButtonClass from "@/lib/buttonClassEnum";
+import ActionTimeout from "./actionTimeout.component";
+import terminal from "virtual:terminal"
 
 /**
  * Generates collection of buttons for actions a player can take on their turn
@@ -177,6 +179,7 @@ const NormalActions = () => {
       ) : (
         <></>
       )}
+      <ActionTimeout callback={() => onIncomeClick()} />
     </div>
   );
 };
