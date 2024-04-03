@@ -12,7 +12,6 @@ const checkIfLoggedInCall = async () => {
           params: {
             personalCookie: personalCookie
           }});
-
     if(response.data.id !== personalCookie.id ||
        response.data.userName !== personalCookie.username ||
        response.data.screenName !== personalCookie.screenName ){

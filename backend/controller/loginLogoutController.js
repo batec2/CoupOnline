@@ -50,9 +50,9 @@ const logout = async (req, res) => {
 const checkForValidSession = (req, res) => {
   const {personalCookie} = req.query
   const curUser = req.session.user
-  curUser.id = curUser.id.toString()
 
   if (curUser){
+      curUser.id = curUser.id.toString()
     if(curUser.id === personalCookie.id &&
       curUser.username === personalCookie.userName &&
       curUser.screenName === personalCookie.screenName){

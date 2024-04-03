@@ -63,7 +63,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     checkIfLoggedInCall().then((res) => {
-      if(res.status === 200){
+      if(res !== undefined && res.status === 200){
         username.current = res.data.username;
         navigate("/room");
       }
