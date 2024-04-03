@@ -20,6 +20,7 @@ export const emitUpdate = (io, roomId, room) => {
         turnId: state.currentTurnId,
         coins: coins,
         discardDeck: state.discardDeck,
+        playerCardCount: state.getPlayerCardCount(),
       });
     });
 
@@ -43,6 +44,7 @@ export const emitPartialUpdate = (io, room) => {
         turnId: state.currentTurnId,
         coins: coins,
         discardDeck: state.discardDeck,
+        playerCardCount: state.getPlayerCardCount(),
       });
     });
   }

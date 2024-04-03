@@ -286,6 +286,23 @@ export class GameState {
   }
 
   getPlayerCoins(player) {
-    this.playerState[player].coins;
+    return this.playerState[player].coins;
+  }
+
+  getPlayerCardCount() {
+    const playerCardCount = {};
+    Object.keys(this.playerState).forEach((player) => {
+      if (this.checkLoser(player)) {
+        playerCardCount[player] = 0;
+      } else if (
+        this.playerState[player].gameCards[0] !== GameCard.Eliminated &&
+        this.playerState[player].gameCards[1] !== GameCard.Eliminated
+      ) {
+        playerCardCount[player] = 2;
+      } else {
+        playerCardCount[player] = 1;
+      }
+    });
+    return playerCardCount;
   }
 }

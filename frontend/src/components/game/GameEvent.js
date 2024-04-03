@@ -1,13 +1,12 @@
 import { useEffect } from "react";
-import handleStatus from "@/lib/handleStatus";
 import GameActions from "@/lib/actionEnum";
 import Cookie from "universal-cookie";
 import { useNavigate } from "react-router-dom";
 import usePlayerState from "./PlayerState";
-import { terminal } from "virtual:terminal";
 import Cookies from "universal-cookie";
 import { io } from "socket.io-client";
 import ChooseCard from "@/lib/chooseCardEnum";
+
 /**
  * Sets up socket listeners for gamestate variables
  * @param {*} gameState
@@ -32,6 +31,7 @@ export const useGameEvents = (gameState) => {
     responseIdRef,
     setIsTarget,
     setChooseType,
+    setPlayerCardCount,
   } = gameState;
 
   const cookie = new Cookie();
@@ -129,7 +129,13 @@ export const useGameEvents = (gameState) => {
       }
     };
 
-    const onUpdateState = ({ gameCards, turnId, coins, discardDeck }) => {
+    const onUpdateState = ({
+      gameCards,
+      turnId,
+      coins,
+      discardDeck,
+      playerCardCount,
+    }) => {
       setGameCards(gameCards);
       setTurnId(turnId);
       setExchangeCards.current = null;
@@ -142,13 +148,21 @@ export const useGameEvents = (gameState) => {
       setDiscardDeck(discardDeck);
       setIsTarget(false);
       setChooseType(null);
+      setPlayerCardCount(playerCardCount);
     };
 
-    const onPartialUpdate = ({ gameCards, turnId, coins, discardDeck }) => {
+    const onPartialUpdate = ({
+      gameCards,
+      turnId,
+      coins,
+      discardDeck,
+      playerCardCount,
+    }) => {
       setGameCards(gameCards);
       setTurnId(turnId);
       setCoins(coins);
       setDiscardDeck(discardDeck);
+      setPlayerCardCount(playerCardCount);
     };
 
     const onBlocked = ({
@@ -201,6 +215,7 @@ export const useGameEvents = (gameState) => {
       socket.current.off("choose-card", onChooseCardEvent);
       socket.current.off("exchange-cards", onExchangeCardEvent);
       socket.current.off("update-state", onUpdateState);
+      socket.current.off("partial-update-state", onPartialUpdate);
       socket.current.off("blocked", onBlocked);
       socket.current.off("end-game", onEndGame);
       socket.current.disconnect();

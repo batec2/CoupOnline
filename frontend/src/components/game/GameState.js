@@ -1,5 +1,4 @@
 import { useState, useContext, useRef } from "react";
-import SocketContext from "@/context/socketContext";
 import { useParams } from "react-router-dom";
 /**
  * @typedef {Object} GameState
@@ -41,6 +40,7 @@ export const useGameState = () => {
   const [responseAction, setResponseAction] = useState(null);
   const [exchangeCards, setExchangeCards] = useState(null);
   const [chooseType, setChooseType] = useState(null);
+  const [playerCardCount, setPlayerCardCount] = useState(null);
   const responseIdRef = useRef(null);
   const socket = useRef(null);
   const { roomId } = useParams();
@@ -77,6 +77,8 @@ export const useGameState = () => {
     setIsTarget: setIsTarget,
     chooseType: chooseType,
     setChooseType: setChooseType,
+    playerCardCount: playerCardCount,
+    setPlayerCardCount: setPlayerCardCount,
     socket: socket,
     roomId: roomId,
   };
