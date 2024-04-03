@@ -3,6 +3,8 @@ import Card from "@/components/card/card.component";
 import ChooseCard from "@/lib/chooseCardEnum";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import ActionTimeout from "../gameActions/actionTimeout.component";
+import GameCard from "@/lib/cardEnum";
 
 const PlayerCards = () => {
   const {
@@ -102,6 +104,14 @@ const PlayerCards = () => {
     }
   };
 
+  const timeoutChooseDiscard = () => {
+    if (gameCards[0] === GameCard.Eliminated) {
+      handleChooseCard(1, 1);
+    } else {
+      handleChooseCard(0, 0);
+    }
+  }
+
   /**
    * Generates card images and confirmation button when exchanging cards
    * @returns The exchange card elemnts
@@ -159,6 +169,9 @@ const PlayerCards = () => {
         ></Card>
       </div>
       {showExchange()}
+      {(isChoosing && chooseType === ChooseCard.Loose) 
+        ? <ActionTimeout callback={() => timeoutChooseDiscard()} /> 
+        : <></>}
     </div>
   );
 };
