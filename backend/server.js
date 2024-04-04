@@ -2,15 +2,14 @@ import dotenv from "dotenv";
 import playersRoute from "./route/players.route.js";
 import gamesRoute from "./route/games.route.js";
 import loginLogoutRoute from "./route/loginLogout.route.js";
-
 import { connectDB } from "./database/database.js";
 import middleware from "./middleware/middleware.js";
 import { registerLobbyHandlers } from "./event-handlers/LobbyEvents.js";
 import { registerGameHandlers } from "./event-handlers/GameEvents.js";
 import { createSocketIO } from "./event-handlers/IOEvents.js";
+dotenv.config();
 
 connectDB();
-dotenv.config();
 
 const PORT = 8080;
 
