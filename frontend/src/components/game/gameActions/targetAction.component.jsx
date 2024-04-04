@@ -16,7 +16,8 @@ const TargetAction = ({ action }) => {
     setTurnId,
     setInitialAction,
     setInitialUserId,
-    playerCardCount
+    playerCardCount,
+    setTargetId
   } = useGameContext();
 
   const buttons = [];
@@ -30,6 +31,7 @@ const TargetAction = ({ action }) => {
         className="w-40"
         onClick={() => {
           handleNormalAction(socket.current, roomId, action, member);
+          setTargetId(member);
           setTurnId(null);
         }}
         key={member}

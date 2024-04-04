@@ -169,6 +169,9 @@ export const registerGameHandlers = (io, socket, rooms) => {
     state.addToEventLog(
       `${initialUserId} is trying to ${GameActions[initialAction]} with target ${targetId}`
     );
+    console.log(
+      `${initialUserId} is trying to ${GameActions[initialAction]} with target ${targetId}`
+    );
 
     //Sets the intial target
     state.targetId = targetId;

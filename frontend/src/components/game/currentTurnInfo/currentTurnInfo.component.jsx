@@ -8,16 +8,24 @@ import GameActions from "@/lib/actionEnum";
  */
 const CurrentTurnInfo = () => {
   const { currentLobbyMembers, initialUserId, currentTurnId, initialAction, 
-          responseAction, responseIdRef} = useGameContext();
+          responseInitialAction, responseIdRef, targetId} = useGameContext();
 
   const displayCurrentTurnPlayer = () => {
       return (
         <div>
-        <p>It is {currentTurnId}'s CURRENT ID turn</p>
         <p>It is {initialUserId}'s CURRENT ID turn</p>
         </div>
       )
   }
+
+  const displayTarget = () => {
+      if(targetId) {
+        return (
+          <p>Targetting: {targetId}</p>
+        )
+      }
+    }
+
   const displayInitialAction = () => {
     if(initialAction) {
       return (
@@ -62,6 +70,7 @@ const CurrentTurnInfo = () => {
       <GameSectionTitle text={"Current Turn Info:"} />
       {displayCurrentTurnPlayer()}
       {displayInitialAction()}
+      {displayTarget()}
     </div>
   );
 };

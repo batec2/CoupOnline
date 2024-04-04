@@ -33,11 +33,15 @@ export const useGameState = () => {
   const [initialAction, setInitialAction] = useState(null);
   const [initialUserId, setInitialUserId] = useState(null);
   const [isChoosing, setIsChoosing] = useState(false);
+  const [targetId, setTargetId] = useState(null);
   const [isTarget, setIsTarget] = useState(false);
   const [coins, setCoins] = useState(0);
   const [discardDeck, setDiscardDeck] = useState([0, 0, 0, 0, 0]);
   const [isResponding, setIsResponding] = useState(false);
-  const [responseAction, setResponseAction] = useState(null);
+  const [responseInitialAction, setResponseInitialAction] = useState(null);
+  const [responseInitialId, setResponseInitialId] = useState(null);
+  const [responseSecondaryAction, setResponseSecondaryAction] = useState(null);
+  const [responseSecondaryId, setResponseSecondaryId] = useState(null);
   const [exchangeCards, setExchangeCards] = useState(null);
   const [chooseType, setChooseType] = useState(null);
   const [playerCardCount, setPlayerCardCount] = useState(null);
@@ -68,13 +72,21 @@ export const useGameState = () => {
     setDiscardDeck: setDiscardDeck,
     isResponding: isResponding,
     setIsResponding: setIsResponding,
-    responseAction: responseAction,
-    setResponseAction: setResponseAction,
+    responseInitialAction: responseInitialAction,
+    setResponseInitialAction: setResponseInitialAction,
+    responseInitialId: responseInitialId,
+    setResponseInitialId, setResponseInitialId,
+    responseSecondaryAction: responseSecondaryAction,
+    setResponseSecondaryAction: setResponseSecondaryAction,
+    responseSecondaryId: responseSecondaryId,
+    setResponseSecondaryId: setResponseSecondaryId,
     exchangeCards: exchangeCards,
     setExchangeCards: setExchangeCards,
     responseIdRef: responseIdRef,
     isTarget: isTarget,
     setIsTarget: setIsTarget,
+    targetId: targetId,
+    setTargetId: setTargetId,
     chooseType: chooseType,
     setChooseType: setChooseType,
     playerCardCount: playerCardCount,

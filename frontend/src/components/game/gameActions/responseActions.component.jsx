@@ -17,7 +17,7 @@ const ResponseActions = () => {
     roomId,
     initialAction,
     gameCards,
-    responseAction,
+    responseInitialAction,
     setIsResponding,
     isTarget,
   } = useGameContext();
@@ -78,7 +78,7 @@ const ResponseActions = () => {
   };
 
   const canCallout = () => {
-    if (initialAction == GameActions.Aid && responseAction == null) {
+    if (initialAction == GameActions.Aid && responseInitialAction == null) {
       return false;
     } else {
       return true;
@@ -89,7 +89,7 @@ const ResponseActions = () => {
   const canBlockAssassinate = () => {
     if (
       initialAction == GameActions.Assassinate &&
-      responseAction == null &&
+      responseInitialAction == null &&
       isTarget
     ) {
       return true;
@@ -101,7 +101,7 @@ const ResponseActions = () => {
   const canBlockSteal = () => {
     if (
       initialAction == GameActions.Steal &&
-      responseAction == null &&
+      responseInitialAction == null &&
       isTarget
     ) {
       return true;
@@ -110,7 +110,7 @@ const ResponseActions = () => {
     }
   };
   const canBlockAid = () => {
-    if (initialAction == GameActions.Aid && responseAction == null) {
+    if (initialAction == GameActions.Aid && responseInitialAction == null) {
       return true;
     } else {
       return false;
@@ -121,7 +121,7 @@ const ResponseActions = () => {
     <div>
       <h1>Initial Action: {JSON.stringify(initialAction)}</h1>
       <div className="space-x-2 space-y-2">
-        <p>Response Action: {JSON.stringify(responseAction)}</p>
+        <p>Response Action: {JSON.stringify(responseInitialAction)}</p>
         {canCallout() ? (
           <ActionButton
             buttonClass={ButtonClass.Callout}
