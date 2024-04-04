@@ -19,7 +19,7 @@ const ActionTimeout = ({callback}) => {
   }, [])
 
   return (
-    <div>
+    <div className="space-y-2">
       <p>Time Remaining:</p>
       <Progress className="w-full" value={progress}/>
     </div>
