@@ -37,6 +37,7 @@ export const useGameEvents = (gameState) => {
     responseSecondaryAction,
     setResponseSecondaryAction,
     setIsChoosing,
+    setCorrectShown,
     setCoins,
     setDiscardDeck,
     setIsResponding,
@@ -122,6 +123,7 @@ export const useGameEvents = (gameState) => {
       responseAction,
       secondaryResponseId,
       secondaryResponseAction,
+      correctShown,
     }) => {
       setIsResponding(false);
       setTurnId(chooserId);
@@ -132,6 +134,7 @@ export const useGameEvents = (gameState) => {
       setResponseInitialId(responseId);
       setResponseSecondaryAction(secondaryResponseAction);
       setResponseSecondaryId(secondaryResponseId);
+      setCorrectShown(correctShown);
       responseIdRef.current = responseId;
 
       if (chooserId === socket.current.id) {
@@ -183,6 +186,7 @@ export const useGameEvents = (gameState) => {
       setResponseInitialId(null);
       setResponseSecondaryAction(null);
       setResponseSecondaryId(null);
+      setCorrectShown(false);
       setCoins(coins);
       setDiscardDeck(discardDeck);
       setIsTarget(false);
