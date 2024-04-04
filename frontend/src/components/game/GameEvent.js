@@ -170,7 +170,6 @@ export const useGameEvents = (gameState) => {
         responseSecondaryAction,
       ]);
       // console.log("Updating State");
-      setEventLog([]);
       setGameCards(gameCards);
       setTurnId(turnId);
       setExchangeCards.current = null;

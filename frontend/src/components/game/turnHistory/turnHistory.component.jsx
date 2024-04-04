@@ -22,7 +22,7 @@ const TurnHistory = () => {
     <p>A cat can sleep 12 to 16 hours a day</p> */}
       <GameSectionTitle text ={"Recent Turn History:"} />
       {eventLog.map((entry, idx) => 
-        <h1 key={1}>Hello</h1>)}
+        <h1 key={idx}>{entry}</h1> )}
     </div>
   )
 }
