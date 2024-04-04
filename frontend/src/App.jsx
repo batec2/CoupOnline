@@ -6,7 +6,6 @@ import StatsPage from "./pages/stats/stats.page";
 import ProfilePage from "./pages/profile/profile.page";
 import LoginPage from "./pages/login/login.page";
 import CreationPage from "./pages/creation/creation.page.jsx";
-import TestPage from "./pages/uiTest/uiTest.page.jsx";
 import LobbyPage from "./pages/lobby/lobby.page.jsx";
 import DropDownMenu from "./components/dropDownMenu/dropdownmenu.component";
 

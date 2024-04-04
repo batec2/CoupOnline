@@ -145,7 +145,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
       }
       case Exchange: {
         state.addToEventLog(
-          `${state.initialUserId} is Choosing to ExchangeCards`
+          `${state.initialUserId} is Choosing to Exchange Cards`
         );
         emitExchangeCards(roomId, state);
       }

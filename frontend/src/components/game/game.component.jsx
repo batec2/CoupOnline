@@ -10,6 +10,7 @@ import "./game.styles.css";
 
 const Game = () => {
   const { roomId, currentLobbyMembers } = useGameContext();
+  
   return (
     <div className="flex justify-center">    
     <div className="h-screen max-w-screen-2xl">
