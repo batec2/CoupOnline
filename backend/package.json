@@ -5,6 +5,7 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
+    "start-render": "node server.js",
     "start": "nodemon server.js",
     "dev": "nodemon server.js"
   },

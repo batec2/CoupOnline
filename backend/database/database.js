@@ -4,7 +4,7 @@ mongoose.set("strictQuery", true);
 
 export const connectDB = async () => {
   //swap if you're using windows
-  const url = `mongodb://127.0.0.1:27017/couponline`;
+  const url = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.bxbwsjp.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
   //swap if you're using apple
   // const url = `mongodb://localhost:27017/couponline`;
   try {
