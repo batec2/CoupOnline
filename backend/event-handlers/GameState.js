@@ -6,7 +6,7 @@ export class GameState {
   currentPlayer = 0;
   playerCount = 0;
   players = [];
-  playersUUID = [];
+  playersUUID = {};
   playerState = {};
   deck = [3, 3, 3, 3, 3];
   discardDeck = [0, 0, 0, 0, 0];

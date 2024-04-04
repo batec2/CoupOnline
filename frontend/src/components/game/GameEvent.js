@@ -44,11 +44,12 @@ export const useGameEvents = (gameState) => {
     // Creates socket client if there is not socket object
     if (!socket.current) {
       const cookie = cookies.get("PersonalCookie");
+      console.log(cookie.screenName);
       socket.current = io("http://localhost:8080", {
         extraHeaders: {
-          id: cookie._id,
-          username: cookie.userName,
-          screenName: cookie.screenName,
+          id: cookie.id,
+          username: cookie.username,
+          screenname: cookie.screenName,
         },
       });
       console.log(socket.current);
