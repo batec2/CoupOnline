@@ -25,7 +25,7 @@ const Game = () => {
         <div className="max-w-sm:order-3 sm:order-1 game-panels">
           <PlayerCardList />
         </div>
-        <div className="max-w-sm:order-4 sm:order-4  game-panels">
+        <div className="max-w-sm:order-4 sm:order-4  game-panels h-96 overflow-y-auto">
           <TurnHistory />
         </div>
         <div className="max-w-sm:order-5 sm:order-3  game-panels">

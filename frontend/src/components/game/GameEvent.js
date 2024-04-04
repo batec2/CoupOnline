@@ -8,7 +8,6 @@ import { io } from "socket.io-client";
 import ChooseCard from "@/lib/chooseCardEnum";
 import terminal from "virtual:terminal";
 
-
 /**
  * Sets up socket listeners for gamestate variables
  * @param {*} gameState
@@ -46,7 +45,9 @@ export const useGameEvents = (gameState) => {
     setChooseType,
     setPlayerCardCount,
     setTurnLog,
-    turnLog
+    turnLog,
+    setEventLog,
+    eventLog,
   } = gameState;
 
   const cookie = new Cookie();
@@ -54,7 +55,6 @@ export const useGameEvents = (gameState) => {
   const navigate = useNavigate();
   const { setInLobby } = usePlayerState();
   const cookies = new Cookies();
-
 
   useEffect(() => {
     // Creates socket client if there is not socket object
@@ -78,6 +78,8 @@ export const useGameEvents = (gameState) => {
     const handleStatusOnRoomJoin = (status) => {
       if (status.status === 400) {
         navigate("/room");
+      } else if (status.status === 401) {
+        navigate("/room");
       }
     };
 
@@ -99,7 +101,7 @@ export const useGameEvents = (gameState) => {
       setTargetId(targetId);
       setIsResponding(true);
       if (socket.current.id === targetId) {
-        terminal.log({targetId})
+        terminal.log({ targetId });
         setIsTarget(true);
       }
     };
@@ -157,19 +159,16 @@ export const useGameEvents = (gameState) => {
       discardDeck,
       playerCardCount,
     }) => {
-      terminal.log("Writing turn history")
-      setTurnLog(
-        [ 
-          initialUserId, 
-          initialAction,
-          targetId,
-          responseInitialId,
-          responseInitialAction,
-          responseSecondaryId,
-          responseSecondaryAction,
-        ]
-      );
-      terminal.log(turnLog);
+      terminal.log("Writing turn history");
+      setTurnLog([
+        initialUserId,
+        initialAction,
+        targetId,
+        responseInitialId,
+        responseInitialAction,
+        responseSecondaryId,
+        responseSecondaryAction,
+      ]);
       // console.log("Updating State");
       setGameCards(gameCards);
       setTurnId(turnId);
@@ -232,12 +231,19 @@ export const useGameEvents = (gameState) => {
       setWinner(winner);
     };
 
+    const onEventLog = ({ eventString }) => {
+      const temp = eventLog;
+      temp.unshift(eventString);
+      setEventLog(temp);
+    };
+
     socket.current.connect();
     socket.current.emit(
       "join-room",
       { roomId: roomId, userId: localCookie["username"] },
       handleStatusOnRoomJoin
     );
+    socket.current.on("event-log", onEventLog);
     socket.current.on("lobby-members", onLobbyEvent);
     socket.current.on("start-game", onStartEvent);
     socket.current.on("choose-response", onChooseResponseEvent);
@@ -250,6 +256,7 @@ export const useGameEvents = (gameState) => {
 
     // Removes all event listeners when component is removed
     return () => {
+      socket.current.off("event-log", onEventLog);
       socket.current.off("lobby-members", onLobbyEvent);
       socket.current.off("start-game", onStartEvent);
       socket.current.off("choose-response", onChooseResponseEvent);

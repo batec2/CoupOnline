@@ -12,7 +12,7 @@ const GameSchema = new mongoose.Schema({
       cardOne: Number,
       cardTwo: Number,
     },
-  ],
+  ],  
   //winner null if no winner
   winner: {
     type: mongoose.Schema.Types.ObjectId,
