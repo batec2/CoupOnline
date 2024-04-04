@@ -20,6 +20,8 @@ const ResponseActions = () => {
     responseInitialAction,
     setResponseInitialAction,
     setResponseInitialId,
+    setResponseSecondaryAction,
+    setResponseSecondaryId,
     setIsResponding,
     isTarget,
   } = useGameContext();
@@ -77,11 +79,14 @@ const ResponseActions = () => {
   const onResponseClick = (gameAction) => {
     setIsResponding(false);
     handleResponseAction(socket.current, roomId, gameAction);
-    if(gameAction !== GameActions.Pass) {
-      setTimeout(()=> {
-        if(responseInitialId === null) {
+    if(gameAction !== GameActions.Pass) { 
+      setTimeout(()=> { //Wait to see if an earlier response was received
+        if(responseInitialId === null) { //No initial response yet - set to initial response
           setResponseInitialId(socket.current);
           setResponseInitialAction(gameAction);
+        } else if(responseSecondaryId === null) {
+          setResponseInitialId(socket.current);
+          setResponseSecondaryAction(gameAction);
         }
       },500)
     }

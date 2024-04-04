@@ -24,11 +24,13 @@ export const useGameEvents = (gameState) => {
     setInitialUserId,
     setInitialAction,
     setResponseInitialId,
+    setResponseInitialAction,
+    setResponseSecondaryId,
+    setResponseSecondaryAction,
     setTargetId,
     setIsChoosing,
     setCoins,
     setDiscardDeck,
-    setResponseInitialAction,
     setIsResponding,
     setExchangeCards,
     responseIdRef,
@@ -82,6 +84,7 @@ export const useGameEvents = (gameState) => {
       );
       setInitialAction(initialAction);
       setInitialUserId(initialUserId);
+      setTargetId(targetId);
       setIsResponding(true);
       if (socket.current.id === targetId) {
         terminal.log({targetId})
@@ -105,6 +108,8 @@ export const useGameEvents = (gameState) => {
       initialAction,
       responseId,
       responseAction,
+      secondaryResponseId,
+      secondaryResponseAction,
     }) => {
       terminal.log(
         `${initialUserId} is choosing a card, initial action: ${GameActions[initialAction]}, responseAction: ${GameActions[responseAction]}, choose type ${ChooseCard[chooseType]}`
@@ -119,6 +124,10 @@ export const useGameEvents = (gameState) => {
       setInitialAction(initialAction);
       setResponseInitialAction(responseAction);
       setResponseInitialId(responseId);
+      setResponseSecondaryAction(secondaryResponseAction);
+      setResponseSecondaryId(secondaryResponseId);
+      terminal.log({secondaryResponseId})
+      terminal.log({secondaryResponseAction})
       responseIdRef.current = responseId;
 
       if (chooserId === socket.current.id) {
@@ -153,6 +162,8 @@ export const useGameEvents = (gameState) => {
       responseIdRef.current = null;
       setResponseInitialAction(null);
       setResponseInitialId(null);
+      setResponseSecondaryAction(null);
+      setResponseSecondaryId(null);
       setCoins(coins);
       setDiscardDeck(discardDeck);
       setIsTarget(false);

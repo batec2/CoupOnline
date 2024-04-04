@@ -42,6 +42,8 @@ export const registerGameHandlers = (io, socket, rooms) => {
       initialAction: state.initialAction,
       responseId: state.initialResponseId,
       responseAction: state.initialResponseAction,
+      secondaryResponseId: state.secondaryResponseId,
+      secondaryResponseAction: state.secondaryAction
     });
   };
 
@@ -260,6 +262,10 @@ export const registerGameHandlers = (io, socket, rooms) => {
           GameActions[state.initialResponseAction]
         }`
       );
+      console.log(`
+        ${socket.id} is calling-out ${state.initialResponseAction} action of ${
+          GameActions[state.initialResponseAction]}`
+      )
       state.resetPassCount();
       emitChooseCard(roomId, state.initialResponseId, Show, state, room);
     }

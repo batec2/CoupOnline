@@ -11,13 +11,13 @@ const CurrentTurnInfo = () => {
   const { 
     currentLobbyMembers, 
     initialUserId, 
-    currentTurnId, 
     initialAction, 
     responseInitialAction, 
     responseInitialId,
     responseSecondaryAction,
-    responseIdRef, 
-    targetId} = useGameContext();
+    responseSecondaryId,
+    targetId
+  } = useGameContext();
 
   const displayCurrentTurnPlayer = () => {
       return (
@@ -42,7 +42,7 @@ const CurrentTurnInfo = () => {
   const displayTarget = () => {
     if(targetId) {
       return (
-        <p>{currentLobbyMembers[initialUserId].userId} has targeted {currentLobbyMembers[targetId].userId}</p>
+        <p>{currentLobbyMembers[initialUserId].userId} targets {currentLobbyMembers[targetId].userId}</p>
       )
     }
   }
@@ -53,7 +53,7 @@ const CurrentTurnInfo = () => {
     } else if (!responseInitialAction) {
       return <p>Waiting for Responses.</p>
     } else {
-      return <p>{responseInitialId} responds with {GameActions[responseInitialAction]}</p>
+      return <p>{currentLobbyMembers[responseInitialId].userId} responds with {GameActions[responseInitialAction]}</p>
     }
   }
 
@@ -63,7 +63,7 @@ const CurrentTurnInfo = () => {
     } else if (!responseSecondaryAction) {
       return <p>Waiting for Responses.</p>
     } else {
-      return <p>Secondary Response Action: {GameActions[responseSecondaryAction]} by ...</p>
+      return <p>{currentLobbyMembers[responseSecondaryId].userId} responds with {GameActions[responseSecondaryAction]}</p>
     }
   }
   
