@@ -45,7 +45,6 @@ export const useGameState = () => {
   const [responseSecondaryId, setResponseSecondaryId] = useState(null);
   const [exchangeCards, setExchangeCards] = useState(null);
   const [chooseType, setChooseType] = useState(null);
-  const [correctShown, setCorrectShown] = useState(false);
   const [playerCardCount, setPlayerCardCount] = useState(null);
   const [turnLog, setTurnLog] = useState([]);
   const responseIdRef = useRef(null);
@@ -94,8 +93,6 @@ export const useGameState = () => {
     setTargetId: setTargetId,
     chooseType: chooseType,
     setChooseType: setChooseType,
-    correctShown: correctShown,
-    setCorrectShown: setCorrectShown,
     playerCardCount: playerCardCount,
     setPlayerCardCount: setPlayerCardCount,
     turnLog: turnLog,
