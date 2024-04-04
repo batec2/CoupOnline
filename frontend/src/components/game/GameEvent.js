@@ -107,6 +107,9 @@ export const useGameEvents = (gameState) => {
       responseAction,
     }) => {
       terminal.log(
+        `${initialUserId} is choosing a card, initial action: ${GameActions[initialAction]}, responseAction: ${GameActions[responseAction]}, choose type ${ChooseCard[chooseType]}`
+      );
+      terminal.log(
         `${chooserId} is choosing a card, initial action: ${GameActions[initialAction]}, responseAction: ${GameActions[responseAction]}, choose type ${ChooseCard[chooseType]}`
       );
       setIsResponding(false);
@@ -115,6 +118,7 @@ export const useGameEvents = (gameState) => {
       setInitialUserId(initialUserId);
       setInitialAction(initialAction);
       setResponseInitialAction(responseAction);
+      setResponseInitialId(responseId);
       responseIdRef.current = responseId;
 
       if (chooserId === socket.current.id) {

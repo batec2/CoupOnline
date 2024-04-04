@@ -18,6 +18,8 @@ const ResponseActions = () => {
     initialAction,
     gameCards,
     responseInitialAction,
+    setResponseInitialAction,
+    setResponseInitialId,
     setIsResponding,
     isTarget,
   } = useGameContext();
@@ -75,6 +77,14 @@ const ResponseActions = () => {
   const onResponseClick = (gameAction) => {
     setIsResponding(false);
     handleResponseAction(socket.current, roomId, gameAction);
+    if(gameAction !== GameActions.Pass) {
+      setTimeout(()=> {
+        if(responseInitialId === null) {
+          setResponseInitialId(socket.current);
+          setResponseInitialAction(gameAction);
+        }
+      },500)
+    }
   };
 
   const canCallout = () => {

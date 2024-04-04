@@ -1,35 +1,36 @@
 import GameSectionTitle from "@/components/text/gameSectionTitle.component";
 import useGameContext from "@/context/useGameContext";
 import GameActions from "@/lib/actionEnum";
+import terminal from "virtual:terminal";
 
 /**
  * Generates view that shows information about the current game turn
  * @returns React UI element for current turn info view
  */
 const CurrentTurnInfo = () => {
-  const { currentLobbyMembers, initialUserId, currentTurnId, initialAction, 
-          responseInitialAction, responseIdRef, targetId} = useGameContext();
+  const { 
+    currentLobbyMembers, 
+    initialUserId, 
+    currentTurnId, 
+    initialAction, 
+    responseInitialAction, 
+    responseInitialId,
+    responseSecondaryAction,
+    responseIdRef, 
+    targetId} = useGameContext();
 
   const displayCurrentTurnPlayer = () => {
       return (
         <div>
-        <p>It is {initialUserId}'s CURRENT ID turn</p>
+        <p>It is {currentLobbyMembers[initialUserId].userId}'s turn</p>
         </div>
       )
   }
 
-  const displayTarget = () => {
-      if(targetId) {
-        return (
-          <p>Targetting: {targetId}</p>
-        )
-      }
-    }
-
   const displayInitialAction = () => {
     if(initialAction) {
       return (
-        <p>Initial Action: {GameActions[initialAction]}</p>
+        <p>{currentLobbyMembers[initialUserId].userId} declares {GameActions[initialAction]}</p>
       )
     } else {
       return (
@@ -38,23 +39,31 @@ const CurrentTurnInfo = () => {
     }
   }
 
+  const displayTarget = () => {
+    if(targetId) {
+      return (
+        <p>{currentLobbyMembers[initialUserId].userId} has targeted {currentLobbyMembers[targetId].userId}</p>
+      )
+    }
+  }
+
   const displayResponseActionInitial = () => {
     if(!initialAction) {
       return <></>
-    } else if (!responseAction) {
+    } else if (!responseInitialAction) {
       return <p>Waiting for Responses.</p>
     } else {
-      return <p>Initial Response Action: {GameActions[responseAction]} by ...</p>
+      return <p>{responseInitialId} responds with {GameActions[responseInitialAction]}</p>
     }
   }
 
   const displayResponseActionSecondary = () => {
-    if(!initialAction) {
+    if(!responseInitialAction) {
       return <></>
-    } else if (!responseAction) {
+    } else if (!responseSecondaryAction) {
       return <p>Waiting for Responses.</p>
     } else {
-      return <p>Secondary Response Action: {GameActions[responseAction]} by ...</p>
+      return <p>Secondary Response Action: {GameActions[responseSecondaryAction]} by ...</p>
     }
   }
   
@@ -71,6 +80,8 @@ const CurrentTurnInfo = () => {
       {displayCurrentTurnPlayer()}
       {displayInitialAction()}
       {displayTarget()}
+      {displayResponseActionInitial()}
+      {displayResponseActionSecondary()}
     </div>
   );
 };

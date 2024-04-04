@@ -1,5 +1,5 @@
 import useGameContext from "@/context/useGameContext";
-import PlayerCards from "../gameCards/playerCards.component";
+import PlayerCards from "../playerCards/playerCards.component";
 import Actions from "../gameActions/actions.component";
 import GameSectionTitle from "@/components/text/gameSectionTitle.component";
 
