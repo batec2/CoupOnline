@@ -1,10 +1,16 @@
 import GameSectionTitle from "@/components/text/gameSectionTitle.component"
+import useGameContext from "@/context/useGameContext.js";
+import terminal from "virtual:terminal"
 
 const TurnHistory = () => {
-
+  const { eventLog } = useGameContext();
+  terminal.log(eventLog)
+  eventLog.map((entry) => {
+    terminal.log(entry)
+  })
   return (
     <div className="p-1">
-    <GameSectionTitle text ={"Interesting Cat Facts:"} />
+    {/* <GameSectionTitle text ={"Interesting Cat Facts:"} />
     <p>Cats have an extra organ which allow them to taste scents in the air</p>
     <br />
     <p>A house cat's genome is 95.6% tiger</p>
@@ -13,9 +19,10 @@ const TurnHistory = () => {
     <br />
     <p>Cats can jump up to 6x their length</p>
     <br />
-    <p>A cat can sleep 12 to 16 hours a day</p>
-    {/* <GameSectionTitle text ={"Recent Turn History:"} />
-    <h1>TODO</h1> */}
+    <p>A cat can sleep 12 to 16 hours a day</p> */}
+      <GameSectionTitle text ={"Recent Turn History:"} />
+      {eventLog.map((entry, idx) => 
+        <h1 key={1}>Hello</h1>)}
     </div>
   )
 }

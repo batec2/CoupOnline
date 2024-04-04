@@ -167,7 +167,6 @@ export const useGameEvents = (gameState) => {
         responseSecondaryId,
         responseSecondaryAction,
       ]);
-      terminal.log(turnLog);
       // console.log("Updating State");
       setEventLog([]);
       setGameCards(gameCards);
