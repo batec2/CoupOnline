@@ -23,11 +23,16 @@ export class GameState {
   secondaryResponseId = null;
   secondaryResponseAction = null;
   isInitialActionResolved = false;
+  eventLog = [];
 
   constructor(players) {
     this.playerCount = players.length;
     this.players = players;
     this.initPlayers();
+  }
+
+  get eventLog() {
+    return this.eventLog;
   }
 
   get currentPlayer() {
@@ -304,5 +309,9 @@ export class GameState {
       }
     });
     return playerCardCount;
+  }
+
+  addToEventLog(event) {
+    this.eventLog.push(event);
   }
 }

@@ -7,6 +7,7 @@ export const emitUpdate = (io, roomId, room) => {
   const { hasWinner, winner } = state.checkEndGame();
   if (hasWinner) {
     console.log(`${winner} has won the game!`);
+    console.log(state.eventLog);
     io.to(roomId).emit("end-game", { winner: winner });
     return;
   }

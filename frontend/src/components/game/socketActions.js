@@ -53,7 +53,8 @@ const handleReturnLobby = (socket, roomId) => {
   socket.emit(
     "return-lobby",
     { roomId: roomId, userId: socket.id },
-    handleStatus)
+    handleStatus
+  );
 };
 
-export {handleStartGame, handleLeave, handleReturnLobby};
+export { handleStartGame, handleLeave, handleReturnLobby };
