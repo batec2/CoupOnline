@@ -8,7 +8,9 @@ import { default as connectMongoDBSession } from "connect-mongodb-session";
 const SESS_SECRET = "test";
 const COOKIE_NAME = "AxiosCookie";
 const MAX_AGE = 1000 * 60 * 60 * 3;
-const MongoURI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.bxbwsjp.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+// const MongoURI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.bxbwsjp.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+
+const MongoURI = `mongodb://127.0.0.1:27017/couponline`;
 
 const MongoDBStore = connectMongoDBSession(session);
 
@@ -21,7 +23,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "*",
+    origin: "http://localhost:5173",
     methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
     credentials: true,
   })
