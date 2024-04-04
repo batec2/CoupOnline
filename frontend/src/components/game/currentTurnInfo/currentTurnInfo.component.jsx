@@ -11,15 +11,12 @@ const CurrentTurnInfo = () => {
           responseAction, responseIdRef} = useGameContext();
 
   const displayCurrentTurnPlayer = () => {
-    if(initialUserId) {
       return (
-        <p>It is {currentLobbyMembers[initialUserId].userId}'s turn</p>
+        <div>
+        <p>It is {currentTurnId}'s CURRENT ID turn</p>
+        <p>It is {initialUserId}'s CURRENT ID turn</p>
+        </div>
       )
-    } else {
-      return (
-        <p>It is {currentTurnId}'s turn</p>
-      )
-    }
   }
   const displayInitialAction = () => {
     if(initialAction) {

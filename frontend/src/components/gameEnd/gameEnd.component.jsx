@@ -21,9 +21,19 @@ const GameEnd = () => {
 
   const gameEndMessage = () => {
     if (socket.current.id === winner) {
-      return <h1 className="w-full text-center">YOU WIN</h1>;
+      return (
+        <div className="w-full text-center mb-4">
+          <h1>You are the </h1>
+          <h1 className="text-4xl">SUPER COUPER!!!</h1>
+        </div>
+      )
     } else {
-      return <h1>Someone else won you are loser!</h1>;
+      return (
+        <div className="w-full text-center mb-4">
+          <h1>You have lost the game</h1>
+          <h1>Better luck next time!</h1> 
+          </div>
+      )
     }
   };
 

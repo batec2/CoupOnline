@@ -14,7 +14,7 @@ import terminal from "virtual:terminal"
  * @returns React UI element with collection of buttons
  */
 const NormalActions = () => {
-  const { socket, roomId, coins, gameCards, setTurnId } = useGameContext();
+  const { socket, roomId, coins, gameCards, setTurnId, setInitialAction } = useGameContext();
   const [showTarget, setShowTarget] = useState(false);
   const actionRef = useRef(null);
 
@@ -90,11 +90,13 @@ const NormalActions = () => {
     handleNormalAction(socket.current, roomId, GameActions.Income, null);
     setTurnId(null);
     setShowTarget(false);
+    setInitialAction(GameActions.Income)
   };
 
   const onCoupClick = () => {
     actionRef.current = GameActions.Coup;
     setShowTarget(true);
+    setInitialAction(GameActions.Coup)
   };
 
   const onAssassinateClick = () => {
@@ -105,17 +107,20 @@ const NormalActions = () => {
   const onStealClick = () => {
     actionRef.current = GameActions.Steal;
     setShowTarget(true);
+    setInitialAction(GameActions.Steal);
   };
 
   const onTaxClick = () => {
     handleNormalAction(socket.current, roomId, GameActions.Taxes, null);
     setTurnId(null);
     setShowTarget(false);
+    setInitialAction(GameActions.Taxes);
   };
 
   const onExchangeClick = () => {
     handleNormalAction(socket.current, roomId, GameActions.Exchange, null);
     setTurnId(null);
+    setInitialAction(GameActions.Exchange);
     setShowTarget(false);
   };
 
@@ -123,6 +128,7 @@ const NormalActions = () => {
     handleNormalAction(socket.current, roomId, GameActions.Aid, null);
     setTurnId(null);
     setShowTarget(false);
+    setInitialAction(GameActions.Aid)
   };
 
   return (
