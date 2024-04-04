@@ -8,6 +8,7 @@ import { io } from "socket.io-client";
 import ChooseCard from "@/lib/chooseCardEnum";
 import terminal from "virtual:terminal";
 
+
 /**
  * Sets up socket listeners for gamestate variables
  * @param {*} gameState
@@ -21,13 +22,20 @@ export const useGameEvents = (gameState) => {
     setGameCards,
     setGameStart,
     setTurnId,
+    initialUserId,
     setInitialUserId,
+    initialAction,
     setInitialAction,
-    setResponseInitialId,
-    setResponseInitialAction,
-    setResponseSecondaryId,
-    setResponseSecondaryAction,
+    targetId,
     setTargetId,
+    responseInitialId,
+    setResponseInitialId,
+    responseInitialAction,
+    setResponseInitialAction,
+    responseSecondaryId,
+    setResponseSecondaryId,
+    responseSecondaryAction,
+    setResponseSecondaryAction,
     setIsChoosing,
     setCoins,
     setDiscardDeck,
@@ -37,6 +45,8 @@ export const useGameEvents = (gameState) => {
     setIsTarget,
     setChooseType,
     setPlayerCardCount,
+    setTurnLog,
+    turnLog
   } = gameState;
 
   const cookie = new Cookie();
@@ -44,6 +54,7 @@ export const useGameEvents = (gameState) => {
   const navigate = useNavigate();
   const { setInLobby } = usePlayerState();
   const cookies = new Cookies();
+
 
   useEffect(() => {
     // Creates socket client if there is not socket object
@@ -112,12 +123,6 @@ export const useGameEvents = (gameState) => {
       secondaryResponseId,
       secondaryResponseAction,
     }) => {
-      terminal.log(
-        `${initialUserId} is choosing a card, initial action: ${GameActions[initialAction]}, responseAction: ${GameActions[responseAction]}, choose type ${ChooseCard[chooseType]}`
-      );
-      terminal.log(
-        `${chooserId} is choosing a card, initial action: ${GameActions[initialAction]}, responseAction: ${GameActions[responseAction]}, choose type ${ChooseCard[chooseType]}`
-      );
       setIsResponding(false);
       setTurnId(chooserId);
       setChooseType(chooseType);
@@ -127,8 +132,6 @@ export const useGameEvents = (gameState) => {
       setResponseInitialId(responseId);
       setResponseSecondaryAction(secondaryResponseAction);
       setResponseSecondaryId(secondaryResponseId);
-      terminal.log({secondaryResponseId})
-      terminal.log({secondaryResponseAction})
       responseIdRef.current = responseId;
 
       if (chooserId === socket.current.id) {
@@ -146,6 +149,7 @@ export const useGameEvents = (gameState) => {
       }
     };
 
+    //End of turn update
     const onUpdateState = ({
       gameCards,
       turnId,
@@ -153,7 +157,20 @@ export const useGameEvents = (gameState) => {
       discardDeck,
       playerCardCount,
     }) => {
-      console.log("Updating State");
+      terminal.log("Writing turn history")
+      setTurnLog(
+        [ 
+          initialUserId, 
+          initialAction,
+          targetId,
+          responseInitialId,
+          responseInitialAction,
+          responseSecondaryId,
+          responseSecondaryAction,
+        ]
+      );
+      terminal.log(turnLog);
+      // console.log("Updating State");
       setGameCards(gameCards);
       setTurnId(turnId);
       setExchangeCards.current = null;
