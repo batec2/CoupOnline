@@ -42,6 +42,8 @@ export const registerGameHandlers = (io, socket, rooms) => {
       initialAction: state.initialAction,
       responseId: state.initialResponseId,
       responseAction: state.initialResponseAction,
+      secondaryResponseId: state.secondaryResponseId,
+      secondaryResponseAction: state.secondaryAction
     });
   };
 
@@ -169,6 +171,9 @@ export const registerGameHandlers = (io, socket, rooms) => {
     state.addToEventLog(
       `${initialUserId} is trying to ${GameActions[initialAction]} with target ${targetId}`
     );
+    console.log(
+      `${initialUserId} is trying to ${GameActions[initialAction]} with target ${targetId}`
+    );
 
     //Sets the intial target
     state.targetId = targetId;
@@ -257,6 +262,10 @@ export const registerGameHandlers = (io, socket, rooms) => {
           GameActions[state.initialResponseAction]
         }`
       );
+      console.log(`
+        ${socket.id} is calling-out ${state.initialResponseAction} action of ${
+          GameActions[state.initialResponseAction]}`
+      )
       state.resetPassCount();
       emitChooseCard(roomId, state.initialResponseId, Show, state, room);
     }

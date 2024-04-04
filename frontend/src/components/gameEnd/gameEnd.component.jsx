@@ -41,7 +41,7 @@ const GameEnd = () => {
     <div className="flex flex-col items-center justify-center h-screen">
       <div className="w-50">
         {gameEndMessage()}
-        <Button
+        {/* <Button
           className="bg-button-mainButton text-white px-4 py-2 rounded-md w-full"
           onClick={() => {
             setInLobby(true);
@@ -51,7 +51,7 @@ const GameEnd = () => {
           }}
         >
           Return to Lobby
-        </Button>
+        </Button> */}
         <Button
           className="bg-button-redButton text-white px-4 my-4 rounded-md w-full"
           onClick={() => {

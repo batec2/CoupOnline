@@ -6,6 +6,7 @@ import usePlayerState from "./PlayerState";
 import Cookies from "universal-cookie";
 import { io } from "socket.io-client";
 import ChooseCard from "@/lib/chooseCardEnum";
+import terminal from "virtual:terminal";
 
 /**
  * Sets up socket listeners for gamestate variables
@@ -22,10 +23,14 @@ export const useGameEvents = (gameState) => {
     setTurnId,
     setInitialUserId,
     setInitialAction,
+    setResponseInitialId,
+    setResponseInitialAction,
+    setResponseSecondaryId,
+    setResponseSecondaryAction,
+    setTargetId,
     setIsChoosing,
     setCoins,
     setDiscardDeck,
-    setResponseAction,
     setIsResponding,
     setExchangeCards,
     responseIdRef,
@@ -75,13 +80,15 @@ export const useGameEvents = (gameState) => {
       initialAction,
       targetId,
     }) => {
-      console.log(
+      terminal.log(
         `Choose a response to ${initialUserId}'s action of ${GameActions[initialAction]}, ${targetId} is the target`
       );
       setInitialAction(initialAction);
       setInitialUserId(initialUserId);
+      setTargetId(targetId);
       setIsResponding(true);
       if (socket.current.id === targetId) {
+        terminal.log({targetId})
         setIsTarget(true);
       }
     };
@@ -102,8 +109,13 @@ export const useGameEvents = (gameState) => {
       initialAction,
       responseId,
       responseAction,
+      secondaryResponseId,
+      secondaryResponseAction,
     }) => {
-      console.log(
+      terminal.log(
+        `${initialUserId} is choosing a card, initial action: ${GameActions[initialAction]}, responseAction: ${GameActions[responseAction]}, choose type ${ChooseCard[chooseType]}`
+      );
+      terminal.log(
         `${chooserId} is choosing a card, initial action: ${GameActions[initialAction]}, responseAction: ${GameActions[responseAction]}, choose type ${ChooseCard[chooseType]}`
       );
       setIsResponding(false);
@@ -111,7 +123,12 @@ export const useGameEvents = (gameState) => {
       setChooseType(chooseType);
       setInitialUserId(initialUserId);
       setInitialAction(initialAction);
-      setResponseAction(responseAction);
+      setResponseInitialAction(responseAction);
+      setResponseInitialId(responseId);
+      setResponseSecondaryAction(secondaryResponseAction);
+      setResponseSecondaryId(secondaryResponseId);
+      terminal.log({secondaryResponseId})
+      terminal.log({secondaryResponseAction})
       responseIdRef.current = responseId;
 
       if (chooserId === socket.current.id) {
@@ -143,8 +160,12 @@ export const useGameEvents = (gameState) => {
       setIsChoosing(false);
       setInitialAction(null);
       setInitialUserId(turnId);
+      setTargetId(null);
       responseIdRef.current = null;
-      setResponseAction(null);
+      setResponseInitialAction(null);
+      setResponseInitialId(null);
+      setResponseSecondaryAction(null);
+      setResponseSecondaryId(null);
       setCoins(coins);
       setDiscardDeck(discardDeck);
       setIsTarget(false);
@@ -179,7 +200,8 @@ export const useGameEvents = (gameState) => {
       setInitialUserId(initialUserId);
       setInitialAction(initialAction);
       responseIdRef.current = responseId;
-      setResponseAction(responseAction);
+      setResponseInitialAction(responseAction);
+      setResponseInitialId(responseId);
 
       // Everyone other than the blocker can respond to the block
       if (responseId !== socket.current.id) {
