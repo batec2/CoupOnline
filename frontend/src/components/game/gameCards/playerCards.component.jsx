@@ -21,6 +21,7 @@ const PlayerCards = () => {
     exchangeCards,
     setExchangeCards,
     chooseType,
+    setIsChoosing,
   } = useGameContext();
 
   const [currentSelected, setCurrentSelected] = useState(0);
@@ -50,6 +51,7 @@ const PlayerCards = () => {
       setTurnId(null);
       setInitialAction(null);
       setInitialUserId(null);
+      setIsChoosing(false);
       return;
     } else if (exchangeCards) {
       setCurrentSelected(
@@ -110,7 +112,7 @@ const PlayerCards = () => {
     } else {
       handleChooseCard(0, 0);
     }
-  }
+  };
 
   /**
    * Generates card images and confirmation button when exchanging cards
@@ -169,9 +171,11 @@ const PlayerCards = () => {
         ></Card>
       </div>
       {showExchange()}
-      {(isChoosing && chooseType === ChooseCard.Loose) 
-        ? <ActionTimeout callback={() => timeoutChooseDiscard()} /> 
-        : <></>}
+      {isChoosing && chooseType === ChooseCard.Loose ? (
+        <ActionTimeout callback={() => timeoutChooseDiscard()} />
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
