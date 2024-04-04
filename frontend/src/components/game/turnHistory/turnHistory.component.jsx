@@ -5,7 +5,7 @@ const TurnHistory = () => {
   return (
     <div className="p-1">
     <GameSectionTitle text ={"Interesting Cat Facts:"} />
-    <p>Cats have an extra organ which allow the to taste scents in the air</p>
+    <p>Cats have an extra organ which allow them to taste scents in the air</p>
     <br />
     <p>A house cat's genome is 95.6% tiger</p>
     <br />
