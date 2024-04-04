@@ -136,6 +136,7 @@ export const useGameEvents = (gameState) => {
       discardDeck,
       playerCardCount,
     }) => {
+      console.log("Updating State");
       setGameCards(gameCards);
       setTurnId(turnId);
       setExchangeCards.current = null;
@@ -158,6 +159,7 @@ export const useGameEvents = (gameState) => {
       discardDeck,
       playerCardCount,
     }) => {
+      console.log("Partially Updating State");
       setGameCards(gameCards);
       setTurnId(turnId);
       setCoins(coins);
