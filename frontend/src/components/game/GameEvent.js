@@ -256,7 +256,7 @@ export const useGameEvents = (gameState) => {
 
     // Removes all event listeners when component is removed
     return () => {
-      socket.current.on("event-log", onEventLog);
+      socket.current.off("event-log", onEventLog);
       socket.current.off("lobby-members", onLobbyEvent);
       socket.current.off("start-game", onStartEvent);
       socket.current.off("choose-response", onChooseResponseEvent);
