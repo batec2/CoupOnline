@@ -53,7 +53,6 @@ export const useGameEvents = (gameState) => {
         },
       });
       console.log(socket.current);
-      // socket.current.join("asd");
     }
 
     const onLobbyEvent = ({ lobby }) => {
@@ -142,7 +141,7 @@ export const useGameEvents = (gameState) => {
       setExchangeCards.current = null;
       setIsChoosing(false);
       setInitialAction(null);
-      setInitialUserId(null);
+      setInitialUserId(turnId);
       responseIdRef.current = null;
       setResponseAction(null);
       setCoins(coins);
