@@ -134,9 +134,7 @@ const ResponseActions = () => {
 
   return (
     <div>
-      <h1>Initial Action: {JSON.stringify(initialAction)}</h1>
       <div className="space-x-2 space-y-2">
-        <p>Response Action: {JSON.stringify(responseInitialAction)}</p>
         {canCallout() ? (
           <ActionButton
             buttonClass={ButtonClass.Callout}
