@@ -11,6 +11,11 @@ export const registerLobbyHandlers = (io, socket, rooms) => {
       return;
     }
     try {
+      // There is a max of 6 players
+      // if (keys >= 6) {
+      //   callback({ status: 401 });
+      //   return;
+      // }
       socket.join(roomId);
       const keys = Object.keys(rooms[roomId].players);
       for (let i = 0; i < keys.length; i++) {

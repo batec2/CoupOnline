@@ -78,6 +78,8 @@ export const useGameEvents = (gameState) => {
     const handleStatusOnRoomJoin = (status) => {
       if (status.status === 400) {
         navigate("/room");
+      } else if (status.status === 401) {
+        navigate("/room");
       }
     };
 
