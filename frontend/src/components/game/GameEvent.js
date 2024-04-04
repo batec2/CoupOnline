@@ -49,11 +49,12 @@ export const useGameEvents = (gameState) => {
     // Creates socket client if there is not socket object
     if (!socket.current) {
       const cookie = cookies.get("PersonalCookie");
+      console.log(cookie.screenName);
       socket.current = io("http://localhost:8080", {
         extraHeaders: {
-          id: cookie._id,
-          username: cookie.userName,
-          screenName: cookie.screenName,
+          id: cookie.id,
+          username: cookie.username,
+          screenname: cookie.screenName,
         },
       });
       console.log(socket.current);
@@ -152,6 +153,7 @@ export const useGameEvents = (gameState) => {
       discardDeck,
       playerCardCount,
     }) => {
+      console.log("Updating State");
       setGameCards(gameCards);
       setTurnId(turnId);
       setExchangeCards.current = null;
@@ -178,6 +180,7 @@ export const useGameEvents = (gameState) => {
       discardDeck,
       playerCardCount,
     }) => {
+      console.log("Partially Updating State");
       setGameCards(gameCards);
       setTurnId(turnId);
       setCoins(coins);
