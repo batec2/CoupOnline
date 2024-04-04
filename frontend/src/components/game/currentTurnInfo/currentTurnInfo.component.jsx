@@ -16,8 +16,7 @@ const CurrentTurnInfo = () => {
     responseInitialId,
     responseSecondaryAction,
     responseSecondaryId,
-    targetId,
-    correctShown,
+    targetId
   } = useGameContext();
 
   const displayCurrentTurnPlayer = () => {
@@ -68,16 +67,8 @@ const CurrentTurnInfo = () => {
     }
   }
   
-  const displayCorrectShown = () => {
-    if (correctShown) {
-      if(responseInitialAction === GameActions.CalloutLie) {
-        return <p>{currentLobbyMembers[initialUserId].userId} has shown the correct card, {currentLobbyMembers[responseInitialId].userId} must choose a card to lose</p>
-      } else if (responseSecondaryAction === GameActions.CalloutLie) {
-        return <p>{currentLobbyMembers[responseInitialId].userId} has shown the correct card, {currentLobbyMembers[responseSecondaryId].userId} must choose a card to lose</p>
-      } 
-    } else {
-      return <></>
-    }
+  const displayShownCard = () => {
+    return <p>PLAYER shows CARD</p>
   }
   const displayCardLost = () => {
     return <p>PLAYER has chosen to discard CARD</p>
@@ -91,7 +82,6 @@ const CurrentTurnInfo = () => {
       {displayTarget()}
       {displayResponseActionInitial()}
       {displayResponseActionSecondary()}
-      {displayCorrectShown()}
     </div>
   );
 };
