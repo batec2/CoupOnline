@@ -1,7 +1,6 @@
 import GameSectionTitle from "@/components/text/gameSectionTitle.component";
 import useGameContext from "@/context/useGameContext";
 import GameActions from "@/lib/actionEnum";
-import terminal from "virtual:terminal";
 
 /**
  * Generates view that shows information about the current game turn
@@ -56,7 +55,7 @@ const CurrentTurnInfo = () => {
     if (!initialAction) {
       return <></>;
     } else if (!responseInitialAction) {
-      return <p>Waiting for Responses.</p>;
+      return <p>Waiting for Responses...</p>;
     } else {
       return (
         <p>
@@ -71,7 +70,7 @@ const CurrentTurnInfo = () => {
     if (!responseInitialAction) {
       return <></>;
     } else if (!responseSecondaryAction) {
-      return <p>Waiting for Responses.</p>;
+      return <p>Waiting for Responses...</p>;
     } else {
       return (
         <p>

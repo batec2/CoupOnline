@@ -118,7 +118,7 @@ const PlayerCards = () => {
     if (exchangeCards) {
       return (
         <>
-          <div className="flex justify-center flex-row space-x-2">
+          <div className="flex justify-center flex-row space-x-2 py-2">
             <Card
               card={exchangeCards[0]}
               active={selectedCards}
@@ -149,7 +149,7 @@ const PlayerCards = () => {
   };
 
   return (
-    <div className="flex flex-col space-y-2">
+    <div className="flex flex-col">
       <p>Your Cards:</p>
       {showPrompt()}
       <div className="flex justify-center flex-row space-x-2">
