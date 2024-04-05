@@ -10,7 +10,7 @@ import terminal from "virtual:terminal";
 import "./game.styles.css";
 
 const Game = () => {
-  const { roomId, currentLobbyMembers, cookieRef, socket } = useGameContext();
+  const { roomId, cookieRef } = useGameContext();
   const player = cookieRef.current.id;
 
   return (
