@@ -15,7 +15,7 @@ export const emitUpdate = async (io, roomId, room) => {
     try {
       // Save game logs to database
       await saveToDatabase(players, gameLogs);
-      console.log("Saved game logs to database:");
+      console.log("Saved game logs to database");
     } catch (err) {
       console.error("Error saving game logs to database:", err);
     }
@@ -41,14 +41,10 @@ export const emitUpdate = async (io, roomId, room) => {
   }
 };
 
-const saveToDatabase = async (players, gameLogs) => {
+const saveToDatabase = async (playerIds, gameLogs) => {
   try {
-    // TODO: Since players are referenced to player model, gotta
-    // figure that out instead of the cookies as shown here
-    // await Games.create({ players: players, eventLog: gameLogs });
-
-    await Games.create({ eventLog: gameLogs });
-    console.log("Game state saved to database");
+    const players = playerIds.map((playerId) => ({ player: playerId }));
+    await Games.create({ players, eventLog: gameLogs });
   } catch (err) {
     console.error("Error saving game state to database:", err);
   }
