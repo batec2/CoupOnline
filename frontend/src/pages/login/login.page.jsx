@@ -22,6 +22,15 @@ const LoginPage = () => {
   // const [username, setUsername] = useState([]);
   const [verified, setVerified] = useState(false);
 
+  // useEffect(() => {
+  //   checkIfLoggedInCall().then((res) => {
+  //     if (res !== undefined && res.status === 200) {
+  //       username.current = res.data.username;
+  //       navigate("/room");
+  //     }
+  //   });
+  // }, [LocalCookie]);
+
   const handleUsernameInput = (e) => {
     // setUsername(e.target.value);
     username.current = e.target.value;
@@ -59,15 +68,6 @@ const LoginPage = () => {
       window.alert("Account Does not Exist.");
     }
   };
-
-  useEffect(() => {
-    checkIfLoggedInCall().then((res) => {
-      if (res !== undefined && res.status === 200) {
-        username.current = res.data.username;
-        navigate("/room");
-      }
-    });
-  }, [LocalCookie]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
