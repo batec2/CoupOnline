@@ -22,7 +22,14 @@ const mongoDBstore = new MongoDBStore({
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
+
 app.use(morgan("dev")); //console logging
 app.use(express.json()); //body parsing
 app.use(express.urlencoded({ extended: true })); //query string
