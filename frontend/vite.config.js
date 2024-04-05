@@ -6,6 +6,7 @@ import Terminal from "vite-plugin-terminal";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), Terminal()],
+  base: "/CoupOnline/",
   resolve: {
     alias: {
       // eslint-disable-next-line no-undef
