@@ -1,14 +1,24 @@
+import Games from "../model/games.model.js";
+
 export const emitStartGame = (io, roomId) => {
   io.to(roomId).emit("start-game");
 };
 
-export const emitUpdate = (io, roomId, room) => {
+export const emitUpdate = async (io, roomId, room) => {
   const { players, state } = room;
   const { hasWinner, winner } = state.checkEndGame();
   if (hasWinner) {
+    const gameLogs = state.eventLog;
+    const players = Object.keys(state.playerState);
     console.log(`${winner} has won the game!`);
-    console.log(state.eventLog);
     io.to(roomId).emit("end-game", { winner: winner });
+    try {
+      // Save game logs to database
+      await saveToDatabase(players, gameLogs);
+      console.log("Saved game logs to database:");
+    } catch (err) {
+      console.error("Error saving game logs to database:", err);
+    }
     return;
   }
   if (players !== undefined) {
@@ -27,6 +37,19 @@ export const emitUpdate = (io, roomId, room) => {
 
     state.resetTurnState();
     state.resetPassCount();
+  }
+};
+
+const saveToDatabase = async (players, gameLogs) => {
+  try {
+    // TODO: Since players are referenced to player model, gotta
+    // figure that out instead of the cookies as shown here
+    // await Games.create({ players: players, eventLog: gameLogs });
+
+    await Games.create({ eventLog: gameLogs });
+    console.log("Game state saved to database");
+  } catch (err) {
+    console.error("Error saving game state to database:", err);
   }
 };
 
