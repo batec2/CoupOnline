@@ -10,17 +10,18 @@ const GameSchema = new mongoose.Schema({
   players: [
     {
       player: { type: mongoose.Schema.Types.ObjectId, ref: "players" },
-      cardOne: Number,
-      cardTwo: Number,
+      // cardOne: Number,
+      // cardTwo: Number,
     },
   ],
-  turns: [
-    {
-      player: { type: mongoose.Schema.Types.ObjectId, ref: "players" },
-      target: { type: mongoose.Schema.Types.ObjectId, ref: "players" },
-      action: Number,
-    },
-  ],
+  // turns: [
+  //   {
+  //     player: { type: mongoose.Schema.Types.ObjectId, ref: "players" },
+  //     target: { type: mongoose.Schema.Types.ObjectId, ref: "players" },
+  //     action: Number,
+  //   },
+  // ],
+  eventLog: [String]
 });
 
 const Games = mongoose.model("games", GameSchema);
