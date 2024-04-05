@@ -14,26 +14,26 @@ import usePlayerState from "../game/PlayerState";
  * @returns GameEnd react UI element
  */
 const GameEnd = () => {
-  const { winner, socket, roomId } = useGameContext();
+  const { winner, socket, roomId, cookieRef } = useGameContext();
   const { setInLobby } = usePlayerState();
   const navigate = useNavigate();
   const room = useRef();
-
+  const { id } = cookieRef.current;
   const gameEndMessage = () => {
-    if (socket.current.id === winner) {
+    if (id === winner) {
       return (
         <div className="w-full text-center mb-4">
           <h1>You are the </h1>
           <h1 className="text-4xl">SUPER COUPER!!!</h1>
         </div>
-      )
+      );
     } else {
       return (
         <div className="w-full text-center mb-4">
           <h1>You have lost the game</h1>
-          <h1>Better luck next time!</h1> 
-          </div>
-      )
+          <h1>Better luck next time!</h1>
+        </div>
+      );
     }
   };
 

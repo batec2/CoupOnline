@@ -5,7 +5,7 @@ import useGameContext from "@/context/useGameContext";
 /**
  * Generates collection of buttons for players that can be targeted by a normal
  * or response action
- * @param {*} param0 
+ * @param {*} param0
  * @returns React UI element containing a button for each targetable players
  */
 const TargetAction = ({ action }) => {
@@ -14,16 +14,14 @@ const TargetAction = ({ action }) => {
     roomId,
     currentLobbyMembers,
     setTurnId,
-    setInitialAction,
-    setInitialUserId,
     playerCardCount,
-    setTargetId
+    setTargetId,
+    cookieRef,
   } = useGameContext();
-
+  const { id } = cookieRef.current;
   const buttons = [];
   Object.keys(currentLobbyMembers).forEach((member) => {
-    if (member === socket.current.id
-        || playerCardCount[member] === 0) {
+    if (member === id || playerCardCount[member] === 0) {
       return;
     }
     buttons.push(
@@ -36,7 +34,7 @@ const TargetAction = ({ action }) => {
         }}
         key={member}
       >
-        {currentLobbyMembers[member].userId}
+        {currentLobbyMembers[member].screenname}
       </Button>
     );
   });

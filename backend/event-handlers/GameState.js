@@ -218,6 +218,7 @@ export class GameState {
 
   initPlayers() {
     this.players.forEach((player) => {
+      console.log(player);
       this.playerState[player] = { gameCards: {}, coins: 0 };
       this.playerState[player].gameCards = this.generateCards();
       this.playerState[player].coins = 8;

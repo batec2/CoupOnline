@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import GameActions from "@/lib/actionEnum";
-import Cookie from "universal-cookie";
 import { useNavigate } from "react-router-dom";
 import usePlayerState from "./PlayerState";
 import Cookies from "universal-cookie";
@@ -21,19 +20,12 @@ export const useGameEvents = (gameState) => {
     setGameCards,
     setGameStart,
     setTurnId,
-    initialUserId,
     setInitialUserId,
-    initialAction,
     setInitialAction,
-    targetId,
     setTargetId,
-    responseInitialId,
     setResponseInitialId,
-    responseInitialAction,
     setResponseInitialAction,
-    responseSecondaryId,
     setResponseSecondaryId,
-    responseSecondaryAction,
     setResponseSecondaryAction,
     setIsChoosing,
     setCoins,
@@ -46,27 +38,26 @@ export const useGameEvents = (gameState) => {
     setPlayerCardCount,
     setEventLog,
     eventLog,
+    cookieRef,
   } = gameState;
 
-  const cookie = new Cookie();
-  const localCookie = cookie.get("PersonalCookie");
   const navigate = useNavigate();
   const { setInLobby } = usePlayerState();
   const cookies = new Cookies();
 
   useEffect(() => {
+    const cookie = cookies.get("PersonalCookie");
+    cookieRef.current = cookie;
+    const { id } = cookie;
     // Creates socket client if there is not socket object
     if (!socket.current) {
-      const cookie = cookies.get("PersonalCookie");
-      console.log(cookie.screenName);
       socket.current = io("http://localhost:8080", {
         extraHeaders: {
-          id: cookie.id,
+          id: id,
           username: cookie.username,
           screenname: cookie.screenName,
         },
       });
-      console.log(socket.current);
     }
 
     const onLobbyEvent = ({ lobby }) => {
@@ -98,7 +89,7 @@ export const useGameEvents = (gameState) => {
       setInitialUserId(initialUserId);
       setTargetId(targetId);
       setIsResponding(true);
-      if (socket.current.id === targetId) {
+      if (id === targetId) {
         terminal.log({ targetId });
         setIsTarget(true);
       }
@@ -134,7 +125,7 @@ export const useGameEvents = (gameState) => {
       setResponseSecondaryId(secondaryResponseId);
       responseIdRef.current = responseId;
 
-      if (chooserId === socket.current.id) {
+      if (chooserId === id) {
         setIsChoosing(true);
         return;
       }
@@ -143,7 +134,7 @@ export const useGameEvents = (gameState) => {
 
     const onExchangeCardEvent = ({ chooserId, exchangeCards }) => {
       console.log(`${chooserId} is choosing 2 cards`);
-      if (chooserId === socket.current.id) {
+      if (chooserId === id) {
         setChooseType(ChooseCard.Exchange);
         setExchangeCards(exchangeCards);
       }
@@ -157,6 +148,13 @@ export const useGameEvents = (gameState) => {
       discardDeck,
       playerCardCount,
     }) => {
+      console.log("UPDATE");
+      console.log(gameCards);
+      console.log(turnId);
+      console.log(coins);
+      console.log(discardDeck);
+      console.log(playerCardCount);
+
       setGameCards(gameCards);
       setTurnId(turnId);
       setExchangeCards.current = null;
@@ -207,7 +205,7 @@ export const useGameEvents = (gameState) => {
       setResponseInitialId(responseId);
 
       // Everyone other than the blocker can respond to the block
-      if (responseId !== socket.current.id) {
+      if (responseId !== id) {
         setIsResponding(true);
         return;
       }
@@ -227,7 +225,7 @@ export const useGameEvents = (gameState) => {
     socket.current.connect();
     socket.current.emit(
       "join-room",
-      { roomId: roomId, userId: localCookie["username"] },
+      { roomId: roomId },
       handleStatusOnRoomJoin
     );
     socket.current.on("event-log", onEventLog);

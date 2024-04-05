@@ -12,16 +12,13 @@ const PlayerCards = () => {
     isChoosing,
     socket,
     roomId,
-    responseAction,
-    currentTurnId,
     initialAction,
     setTurnId,
-    setInitialAction,
-    setInitialUserId,
     exchangeCards,
     setExchangeCards,
     chooseType,
     setIsChoosing,
+    cookieRef,
   } = useGameContext();
 
   const [currentSelected, setCurrentSelected] = useState(0);
@@ -39,9 +36,10 @@ const PlayerCards = () => {
    * @returns
    */
   const handleChooseCard = (card, cardNumber) => {
+    const { screenname } = cookieRef;
     if (isChoosing) {
       console.log(
-        `${socket.current.id} is choosing ${card}, ${ChooseCard[chooseType]},${initialAction}`
+        `${screenname} is choosing ${card}, ${ChooseCard[chooseType]},${initialAction}`
       );
       socket.current.emit("choose-card", {
         roomId: roomId,
@@ -110,7 +108,7 @@ const PlayerCards = () => {
     } else {
       handleChooseCard(0, 0);
     }
-  }
+  };
 
   /**
    * Generates card images and confirmation button when exchanging cards
@@ -169,9 +167,11 @@ const PlayerCards = () => {
         ></Card>
       </div>
       {showExchange()}
-      {(isChoosing && chooseType === ChooseCard.Loose) 
-        ? ( <ActionTimeout callback={() => timeoutChooseDiscard()} /> )
-        : ( <></> )}
+      {isChoosing && chooseType === ChooseCard.Loose ? (
+        <ActionTimeout callback={() => timeoutChooseDiscard()} />
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

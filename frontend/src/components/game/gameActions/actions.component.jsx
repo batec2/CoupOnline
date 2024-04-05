@@ -8,25 +8,27 @@ import ChooseCard from "@/lib/chooseCardEnum";
  * @returns Current Actions React Component
  */
 const Actions = () => {
-  const { 
-    socket, 
-    isResponding, 
-    currentTurnId, 
-    isChoosing, 
+  const {
+    isResponding,
+    currentTurnId,
+    isChoosing,
     chooseType,
-    playerCardCount } = useGameContext();
+    playerCardCount,
+    cookieRef,
+  } = useGameContext();
+  const { id } = cookieRef.current;
   if (isChoosing) {
-    return <h2>Please select a card to show or lose</h2>
-  } else if  (chooseType === ChooseCard.Exchange) {
-    return <h2>Please select two cards to discard</h2>
-  } else if (socket.current.id === currentTurnId && !isChoosing) {
+    return <h2>Please select a card to show or lose</h2>;
+  } else if (chooseType === ChooseCard.Exchange) {
+    return <h2>Please select two cards to discard</h2>;
+  } else if (id === currentTurnId && !isChoosing) {
     return <NormalActions></NormalActions>;
-  } else if (playerCardCount[socket.current.id] === 0) {
-    return <h2>You're dead homie</h2>
+  } else if (playerCardCount[id] === 0) {
+    return <h2>You're dead homie</h2>;
   } else if (isResponding) {
     return <ResponseActions></ResponseActions>;
-  } else { 
-    return <h2>Waiting for your turn</h2>; 
+  } else {
+    return <h2>Waiting for your turn</h2>;
   }
 };
 
