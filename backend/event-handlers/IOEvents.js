@@ -2,7 +2,7 @@ import { Server } from "socket.io";
 export const createSocketIO = (httpServer, rooms) => {
   const io = new Server(httpServer, {
     cors: {
-      origin: "https://batec2.github.io",
+      origin: ["https://batec2.github.io", "http://localhost:5173"],
       methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
       credentials: true,
     },

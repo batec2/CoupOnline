@@ -24,7 +24,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://batec2.github.io",
+    origin: ["https://batec2.github.io", "http://localhost:5173"],
     methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
     credentials: true,
   })
