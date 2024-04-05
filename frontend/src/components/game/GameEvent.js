@@ -44,8 +44,6 @@ export const useGameEvents = (gameState) => {
     setIsTarget,
     setChooseType,
     setPlayerCardCount,
-    setTurnLog,
-    turnLog,
     setEventLog,
     eventLog,
   } = gameState;
@@ -159,17 +157,6 @@ export const useGameEvents = (gameState) => {
       discardDeck,
       playerCardCount,
     }) => {
-      terminal.log("Writing turn history");
-      setTurnLog([
-        initialUserId,
-        initialAction,
-        targetId,
-        responseInitialId,
-        responseInitialAction,
-        responseSecondaryId,
-        responseSecondaryAction,
-      ]);
-      // console.log("Updating State");
       setGameCards(gameCards);
       setTurnId(turnId);
       setExchangeCards.current = null;
