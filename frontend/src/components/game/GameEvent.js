@@ -66,7 +66,6 @@ export const useGameEvents = (gameState) => {
           screenname: cookie.screenName,
         },
       });
-      console.log(socket.current);
     }
 
     const onLobbyEvent = ({ lobby }) => {

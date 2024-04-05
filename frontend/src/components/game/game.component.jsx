@@ -5,16 +5,23 @@ import DiscardList from "../cardList/discardList.component";
 import References from "./references/references.component";
 import PlayerInfo from "./playerInfo/playerInfo.component";
 import TurnHistory from "./turnHistory/turnHistory.component";
+import terminal from "virtual:terminal"
+
 import "./game.styles.css";
 
 
+
 const Game = () => {
-  const { roomId, currentLobbyMembers } = useGameContext();
-  
+  const { roomId, currentLobbyMembers, socket } = useGameContext();
+  const player = currentLobbyMembers[socket.current.id].userId
+
   return (
     <div className="flex justify-center">    
     <div className="h-screen max-w-screen-2xl">
-      <p className="text-3xl font-bold text-center">Room: {roomId}</p>
+      <div className="flex-row inline-flex w-full justify-between text-center text-xl font-bold">
+        <p>Player: {player}</p>
+        <p>Room: {roomId}</p> 
+      </div>
       <div className="max-w-sm:flex max-w-sm:flex-col sm:grid sm:grid-cols-4">
         <div className="max-w-sm:order-1 sm:order-2 border sm:col-span-2 game-panels">
           <CurrentTurnInfo />

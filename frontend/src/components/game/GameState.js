@@ -46,7 +46,6 @@ export const useGameState = () => {
   const [exchangeCards, setExchangeCards] = useState(null);
   const [chooseType, setChooseType] = useState(null);
   const [playerCardCount, setPlayerCardCount] = useState(null);
-  const [turnLog, setTurnLog] = useState([]);
   const responseIdRef = useRef(null);
   const socket = useRef(null);
   const { roomId } = useParams();
