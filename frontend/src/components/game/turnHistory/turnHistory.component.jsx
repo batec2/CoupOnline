@@ -1,6 +1,5 @@
 import GameSectionTitle from "@/components/text/gameSectionTitle.component"
 import useGameContext from "@/context/useGameContext.js";
-import terminal from "virtual:terminal"
 
 const TurnHistory = () => {
   const { eventLog } = useGameContext();
