@@ -8,71 +8,86 @@ import terminal from "virtual:terminal";
  * @returns React UI element for current turn info view
  */
 const CurrentTurnInfo = () => {
-  const { 
-    currentLobbyMembers, 
-    initialUserId, 
-    initialAction, 
-    responseInitialAction, 
+  const {
+    currentLobbyMembers,
+    initialUserId,
+    initialAction,
+    responseInitialAction,
     responseInitialId,
     responseSecondaryAction,
     responseSecondaryId,
-    targetId
+    targetId,
   } = useGameContext();
-
   const displayCurrentTurnPlayer = () => {
+    if (initialUserId) {
       return (
         <div>
-        <p>It is {currentLobbyMembers[initialUserId].userId}'s turn</p>
+          <p>It is {currentLobbyMembers[initialUserId].screenname}'s turn</p>
         </div>
-      )
-  }
+      );
+    }
+  };
 
   const displayInitialAction = () => {
-    if(initialAction) {
+    if (initialAction) {
       return (
-        <p>{currentLobbyMembers[initialUserId].userId} declares {GameActions[initialAction]}</p>
-      )
+        <p>
+          {currentLobbyMembers[initialUserId].screenname} declares{" "}
+          {GameActions[initialAction]}
+        </p>
+      );
     } else {
-      return (
-        <p>Waiting for Initial Action.</p>
-      )
+      return <p>Waiting for Initial Action.</p>;
     }
-  }
+  };
 
   const displayTarget = () => {
-    if(targetId) {
+    if (targetId) {
       return (
-        <p>{currentLobbyMembers[initialUserId].userId} targets {currentLobbyMembers[targetId].userId}</p>
-      )
+        <p>
+          {currentLobbyMembers[initialUserId].screenname} targets{" "}
+          {currentLobbyMembers[targetId].screenname}
+        </p>
+      );
     }
-  }
+  };
 
   const displayResponseActionInitial = () => {
-    if(!initialAction) {
-      return <></>
+    if (!initialAction) {
+      return <></>;
     } else if (!responseInitialAction) {
-      return <p>Waiting for Responses.</p>
+      return <p>Waiting for Responses.</p>;
     } else {
-      return <p>{currentLobbyMembers[responseInitialId].userId} responds with {GameActions[responseInitialAction]}</p>
+      return (
+        <p>
+          {currentLobbyMembers[responseInitialId].screenname} responds with{" "}
+          {GameActions[responseInitialAction]}
+        </p>
+      );
     }
-  }
+  };
 
   const displayResponseActionSecondary = () => {
-    if(!responseInitialAction) {
-      return <></>
+    if (!responseInitialAction) {
+      return <></>;
     } else if (!responseSecondaryAction) {
-      return <p>Waiting for Responses.</p>
+      return <p>Waiting for Responses.</p>;
     } else {
-      return <p>{currentLobbyMembers[responseSecondaryId].userId} responds with {GameActions[responseSecondaryAction]}</p>
+      return (
+        <p>
+          {currentLobbyMembers[responseSecondaryId].screenname} responds with{" "}
+          {GameActions[responseSecondaryAction]}
+        </p>
+      );
     }
-  }
-  
+  };
+
   const displayShownCard = () => {
-    return <p>PLAYER shows CARD</p>
-  }
+    return <p>PLAYER shows CARD</p>;
+  };
   const displayCardLost = () => {
-    return <p>PLAYER has chosen to discard CARD</p>
-  }
+    return <p>PLAYER has chosen to discard CARD</p>;
+  };
 
   return (
     <div className="p-1">

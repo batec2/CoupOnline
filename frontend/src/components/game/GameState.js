@@ -48,6 +48,7 @@ export const useGameState = () => {
   const [playerCardCount, setPlayerCardCount] = useState(null);
   const responseIdRef = useRef(null);
   const socket = useRef(null);
+  const cookieRef = useRef(null);
   const { roomId } = useParams();
 
   return {
@@ -94,6 +95,7 @@ export const useGameState = () => {
     setChooseType: setChooseType,
     playerCardCount: playerCardCount,
     setPlayerCardCount: setPlayerCardCount,
+    cookieRef: cookieRef,
     socket: socket,
     roomId: roomId,
   };

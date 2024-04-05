@@ -22,8 +22,11 @@ const ResponseActions = () => {
     setResponseInitialId,
     setResponseSecondaryAction,
     setResponseSecondaryId,
+    // responseInitialId,
+    // responseSecondaryId,
     setIsResponding,
     isTarget,
+    cookieRef,
   } = useGameContext();
 
   console.log(isTarget);
@@ -79,16 +82,18 @@ const ResponseActions = () => {
   const onResponseClick = (gameAction) => {
     setIsResponding(false);
     handleResponseAction(socket.current, roomId, gameAction);
-    if(gameAction !== GameActions.Pass) { 
-      setTimeout(()=> { //Wait to see if an earlier response was received
-        if(responseInitialId === null) { //No initial response yet - set to initial response
-          setResponseInitialId(socket.current);
+    if (gameAction !== GameActions.Pass) {
+      setTimeout(() => {
+        //Wait to see if an earlier response was received
+        if (responseInitialId === null) {
+          //No initial response yet - set to initial response
+          setResponseInitialId(cookieRef.current.id);
           setResponseInitialAction(gameAction);
-        } else if(responseSecondaryId === null) {
-          setResponseInitialId(socket.current);
+        } else if (responseSecondaryId === null) {
+          setResponseInitialId(cookieRef.current.id);
           setResponseSecondaryAction(gameAction);
         }
-      },500)
+      }, 500);
     }
   };
 

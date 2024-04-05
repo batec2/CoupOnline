@@ -9,7 +9,6 @@ import handleStatus from "@/lib/handleStatus";
 export const handleNormalAction = (socket, roomId, action, targetId) => {
   socket.emit("normal-action", {
     roomId: roomId,
-    initialUserId: socket.id,
     initialAction: action,
     targetId: targetId,
   });
@@ -38,11 +37,7 @@ export const handleResponseAction = (socket, roomId, responseAction) => {
  * @param {string} roomId
  */
 const handleStartGame = (socket, roomId) => {
-  socket.emit(
-    "start-game",
-    { roomId: roomId, userId: socket.id },
-    handleStatus
-  );
+  socket.emit("start-game", { roomId: roomId }, handleStatus);
 };
 
 const handleLeave = (socket, roomId) => {
@@ -50,11 +45,7 @@ const handleLeave = (socket, roomId) => {
 };
 
 const handleReturnLobby = (socket, roomId) => {
-  socket.emit(
-    "return-lobby",
-    { roomId: roomId, userId: socket.id },
-    handleStatus
-  );
+  socket.emit("return-lobby", { roomId: roomId }, handleStatus);
 };
 
 export { handleStartGame, handleLeave, handleReturnLobby };

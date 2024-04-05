@@ -2,11 +2,12 @@ import { GameState } from "./GameState.js";
 import { emitStartGame, emitUpdate } from "./GameEmitters.js";
 
 export const registerLobbyHandlers = (io, socket, rooms) => {
+  const { id, username, screenname } = socket.handshake.headers;
   /**
    * Socket Joins a room adds a user's socketid and userId to the
    * rooms datastructure
    */
-  socket.on("join-room", ({ roomId, userId }, callback) => {
+  socket.on("join-room", ({ roomId }, callback) => {
     if (!roomId) {
       return;
     }
@@ -17,14 +18,23 @@ export const registerLobbyHandlers = (io, socket, rooms) => {
       //   return;
       // }
       socket.join(roomId);
+      console.log(
+        `Socket-id:${socket.id} UserId:${socket.handshake.headers.id} Screenname: ${screenname} Username: ${username}`
+      );
       const keys = Object.keys(rooms[roomId].players);
+      console.log(keys);
       for (let i = 0; i < keys.length; i++) {
-        if (rooms[roomId].players[keys[i]]["userId"] === userId) {
+        if (keys[i] === id) {
           callback({ status: 400 });
           return;
         }
       }
-      rooms[roomId].players[socket.id] = { userId: userId };
+      rooms[roomId].players[id] = {
+        socketId: socket.id,
+        screenname: screenname,
+        username: username,
+      };
+      console.log(rooms[roomId].players);
       io.to(roomId).emit("lobby-members", { lobby: rooms[roomId].players });
       callback({ status: 200 });
     } catch (e) {
@@ -44,8 +54,7 @@ export const registerLobbyHandlers = (io, socket, rooms) => {
       if (!rooms[roomId]) {
         return;
       }
-
-      delete rooms[roomId].players[socket.id];
+      delete rooms[roomId].players[id];
       io.to(roomId).emit("lobby-members", { lobby: rooms[roomId].players });
       callback({ status: 200 });
     } catch (e) {
@@ -84,7 +93,7 @@ export const registerLobbyHandlers = (io, socket, rooms) => {
     }
   });
 
-  socket.on("disconnection", (socket) => {
-    console.log(`${socket.id} has disconnected`);
+  socket.on("disconnection", () => {
+    console.log(`${id} has disconnected`);
   });
 };

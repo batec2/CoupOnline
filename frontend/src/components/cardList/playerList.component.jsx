@@ -7,8 +7,7 @@ import useGameContext from "@/context/useGameContext";
  * @returns React UI elment PlayerCardList
  */
 const PlayerCardList = () => {
-
-  const {currentLobbyMembers, playerCardCount} = useGameContext();
+  const { currentLobbyMembers, playerCardCount } = useGameContext();
   const members = Object.keys(currentLobbyMembers);
 
   return (
@@ -18,7 +17,7 @@ const PlayerCardList = () => {
         {members.map((member) => (
           <CardItem
             key={member}
-            item={currentLobbyMembers[member].userId}
+            item={currentLobbyMembers[member].id}
             count={playerCardCount[member]}
             context={"players"}
           />

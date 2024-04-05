@@ -9,7 +9,6 @@ const LobbyComponent = () => {
   const navigate = useNavigate();
 
   const playerIds = currentLobbyMembers ? Object.keys(currentLobbyMembers) : [];
-
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <div className="w-50">
@@ -32,8 +31,8 @@ const LobbyComponent = () => {
         <div className="text-center">
           <p className="text-xl font-bold mb-2">Players in Lobby:</p>
           {playerIds.map((player) => (
-            <p key={currentLobbyMembers[player].userId}>
-              {currentLobbyMembers[player].userId}
+            <p key={currentLobbyMembers[player].id}>
+              {currentLobbyMembers[player].screenname}
             </p>
           ))}
         </div>

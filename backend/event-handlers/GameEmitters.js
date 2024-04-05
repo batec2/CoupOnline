@@ -23,10 +23,11 @@ export const emitUpdate = async (io, roomId, room) => {
   }
   if (players !== undefined) {
     Object.keys(players).forEach((player) => {
+      const { socketId } = players[player];
       const { gameCards, coins } = state.getPlayer(player);
       // Sends players cards
       // Starts the game for players and sends player id of first turn\
-      io.to(player).emit("update-state", {
+      io.to(socketId).emit("update-state", {
         gameCards: gameCards,
         turnId: state.currentTurnId,
         coins: coins,
@@ -62,8 +63,9 @@ export const emitPartialUpdate = (io, room) => {
   const { players, state } = room;
   if (players !== undefined) {
     Object.keys(players).forEach((player) => {
+      const { socketId } = players[player];
       const { gameCards, coins } = state.getPlayer(player);
-      io.to(player).emit("partial-update-state", {
+      io.to(socketId).emit("partial-update-state", {
         gameCards: gameCards,
         turnId: state.currentTurnId,
         coins: coins,
