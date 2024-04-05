@@ -95,8 +95,6 @@ export const useGameState = () => {
     setChooseType: setChooseType,
     playerCardCount: playerCardCount,
     setPlayerCardCount: setPlayerCardCount,
-    turnLog: turnLog,
-    setTurnLog: setTurnLog,
     socket: socket,
     roomId: roomId,
   };

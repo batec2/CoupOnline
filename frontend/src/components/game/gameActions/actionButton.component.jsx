@@ -34,7 +34,7 @@ const ActionButton = ({ buttonClass, onClick, text }) => {
     }
   }
 
-  let cName = `${buttonColor} max-w-44 hover:opacity-50`;
+  let cName = `${buttonColor} max-w-44 min-w-44 hover:opacity-50`;
   
   return (
     <Button
