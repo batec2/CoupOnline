@@ -32,14 +32,14 @@ const Game = () => {
         <div className="max-w-sm:order-3 sm:order-1 game-panels">
           <PlayerCardList />
         </div>
-        <div className="max-w-sm:order-4 sm:order-4 game-panels h-0 min-h-full overflow-y-auto">
-          <TurnHistory />
-        </div>
-        <div className="max-w-sm:order-5 sm:order-3 game-panels">
+        <div className="max-w-sm:order-4 sm:order-3 game-panels">
           <DiscardList />
         </div>
-        <div className="max-w-sm:order-6 sm:order-6 min-h-full game-panels">
+        <div className="max-w-sm:order-5 sm:order-6 min-h-full game-panels">
           <References />
+        </div>
+        <div className="max-w-sm:order-6 sm:order-4 game-panels sm:h-0 min-h-full overflow-y-auto">
+          <TurnHistory />
         </div>
       </div>
     </div>
