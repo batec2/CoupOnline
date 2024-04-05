@@ -1,26 +1,29 @@
 import mongoose from "mongoose";
 
 const GameSchema = new mongoose.Schema({
-  //Game ID which will be auto generated
-  active: Boolean, //is game active
-  //amount of players, can prob be removed and just do a .length on players
+  // Game ID which will be auto generated
+  active: Boolean, // Is game active
+  // Amount of players (might not need this)
   playerCount: Number,
-  //player ids and their initial cards
+  // Winner of the game
   winner: { type: mongoose.Schema.Types.ObjectId, ref: "players" },
+  // Players in the game
   players: [
     {
       player: { type: mongoose.Schema.Types.ObjectId, ref: "players" },
-      cardOne: Number,
-      cardTwo: Number,
+      // cardOne: Number,
+      // cardTwo: Number,
     },
   ],
-  turns: [
-    {
-      player: { type: mongoose.Schema.Types.ObjectId, ref: "players" },
-      target: { type: mongoose.Schema.Types.ObjectId, ref: "players" },
-      action: Number,
-    },
-  ],
+  // turns: [
+  //   {
+  //     player: { type: mongoose.Schema.Types.ObjectId, ref: "players" },
+  //     target: { type: mongoose.Schema.Types.ObjectId, ref: "players" },
+  //     action: Number,
+  //   },
+  // ],
+  // Game logs array
+  eventLog: [String],
 });
 
 const Games = mongoose.model("games", GameSchema);
