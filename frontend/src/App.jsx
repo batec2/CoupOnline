@@ -19,7 +19,6 @@ const queryClient = new QueryClient({
 });
 
 function App() {
-  // const Socket = io("http://localhost:8080", { autoConnect: false });
   return (
     <div className="bg-page text-textColor-base">
       <BrowserRouter>

@@ -2,8 +2,9 @@ import axios from "axios";
 
 const logoutCall = async () => {
   const response = await axios.get(
-    `http://localhost:8080/loginLogout/logout/`
-  ,{ withCredentials: true });
+    `${import.meta.env.VITE_SERVER_URL}/loginLogout/logout/`,
+    { withCredentials: true }
+  );
   if (response.status === 200) {
     return response;
   } else {

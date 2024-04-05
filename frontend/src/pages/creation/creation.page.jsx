@@ -50,7 +50,7 @@ const CreationPage = () => {
         }
         const makeNewAccount = async () => {
           const response = await axios.post(
-            "http://localhost:8080/players",
+            `${import.meta.env.VITE_SERVER_URL}/players`,
             { userName: userName, screenName: screenName, email: Email },
             {
               headers: {

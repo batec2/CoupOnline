@@ -1,18 +1,20 @@
-import { terminal } from 'virtual:terminal'
+import { terminal } from "virtual:terminal";
 import axios from "axios";
-
 
 const verifyAccount = async (username, setVerified) => {
   try {
-    const response = await axios.get(`http://localhost:8080/players/byName/${username}`)
-      .catch(() => {return false})
+    const response = await axios
+      .get(`${import.meta.env.VITE_SERVER_URL}/players/byName/${username}`)
+      .catch(() => {
+        return false;
+      });
     if (response.status === 200) {
-      return true
+      return true;
     }
-  }catch (e){
-    return false
+  } catch (e) {
+    return false;
   }
-  return false
-}
+  return false;
+};
 
 export default verifyAccount;

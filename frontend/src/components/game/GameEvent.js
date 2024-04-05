@@ -51,7 +51,7 @@ export const useGameEvents = (gameState) => {
     const { id } = cookie;
     // Creates socket client if there is not socket object
     if (!socket.current) {
-      socket.current = io("http://localhost:8080", {
+      socket.current = io(import.meta.env.VITE_SERVER_URL, {
         extraHeaders: {
           id: id,
           username: cookie.username,
