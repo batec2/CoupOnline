@@ -16,7 +16,7 @@ const Game = () => {
     <div className="h-screen max-w-screen-2xl">
       <p className="text-3xl font-bold text-center">Room: {roomId}</p>
       <div className="max-w-sm:flex max-w-sm:flex-col sm:grid sm:grid-cols-4">
-        <div className="max-w-sm:order-1 sm:order-2 border sm:col-span-2  game-panels">
+        <div className="max-w-sm:order-1 sm:order-2 border sm:col-span-2 game-panels">
           <CurrentTurnInfo />
         </div>
         <div className="max-w-sm:order-2 sm:order-5 min-h-full sm:col-span-2 game-panels">

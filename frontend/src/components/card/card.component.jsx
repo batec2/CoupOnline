@@ -1,10 +1,9 @@
-import ambassador from "./Ambassador1.png";
-import assassin from "./Assassin1.png";
-import captain from "./Captain2.png";
-import duke from "./Duke1.png";
-import contessa from "./Contessa1.png";
-import tombstone from "../cardList/tombstone64.png";
-import notFound from "./not-found.png";
+import ambassador from "@/assets/Ambassador.png";
+import assassin from "@/assets/Assassin.png";
+import captain from "@/assets/Captain.png";
+import duke from "@/assets/Duke.png";
+import contessa from "@/assets/Contessa.png";
+import tombstone from "@/assets/tombstone96.png";
 import GameCard from "@/lib/cardEnum";
 import CardInfo from "@/components/card/CardInfo";
 
@@ -21,7 +20,7 @@ import useGameContext from "@/context/useGameContext.js";
  */
 const Card = ({ card, onClick, active, number }) => {
   const { isChoosing, exchangeCards } = useGameContext();
-  let img = notFound;
+  let img = "";
   let bgColor = "bg-cards-duke";
 
   let cardInfo = CardInfo[card];
@@ -69,7 +68,8 @@ const Card = ({ card, onClick, active, number }) => {
   if (card == GameCard.Eliminated) {
     return (
       <div className={nonTargetStyle}>
-        <img className="justify-center" src={img} alt="char_icon" />
+        <p className="font-bold w-24 text-center">Eliminated</p>
+        <img className="w-24 rounded-md" src={img} alt="char_icon" />
       </div>
     );
   } else {

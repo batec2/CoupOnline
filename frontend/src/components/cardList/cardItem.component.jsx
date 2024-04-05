@@ -1,5 +1,5 @@
-import card from "./card32inv.png";
-import tombstone from "./tombstone32inv.png";0
+import card from "@/assets/card32inv.png";
+import tombstone from "@/assets/tombstone32inv.png";
 
 /**
  * UI element for a car/player name and number of cards
