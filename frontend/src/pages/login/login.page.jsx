@@ -74,7 +74,7 @@ const LoginPage = () => {
       <h1 className="text-3xl font-bold mb-4 text-center">
         Welcome to Super Couper
       </h1>
-      <div className="w-full max-w-sm px-4">
+      <div className="w-full px-4 max-w-80">
         <h2 className="text-xl mb-2">Enter your username:</h2>
         <Input
           type="username"
