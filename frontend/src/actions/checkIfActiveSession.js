@@ -7,7 +7,7 @@ const checkIfLoggedInCall = async () => {
   const personalCookie = cookies.get("PersonalCookie");
   try {
     const response = await axios.get(
-      `http://localhost:8080/loginLogout/checkLogin/`,
+      `${import.meta.env.VITE_SERVER_URL}/loginLogout/checkLogin/`,
       {
         withCredentials: true,
         params: {

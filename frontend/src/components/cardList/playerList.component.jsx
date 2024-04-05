@@ -1,6 +1,7 @@
 import CardItem from "./cardItem.component";
 import GameSectionTitle from "../text/gameSectionTitle.component";
 import useGameContext from "@/context/useGameContext";
+import terminal from "virtual:terminal"
 
 /**
  * Generates UI element showing list of players and their remaining cards
@@ -9,6 +10,7 @@ import useGameContext from "@/context/useGameContext";
 const PlayerCardList = () => {
   const { currentLobbyMembers, playerCardCount } = useGameContext();
   const members = Object.keys(currentLobbyMembers);
+  terminal.log(currentLobbyMembers)
 
   return (
     <div className="p-1">
@@ -17,7 +19,7 @@ const PlayerCardList = () => {
         {members.map((member) => (
           <CardItem
             key={member}
-            item={currentLobbyMembers[member].id}
+            item={currentLobbyMembers[member].screenname}
             count={playerCardCount[member]}
             context={"players"}
           />

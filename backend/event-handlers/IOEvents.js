@@ -1,6 +1,12 @@
 import { Server } from "socket.io";
 export const createSocketIO = (httpServer, rooms) => {
-  const io = new Server(httpServer, { cors: { origin: "*" } });
+  const io = new Server(httpServer, {
+    cors: {
+      origin: ["https://batec2.github.io", "http://localhost:5173"],
+      methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
+      credentials: true,
+    },
+  });
   /**
    * Listens for room deletion event, event is triggered when room is empty
    * The corresponding data structure is then deleted from the rooms object

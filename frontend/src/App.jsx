@@ -19,19 +19,18 @@ const queryClient = new QueryClient({
 });
 
 function App() {
-  // const Socket = io("http://localhost:8080", { autoConnect: false });
   return (
     <div className="bg-page text-textColor-base">
-      <BrowserRouter>
+      <BrowserRouter basename="/CoupOnline">
         <DropDownMenu />
         <QueryClientProvider client={queryClient} contextSharing={true}>
           <Routes>
             <Route path="/" element={<LoginPage />}></Route>
-            <Route path="creation" element={<CreationPage />}></Route>
-            <Route path="room" element={<RoomPage />}></Route>
-            <Route path="room/:roomId" element={<LobbyPage />}></Route>
-            <Route path="global-stats" element={<StatsPage />}></Route>
-            <Route path="profile" element={<ProfilePage />}></Route>
+            <Route path="/creation" element={<CreationPage />}></Route>
+            <Route path="/room" element={<RoomPage />}></Route>
+            <Route path="/room/:roomId" element={<LobbyPage />}></Route>
+            <Route path="/global-stats" element={<StatsPage />}></Route>
+            <Route path="/profile" element={<ProfilePage />}></Route>
             {/* <Route path="test" element={<TestPage />} /> */}
           </Routes>
         </QueryClientProvider>
