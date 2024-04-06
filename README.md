@@ -39,7 +39,7 @@ CoupOnline follows the rules of the original card game Coup.
 
 ## Screenshots
 
-<img width="1420" alt="Screenshot3" src="https://github.com/batec2/CoupOnline/assets/97869609/1ced77d6-e383-456d-ab5d-73f85b4e07a8">
+<img width="1420" alt="Screenshot3" src="https://github.com/batec2/CoupOnline/assets/134631360/90453df8-ea55-4c0e-8725-87e8500640b6">
 <br>
 <img width="420" alt="Screenshot1" src="https://github.com/batec2/CoupOnline/assets/97869609/45f4f0e6-9d0a-42ff-80a1-08ded899fc71">
 <br>
