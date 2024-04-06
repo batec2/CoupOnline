@@ -1,9 +1,26 @@
 # CoupOnline
+
+## Index
+
+- [CoupOnline](#couponline)
+  - [Index](#index)
+  - [Description](#description)
+  - [Link to Deployment](#link-to-deployment)
+  - [Gameplay](#gameplay)
+    - [Features](#features)
+  - [Technologies Used](#technologies-used)
+  - [Additional Features (Future Implementations)](#additional-features-future-implementations)
+  - [Interface](#interface)
+  - [Installation on local machine](#installation-on-local-machine)
+
+## Description
+
 <img width="1420" alt="Screenshot3" src="https://github.com/batec2/CoupOnline/assets/134631360/90453df8-ea55-4c0e-8725-87e8500640b6">
 <br>
 CoupOnline is a web application version of the popular card game Coup. It has been developed using Vite React for the frontend, Express Node.js for the backend, and MongoDB for the database. Utilizes socket.io to facilitate communication between users and frontend. Uses cookies to remember user information.
 
-## Link to deployment
+## Link to Deployment
+
 [Coup Online](https://batec2.github.io/CoupOnline/)
 The backend spins down when not in use, and takes about a minute to spin up before login or create account button presses are processed.
 
@@ -20,7 +37,7 @@ CoupOnline follows the rules of the original card game Coup.
 - **Global Leaderboard** Players can see a global statistics.
 - **Player Accounts/Profiles** Players can access their own records.
 - **Gameplay Log** Players can see logs of each users turn.
-  
+
 ## Technologies Used
 
 - **Express Node.js**
@@ -29,6 +46,7 @@ CoupOnline follows the rules of the original card game Coup.
 - **Socket.IO**
 
 ## Additional Features (Future Implementations)
+
 - **Publishing Games:** After a game is completed, the results are published to the database.
 - **Game Chat**
 - **Public Lobbies**
@@ -79,20 +97,31 @@ The hamburger menu from the top allows access to a user profile page and past ga
 ## Installation on local machine
 
 1. Clone the repository:
+
 ```
 git clone https://github.com/batec2/CoupOnline
 ```
 
-2. Navigate to the project frontend and install dependencies and start the frontend: 
+2. Navigate to the project frontend and install dependencies and start the frontend:
+
+- Create a .env file for the frontend with these entries
+
+```
+VITE_SERVER_URL="http://localhost:8080"
+```
+
 ```
 cd frontend
 npm i
 npm run dev
 ```
-3. Navigate to the project backend, install dependencies and start the backend: 
+
+3. Navigate to the project backend, install dependencies and start the backend:
+
 ```
 cd backend
 npm i
 nodemon server.js
 ```
+
 4. Open your web browser and navigate to [http://localhost:5173](http://localhost:5173).
