@@ -58,7 +58,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
       responseId: state.initialResponseId,
       responseAction: state.initialResponseAction,
       secondaryResponseId: state.secondaryResponseId,
-      secondaryResponseAction: state.secondaryAction,
+      secondaryResponseAction: state.secondaryResponseAction,
     });
   };
 
