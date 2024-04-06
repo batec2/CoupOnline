@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import calculatePlayerStatistics from "@/components/statsTable/calculatePlayerStatistics";
 
-const API_URL = "http://localhost:8080";
+const API_URL = import.meta.env.VITE_SERVER_URL;
 const PLAYER_ENDPOINT = "/players/";
 const GAMES_ENDPOINT = "/games/";
 

@@ -5,20 +5,18 @@ import StatsTable from "../../components/statsTable/statsTable.component.jsx";
 import calculatePlayerStatistics from "@/components/statsTable/calculatePlayerStatistics.js";
 
 const axiosClientPlayers = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: import.meta.env.VITE_SERVER_URL,
   headers: {
     Accept: "application/json",
     "Content-Type": "application/x-www-form-urlencoded",
-    "Access-Control-Allow-Origin": "*",
   },
 });
 
 const axiosClientGames = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: import.meta.env.VITE_SERVER_URL,
   headers: {
     Accept: "application/json",
     "Content-Type": "application/x-www-form-urlencoded",
-    "Access-Control-Allow-Origin": "*",
   },
 });
 

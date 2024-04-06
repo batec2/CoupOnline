@@ -31,9 +31,7 @@ const LobbyComponent = () => {
         <div className="text-center">
           <p className="text-xl font-bold mb-2">Players in Lobby:</p>
           {playerIds.map((player) => (
-            <p key={currentLobbyMembers[player].id}>
-              {currentLobbyMembers[player].screenname}
-            </p>
+            <p key={player}>{currentLobbyMembers[player].screenname}</p>
           ))}
         </div>
       </div>

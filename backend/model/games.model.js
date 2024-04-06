@@ -10,18 +10,10 @@ const GameSchema = new mongoose.Schema({
   // Players in the game
   players: [
     {
+      _id: false, // remove automatic generation of _id for embedded documents
       player: { type: mongoose.Schema.Types.ObjectId, ref: "players" },
-      // cardOne: Number,
-      // cardTwo: Number,
     },
   ],
-  // turns: [
-  //   {
-  //     player: { type: mongoose.Schema.Types.ObjectId, ref: "players" },
-  //     target: { type: mongoose.Schema.Types.ObjectId, ref: "players" },
-  //     action: Number,
-  //   },
-  // ],
   // Game logs array
   eventLog: [String],
 });

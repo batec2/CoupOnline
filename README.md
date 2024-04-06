@@ -2,6 +2,9 @@
 
 CoupOnline is a web application version of the popular card game Coup. It has been developed using Vite React for the frontend, Express Node.js for the backend, and MongoDB for the database.
 
+## Link to deployment
+[Coup Online](https://batec2.github.io/CoupOnline/)
+
 ## Gameplay
 
 CoupOnline follows the rules of the original card game Coup.
@@ -14,6 +17,7 @@ CoupOnline follows the rules of the original card game Coup.
 - **Usernames:** Players can select custom usernames when they enter the game.
 - **Global Leaderboard** Players can see a global statistics.
 - **Player Accounts/Profiles** Players can access their own records.
+- **Gameplay Log** Players can see logs of each users turn.
   
 ## Technologies Used
 
@@ -24,7 +28,6 @@ CoupOnline follows the rules of the original card game Coup.
 
 ## Additional Features (Future Implementations)
 - **Publishing Games:** After a game is completed, the results are published to the database.
-- **Saved Games:** Games are saved in the database, allowing players to resume them at a later time.
 - **Game Chat**
 - **Public Lobbies**
 - **Matchmaking**

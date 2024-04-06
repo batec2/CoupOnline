@@ -22,6 +22,15 @@ const LoginPage = () => {
   // const [username, setUsername] = useState([]);
   const [verified, setVerified] = useState(false);
 
+  // useEffect(() => {
+  //   checkIfLoggedInCall().then((res) => {
+  //     if (res !== undefined && res.status === 200) {
+  //       username.current = res.data.username;
+  //       navigate("/room");
+  //     }
+  //   });
+  // }, [LocalCookie]);
+
   const handleUsernameInput = (e) => {
     // setUsername(e.target.value);
     username.current = e.target.value;
@@ -60,21 +69,12 @@ const LoginPage = () => {
     }
   };
 
-  useEffect(() => {
-    checkIfLoggedInCall().then((res) => {
-      if (res !== undefined && res.status === 200) {
-        username.current = res.data.username;
-        navigate("/room");
-      }
-    });
-  }, [LocalCookie]);
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <h1 className="text-3xl font-bold mb-4 text-center">
         Welcome to Super Couper
       </h1>
-      <div className="w-full max-w-sm px-4">
+      <div className="w-full px-4 max-w-80">
         <h2 className="text-xl mb-2">Enter your username:</h2>
         <Input
           type="username"

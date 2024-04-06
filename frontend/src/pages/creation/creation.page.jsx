@@ -50,7 +50,7 @@ const CreationPage = () => {
         }
         const makeNewAccount = async () => {
           const response = await axios.post(
-            "http://localhost:8080/players",
+            `${import.meta.env.VITE_SERVER_URL}/players`,
             { userName: userName, screenName: screenName, email: Email },
             {
               headers: {
@@ -85,29 +85,33 @@ const CreationPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <div className="w-50">
-        <h1 className="text-3xl font-bold mb-4">Account Creation Page</h1>
+      <h1 className="text-3xl font-bold mb-4">Account Creation Page</h1>
+      <div className="max-w-80 space-y-2">
         <Input
           type="username"
           placeholder="User Name"
           onChange={(e) => setUserName(e.target.value)}
           onKeyPress={handleKeyPress}
-          className="px-4 py-2 border rounded-md mb-2 w-full text-textColor-dark "
+          className="px-4 border rounded-md mb-2 w-full text-textColor-dark "
         />
         <Input
           type="screenname"
           placeholder="Screen Name"
           onChange={(e) => setScreenName(e.target.value)}
           onKeyPress={handleKeyPress}
-          className="px-4 py-2 border rounded-md mb-2 w-full text-textColor-dark "
+          className="px-4 border rounded-md mb-2 w-full text-textColor-dark "
         />
         <Input
           type="email"
           placeholder="Email"
           onChange={(e) => setEmail(e.target.value)}
           onKeyPress={handleKeyPress}
-          className="px-4 py-2 border rounded-md mb-4 w-full text-textColor-dark "
+          className="px-4 border rounded-md mb-4 w-full text-textColor-dark "
         />
+        <p className="text-red-400 text-center text-wrap">
+          Please do not use your real name or email.<br />
+          We do not want or need personal info and cannot guarantee security of this site.
+        </p>
         <Button
           onClick={() => setCreatedCookie(true)}
           className="bg-button-mainButton px-4 py-2 rounded-md w-full"

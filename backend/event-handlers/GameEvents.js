@@ -24,7 +24,13 @@ const { Show, Loose, Exchange: ExchangeType } = ChooseCard;
  */
 export const registerGameHandlers = (io, socket, rooms) => {
   const { id } = socket.handshake.headers;
-
+  /**
+   * Adds game events to a log to be saved by to the db, and sends event strings
+   * to the front end
+   * @param {*} eventString
+   * @param {*} state
+   * @param {*} roomId
+   */
   const handleEventLogs = (eventString, state, roomId) => {
     socket.to(roomId).emit("event-log", { eventString: eventString });
     state.addToEventLog(eventString);
@@ -32,7 +38,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
   };
 
   /**
-   *
+   * Emits an event telling a player to show or loose a card
    * @param {*} roomId
    * @param {*} chooserId - user who has to pick a card
    * @param {*} initialUserId - first user in event chain
@@ -58,17 +64,23 @@ export const registerGameHandlers = (io, socket, rooms) => {
       responseId: state.initialResponseId,
       responseAction: state.initialResponseAction,
       secondaryResponseId: state.secondaryResponseId,
-      secondaryResponseAction: state.secondaryAction,
+      secondaryResponseAction: state.secondaryResponseAction,
     });
   };
 
+  /**
+   * Increments the player whos turn it is
+   * @param {*} state
+   * @param {*} roomId
+   * @param {*} room
+   */
   const nextTurnAndUpdate = (state, roomId, room) => {
     state.incrementTurn();
     emitUpdate(io, roomId, room);
   };
 
   /**
-   *
+   * Emits and event telling all players that a action was blocked
    * @param {*} initialUserId - first user in event chain
    * @param {*} initialAction - first action in event chain
    * @param {*} responseId - responding user
@@ -83,6 +95,12 @@ export const registerGameHandlers = (io, socket, rooms) => {
     });
   };
 
+  /**
+   * Emits an event telling players someone chose to exchange cards allowing
+   * the chosing player to exchange
+   * @param {*} roomId
+   * @param {*} state
+   */
   const emitExchangeCards = (roomId, state) => {
     io.to(roomId).emit("exchange-cards", {
       chooserId: state.initialUserId,
@@ -92,7 +110,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
   };
 
   /**
-   *
+   * Handles normal actions the a player can take during a turn
    * @param {*} roomId
    * @param {*} room
    * @param {*} state
@@ -115,7 +133,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
       }
       case Coup: {
         handleEventLogs(
-          `${state.initialUserId} is Choosing to coup ${state.targetId}`,
+          `${state.initialUserId} is Choosing to Coup ${state.targetId}`,
           state,
           roomId
         );
@@ -133,7 +151,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
           state.increasePlayerMoney(state.initialUserId, 1);
         } else {
           handleEventLogs(
-            `${state.initialUserId} has 10 or more coins and is unable to take income`,
+            `${state.initialUserId} has 10 or more coins and is unable to take Income`,
             state,
             roomId
           );
@@ -378,7 +396,15 @@ export const registerGameHandlers = (io, socket, rooms) => {
     }
   };
 
-  //If the called out player shows the correct card the calling out player
+  /**
+   * Handles the case where a player has chosen a card on the first
+   * challenge
+   * @param {*} roomId
+   * @param {*} room
+   * @param {*} state
+   * @param {*} card
+   * @returns
+   */
   const onFirstResponse = (roomId, room, state, card) => {
     //chooses a card to loose
     handleEventLogs(
@@ -393,6 +419,15 @@ export const registerGameHandlers = (io, socket, rooms) => {
     return;
   };
 
+  /**
+   * Handles the case where a challenge is challenge and a player has shown
+   * a card
+   * @param {*} roomId
+   * @param {*} room
+   * @param {*} state
+   * @param {*} card
+   * @returns
+   */
   const onSecondResponse = (roomId, room, state, card) => {
     // Checks if responder has card for block
     if (state.checkCard(id, card, state.initialResponseAction)) {
@@ -424,6 +459,12 @@ export const registerGameHandlers = (io, socket, rooms) => {
     handleAction(roomId, room, state, true);
   };
 
+  /**
+   * Updates the gamestate when a player chooses a card
+   * @param {*} roomId
+   * @param {*} chosenCards
+   * @param {*} returnCards
+   */
   const onExchangeCards = ({ roomId, chosenCards, returnedCards }) => {
     const room = rooms[roomId];
     const state = room.state;

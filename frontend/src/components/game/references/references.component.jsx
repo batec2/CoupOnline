@@ -1,18 +1,4 @@
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "../../ui/tooltip";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import ActionTable from "@/components/actionTable/actionTable.component";
 import GameRules from "@/components/gameRules/gameRules.component";
 import GameSectionTitle from "@/components/text/gameSectionTitle.component";
