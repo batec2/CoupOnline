@@ -18,6 +18,22 @@ const CurrentTurnInfo = () => {
     responseSecondaryId,
     targetId,
   } = useGameContext();
+
+  // DEBUG CODE
+  // terminal.log("LOBBY")
+  // terminal.log(currentLobbyMembers);
+  // terminal.log("ACTION")
+  // terminal.log(initialUserId);
+  // terminal.log(initialAction);
+  // terminal.log("RESPONSE INITIAL ")
+  // terminal.log(responseInitialId)
+  // terminal.log(responseInitialAction);
+  // terminal.log("RESPONSE SECONDARY")
+  // terminal.log(responseSecondaryId)
+  // terminal.log(responseSecondaryAction)
+  // terminal.log("DONE")
+
+  
   const displayCurrentTurnPlayer = () => {
     if (initialUserId) {
       return (
@@ -56,7 +72,7 @@ const CurrentTurnInfo = () => {
     if (!initialAction) {
       return <></>;
     } else if (!responseInitialAction) {
-      return <p>Waiting for Responses.</p>;
+      return <p>Waiting for Responses...</p>;
     } else {
       return (
         <p>
@@ -71,7 +87,7 @@ const CurrentTurnInfo = () => {
     if (!responseInitialAction) {
       return <></>;
     } else if (!responseSecondaryAction) {
-      return <p>Waiting for Responses.</p>;
+      return <p>Waiting for Responses...</p>;
     } else {
       return (
         <p>

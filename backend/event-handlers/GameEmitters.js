@@ -1,4 +1,5 @@
 import Games from "../model/games.model.js";
+import Player from "../model/players.model.js";
 
 export const emitStartGame = (io, roomId) => {
   io.to(roomId).emit("start-game");
@@ -13,11 +14,11 @@ export const emitUpdate = async (io, roomId, room) => {
     console.log(`${winner} has won the game!`);
     io.to(roomId).emit("end-game", { winner: winner });
     try {
-      // Save game logs to database
-      await saveToDatabase(players, gameLogs);
-      console.log("Saved game logs to database:");
+      // Save game and players to database
+      const gameId = await saveGameToDatabase(winner, players, gameLogs);
+      await savePlayerGamesToDatabase(players, gameId);
     } catch (err) {
-      console.error("Error saving game logs to database:", err);
+      console.error("Error saving to database:", err);
     }
     return;
   }
@@ -41,19 +42,35 @@ export const emitUpdate = async (io, roomId, room) => {
   }
 };
 
-const saveToDatabase = async (players, gameLogs) => {
+const saveGameToDatabase = async (winner, playerIds, gameLogs) => {
   try {
-    // TODO: Since players are referenced to player model, gotta
-    // figure that out instead of the cookies as shown here
-    // await Games.create({ players: players, eventLog: gameLogs });
-
-    await Games.create({ eventLog: gameLogs });
-    console.log("Game state saved to database");
+    const players = playerIds.map((playerId) => ({ player: playerId }));
+    const game = await Games.create({
+      winner: winner,
+      players,
+      eventLog: gameLogs,
+    });
+    console.log("Game saved to database with ID:", game._id);
+    return game._id; // return the ID of the created game
   } catch (err) {
-    console.error("Error saving game state to database:", err);
+    console.error("Error saving game to database:", err);
+    throw err;
   }
 };
 
+const savePlayerGamesToDatabase = async (playerIds, gameId) => {
+  try {
+    const players = playerIds.map((playerId) => ({ player: playerId }));
+    await Player.updateMany(
+      { _id: { $in: playerIds } },
+      { $push: { games: gameId } }
+    );
+    console.log("Game IDs saved to player database");
+  } catch (err) {
+    console.error("Error saving game ID to players database:", err);
+    throw err;
+  }
+};
 /**
  *
  * @param {*} io

@@ -58,7 +58,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
       responseId: state.initialResponseId,
       responseAction: state.initialResponseAction,
       secondaryResponseId: state.secondaryResponseId,
-      secondaryResponseAction: state.secondaryAction,
+      secondaryResponseAction: state.secondaryResponseAction,
     });
   };
 
@@ -115,7 +115,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
       }
       case Coup: {
         handleEventLogs(
-          `${state.initialUserId} is Choosing to coup ${state.targetId}`,
+          `${state.initialUserId} is Choosing to Coup ${state.targetId}`,
           state,
           roomId
         );
@@ -133,7 +133,7 @@ export const registerGameHandlers = (io, socket, rooms) => {
           state.increasePlayerMoney(state.initialUserId, 1);
         } else {
           handleEventLogs(
-            `${state.initialUserId} has 10 or more coins and is unable to take income`,
+            `${state.initialUserId} has 10 or more coins and is unable to take Income`,
             state,
             roomId
           );

@@ -22,8 +22,8 @@ const ResponseActions = () => {
     setResponseInitialId,
     setResponseSecondaryAction,
     setResponseSecondaryId,
-    // responseInitialId,
-    // responseSecondaryId,
+    responseInitialId,
+    responseSecondaryId,
     setIsResponding,
     isTarget,
     cookieRef,
@@ -140,6 +140,7 @@ const ResponseActions = () => {
   return (
     <div>
       <div className="space-x-2 space-y-2">
+        <p>Responses:</p>
         {canCallout() ? (
           <ActionButton
             buttonClass={ButtonClass.Callout}
