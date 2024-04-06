@@ -1,6 +1,7 @@
 import GameSectionTitle from "@/components/text/gameSectionTitle.component";
 import useGameContext from "@/context/useGameContext";
 import GameActions from "@/lib/actionEnum";
+import terminal from "virtual:terminal";
 
 /**
  * Generates view that shows information about the current game turn
@@ -17,6 +18,19 @@ const CurrentTurnInfo = () => {
     responseSecondaryId,
     targetId,
   } = useGameContext();
+  terminal.log("LOBBY")
+  terminal.log(currentLobbyMembers);
+  terminal.log("ACTION")
+  terminal.log(initialUserId);
+  terminal.log(initialAction);
+  terminal.log("RESPONSE INITIAL ")
+  terminal.log(responseInitialId)
+  terminal.log(responseInitialAction);
+  terminal.log("RESPONSE SECONDARY")
+  terminal.log(responseSecondaryId)
+  terminal.log(responseSecondaryAction)
+
+  
   const displayCurrentTurnPlayer = () => {
     if (initialUserId) {
       return (
