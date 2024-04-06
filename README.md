@@ -1,5 +1,6 @@
 # CoupOnline
-
+<img width="1420" alt="Screenshot3" src="https://github.com/batec2/CoupOnline/assets/134631360/90453df8-ea55-4c0e-8725-87e8500640b6">
+<br>
 CoupOnline is a web application version of the popular card game Coup. It has been developed using Vite React for the frontend, Express Node.js for the backend, and MongoDB for the database. Utilizes socket.io to facilitate communication between users and frontend. Uses cookies to remember user information.
 
 ## Index
@@ -51,13 +52,42 @@ CoupOnline follows the rules of the original card game Coup.
 - **Stepwise Replay:** Replay previous games step by step.
 - **Ready Status:** Indication of player readiness for the next phase or game.
 
-## Screenshots
+## Interface
 
+<br>
+<img width="420" alt="ScreenshotLogin" src="https://github.com/batec2/CoupOnline/assets/97869609/58dbf0c1-37cf-4c09-9095-e83642c1fa27">
+<br>
+Users will begin at the login page, where they can enter a registered username to login to their account. At this time, there is no password or verification system, accounts can be accessed by entering a valid username. Once logged in, a cookie will be saved into the browser session which will remember the logged in account.
+<br>
+<br>
+<img width="420" alt="ScreenshotCreation" src="https://github.com/batec2/CoupOnline/assets/134631360/dd943578-6d48-404e-bed4-21c6687c9952">
+<br>
+If you do not have an account, you can click the "Create an Account" button to navigate to the account creation page. Please note that we do not utilize or require personal information, and recommend you do not use your real name or email address when creating an account. Emails must be in a valid email format (nut do not need to be a valid email) and usernames must be unique (duplicate usernames are not permitted).
+<br>
+<br>
+<img width="240" alt="ScreenshotJoin" src="https://github.com/batec2/CoupOnline/assets/134631360/ebb8f30d-e2e4-4088-9228-cc7f61d4702c">
+<img width="240" alt="ScreenshotLobby" src="https://github.com/batec2/CoupOnline/assets/134631360/14733ee0-d63c-44e5-b6dc-89354a74c09d">
+<br>
+Once logged in to an account, the user is brought to the join room page. From here, the user can join a lobby by entering a lobby name in the text field. When the join room button is clicked, the user will be placed in either a new or existing lobby. Once in a lobby, the user can see all players currently in the lobby. Once two or more players are in a lobby, any player can start the game by clicking the "Start Game" button.
+<br>
+<br>
 <img width="1420" alt="Screenshot3" src="https://github.com/batec2/CoupOnline/assets/134631360/90453df8-ea55-4c0e-8725-87e8500640b6">
 <br>
-<img width="420" alt="Screenshot1" src="https://github.com/batec2/CoupOnline/assets/97869609/45f4f0e6-9d0a-42ff-80a1-08ded899fc71">
+Once a game begins, players will be brought to the main game screen. There are six elements on the UI screen. 
+<ol>
+<li> Player Cards Remaining: A list of all players in the game showing the number of cards they have remaining. </li>
+<li> Current Turn Info: a summary of actions taken during the current turn </li>
+<li> Discarded Cards: A list showing all cards discarded during the course of the game </li>
+<li> Recent Turn History: Complete history of past actions </li>
+<li> Player Info: The main section a player interacts with during their turn. It shows the number of coins a player has, the cards they are holding, and actions that can be taken at the current point in the game.  </li>
+<li> References: Includes a table listing all cards and actions, and a set of complete game rules. </li>
+</ol>
 <br>
-<img width="420" alt="Screenshot2" src="https://github.com/batec2/CoupOnline/assets/97869609/58dbf0c1-37cf-4c09-9095-e83642c1fa27">
+<br>
+<img width="420" alt="ScreenshotProfile" src="https://github.com/batec2/CoupOnline/assets/97869609/45f4f0e6-9d0a-42ff-80a1-08ded899fc71">
+<img width="1240" alt="ScreenshotProfile" src="https://github.com/batec2/CoupOnline/assets/134631360/0ba82526-5b84-4329-8286-30af62d38983">
+The hamburger menu from the top allows access to a user profile page and past game statistics page.
+<br>
 <br>
 
 ## Installation on local machine
