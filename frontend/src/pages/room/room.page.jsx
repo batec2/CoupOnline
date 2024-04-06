@@ -21,20 +21,20 @@ const RoomPage = () => {
   // Checks if a cookie exists for a user, if not, logs then out
   useEffect(() => {
     const cookie = cookies.get("PersonalCookie");
-    setLocalCookie(cookie)
+    setLocalCookie(cookie);
     if (!cookie) {
       setCookieExists(false); // Update state when cookie doesn't exist
     }
   }, []);
 
-  useEffect(() => {
-    checkIfActiveSession().then((res) => {
-      if (res === undefined){
-        logoutCall()
-        navigate("/")
-      }
-    })
-  }, [localCookie]);
+  // useEffect(() => {
+  //   checkIfActiveSession().then((res) => {
+  //     if (res === undefined){
+  //       logoutCall()
+  //       navigate("/")
+  //     }
+  //   })
+  // }, [localCookie]);
 
   // Function to handle joining a room
   const handleJoin = () => {
@@ -47,11 +47,9 @@ const RoomPage = () => {
   // Function to handle user logout
   const handleLogout = () => {
     logoutCall().then(() => {
-        cookies.remove("PersonalCookie")
-        navigate("/")
-      }
-    );
-
+      cookies.remove("PersonalCookie");
+      navigate("/");
+    });
   };
 
   // Function to handle 'enter' key press for joining room

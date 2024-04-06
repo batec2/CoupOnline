@@ -1,10 +1,22 @@
 import Games from "../model/games.model.js";
 import Player from "../model/players.model.js";
 
+/**
+ * Emits a start-game event to all users in a room
+ * @param {*} io
+ * @param {*} roomId
+ */
 export const emitStartGame = (io, roomId) => {
   io.to(roomId).emit("start-game");
 };
 
+/**
+ * Emits a new update that causes the frontend to reset turn variables
+ * @param {*} io
+ * @param {*} roomId
+ * @param {*} room
+ * @returns
+ */
 export const emitUpdate = async (io, roomId, room) => {
   const { players, state } = room;
   const { hasWinner, winner } = state.checkEndGame();
@@ -42,6 +54,13 @@ export const emitUpdate = async (io, roomId, room) => {
   }
 };
 
+/**
+ * Saves a game to the database
+ * @param {*} winner
+ * @param {*} playerIds
+ * @param {*} gameLogs
+ * @returns
+ */
 const saveGameToDatabase = async (winner, playerIds, gameLogs) => {
   try {
     const players = playerIds.map((playerId) => ({ player: playerId }));
@@ -58,6 +77,11 @@ const saveGameToDatabase = async (winner, playerIds, gameLogs) => {
   }
 };
 
+/**
+ * Saves the game id to all players database entries
+ * @param {*} playerIds
+ * @param {*} gameId
+ */
 const savePlayerGamesToDatabase = async (playerIds, gameId) => {
   try {
     const players = playerIds.map((playerId) => ({ player: playerId }));
@@ -72,7 +96,7 @@ const savePlayerGamesToDatabase = async (playerIds, gameId) => {
   }
 };
 /**
- *
+ * Emits a mid turn update to frontend which does not cause front end to reset
  * @param {*} io
  * @param {*} room
  */

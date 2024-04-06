@@ -2,26 +2,55 @@ import { useState, useContext, useRef } from "react";
 import { useParams } from "react-router-dom";
 /**
  * @typedef {Object} GameState
- * @property {Object} currentLobbyMembers
- * @property {function} setLobbyMembers
- * @property {boolean} gameStart
- * @property {function} setGameStart
- * @property {Object} currentTurnId
- * @property {function} setTurnId
- * @property {Object} gameCards
- * @property {function} setGameCards
- * @property {Object} responseAction
- * @property {function} setResponseAction
- * @property {boolean} isTarget
- * @property {function} setIsTarget
- * @property {number} coins
- * @property {function} setCoins
- * @property {Object} socket
- * @property {string} roomId
+ * @property {*} eventLog,
+ * @property {*} setEventLog,
+ * @property {*} winner,
+ * @property {*} setWinner,
+ * @property {*} currentLobbyMembers,
+ * @property {*} setLobbyMembers,
+ * @property {*} gameStart,
+ * @property {*} setGameStart,
+ * @property {*} currentTurnId,
+ * @property {*} setTurnId,
+ * @property {*} gameCards,
+ * @property {*} setGameCards,
+ * @property {*} initialAction,
+ * @property {*} setInitialAction,
+ * @property {*} initialUserId,
+ * @property {*} setInitialUserId,
+ * @property {*} isChoosing,
+ * @property {*} setIsChoosing,
+ * @property {*} coins,
+ * @property {*} setCoins,
+ * @property {*} discardDeck,
+ * @property {*} setDiscardDeck,
+ * @property {*} isResponding,
+ * @property {*} setIsResponding,
+ * @property {*} responseInitialAction,
+ * @property {*} setResponseInitialAction,
+ * @property {*} responseInitialId,
+ * @property {*} setResponseInitialId,
+ * @property {*} responseSecondaryAction,
+ * @property {*} setResponseSecondaryAction,
+ * @property {*} responseSecondaryId
+ * @property {*} setResponseSecondaryId
+ * @property {*} exchangeCards
+ * @property {*} setExchangeCards
+ * @property {*} responseIdRef
+ * @property {*} isTarget
+ * @property {*} setIsTarget
+ * @property {*} targetId
+ * @property {*} setTargetId
+ * @property {*} chooseType
+ * @property {*} setChooseType
+ * @property {*} playerCardCount
+ * @property {*} setPlayerCardCount
+ * @property {*} cookieRef
+ * @property {*} socket
+ * @property {*} roomId
  */
 
 /**
- *
  * @returns {GameState}
  */
 export const useGameState = () => {

@@ -17,7 +17,8 @@ export const createSocketIO = (httpServer, rooms) => {
   });
 
   /**
-   *
+   * Creates a room entry in the rooms datasructure when a player
+   * joins a socketIo Room
    */
   io.of("/").adapter.on("create-room", (room) => {
     console.log("Room: " + room + " was created by server");
@@ -26,10 +27,16 @@ export const createSocketIO = (httpServer, rooms) => {
     rooms[room].state = null;
   });
 
+  /**
+   * Triggers when a player joins a socketIo room
+   */
   io.of("/").adapter.on("join-room", (room, id) => {
     console.log(`${id} has joined Room: ${room}`);
   });
 
+  /**
+   * Event that occurs when a player leaves a socketIo room
+   */
   io.of("/").adapter.on("leave-room", (room, id) => {
     if (rooms[room]) {
       delete rooms[room].players[id];

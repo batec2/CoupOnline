@@ -64,6 +64,10 @@ export const useGameEvents = (gameState) => {
       setLobbyMembers(lobby);
     };
 
+    /**
+     *
+     * @param {*} status
+     */
     const handleStatusOnRoomJoin = (status) => {
       if (status.status === 400) {
         navigate("/room");
@@ -72,11 +76,20 @@ export const useGameEvents = (gameState) => {
       }
     };
 
+    /**
+     * Sets the game ui to render on game-start event
+     */
     const onStartEvent = () => {
       setInLobby(false);
       setGameStart(true);
     };
 
+    /**
+     * Sets targetId, and the action causing the target
+     * @param {*} initialUserId
+     * @param {*} initialAction
+     * @param {*} targetId
+     */
     const onChooseResponseEvent = ({
       initialUserId,
       initialAction,
@@ -96,12 +109,14 @@ export const useGameEvents = (gameState) => {
     };
 
     /**
-     *
+     * The Event when a player is prompted to lose or show a card
      * @param {*} chooserId - Player asking for target to choose card
      * @param {*} initialUserId - initial user
      * @param {*} initialAction - initial action
      * @param {*} responseId - responser userId
      * @param {*} responseAction - responser action
+     * @param {*} secondaryResponseId
+     * @param {*} secondaryResponseAction
      * @returns
      */
     const onChooseCardEvent = ({
@@ -132,6 +147,10 @@ export const useGameEvents = (gameState) => {
       setIsChoosing(false);
     };
 
+    /**
+     * Sets the random cards given to the player
+     * @param {*} param0
+     */
     const onExchangeCardEvent = ({ chooserId, exchangeCards }) => {
       console.log(`${chooserId} is choosing 2 cards`);
       if (chooserId === id) {
@@ -140,7 +159,9 @@ export const useGameEvents = (gameState) => {
       }
     };
 
-    //End of turn update
+    /**
+     * Resets turn relevant state and updates general gamestate
+     */
     const onUpdateState = ({
       gameCards,
       turnId,
@@ -148,13 +169,6 @@ export const useGameEvents = (gameState) => {
       discardDeck,
       playerCardCount,
     }) => {
-      console.log("UPDATE");
-      console.log(gameCards);
-      console.log(turnId);
-      console.log(coins);
-      console.log(discardDeck);
-      console.log(playerCardCount);
-
       setGameCards(gameCards);
       setTurnId(turnId);
       setExchangeCards.current = null;
