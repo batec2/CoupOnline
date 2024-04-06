@@ -16,7 +16,9 @@ const Actions = () => {
     playerCardCount,
     cookieRef,
   } = useGameContext();
-  const { id } = cookieRef.current;
+  const { id } = cookieRef.current; //user's information
+
+  //Which actions are shown depends on whose turn / what point in turn it is
   if (isChoosing) {
     return <h2>Please select a card to show or lose</h2>;
   } else if (chooseType === ChooseCard.Exchange) {
