@@ -90,7 +90,7 @@ const ResponseActions = () => {
           setResponseInitialId(cookieRef.current.id);
           setResponseInitialAction(gameAction);
         } else if (responseSecondaryId === null) {
-          setResponseInitialId(cookieRef.current.id);
+          setResponseSecondaryId(cookieRef.current.id);
           setResponseSecondaryAction(gameAction);
         }
       }, 500);
