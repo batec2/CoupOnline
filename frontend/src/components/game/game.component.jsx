@@ -10,7 +10,7 @@ import "./game.styles.css";
 
 const Game = () => {
   const { roomId, cookieRef } = useGameContext();
-  const player = cookieRef.current.id;
+  const player = cookieRef.current.screenName;
 
   return (
     <div className="flex justify-center">    
