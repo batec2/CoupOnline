@@ -1,19 +1,23 @@
 # CoupOnline
-<img width="1420" alt="Screenshot3" src="https://github.com/batec2/CoupOnline/assets/134631360/90453df8-ea55-4c0e-8725-87e8500640b6">
-<br>
-CoupOnline is a web application version of the popular card game Coup. It has been developed using Vite React for the frontend, Express Node.js for the backend, and MongoDB for the database. Utilizes socket.io to facilitate communication between users and frontend. Uses cookies to remember user information.
 
 ## Index
 
 - [CoupOnline](#couponline)
   - [Index](#index)
+  - [Description](#description)
   - [Link to Deployment](#link-to-deployment)
   - [Gameplay](#gameplay)
     - [Features](#features)
   - [Technologies Used](#technologies-used)
   - [Additional Features (Future Implementations)](#additional-features-future-implementations)
-  - [Screenshots](#screenshots)
+  - [Interface](#interface)
   - [Installation on local machine](#installation-on-local-machine)
+
+## Description
+
+<img width="1420" alt="Screenshot3" src="https://github.com/batec2/CoupOnline/assets/134631360/90453df8-ea55-4c0e-8725-87e8500640b6">
+<br>
+CoupOnline is a web application version of the popular card game Coup. It has been developed using Vite React for the frontend, Express Node.js for the backend, and MongoDB for the database. Utilizes socket.io to facilitate communication between users and frontend. Uses cookies to remember user information.
 
 ## Link to Deployment
 
