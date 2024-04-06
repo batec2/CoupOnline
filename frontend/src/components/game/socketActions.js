@@ -18,11 +18,7 @@ export const handleNormalAction = (socket, roomId, action, targetId) => {
  * Sends an response action with the Id of the player being blocked
  * @param {Object} socket - Global Socket Object
  * @param {string} roomId - Current room id
- * @param {string} initialUserId - Id of the player being blocked/responded
- * @param {string} initialAction - Action being responded to
- * @param {string} responseAction - Block/response action
- * @param {string} initialResponseId - Used if block is called out
- * @param {string} initialResponseAction - Id if block is called out
+ * @param {string} responseAction - Type of response actions callout/block
  */
 export const handleResponseAction = (socket, roomId, responseAction) => {
   socket.emit("response-action", {
@@ -40,10 +36,21 @@ const handleStartGame = (socket, roomId) => {
   socket.emit("start-game", { roomId: roomId }, handleStatus);
 };
 
+/**
+ * Leaves the current lobby
+ * @param {*} socket
+ * @param {*} roomId
+ */
 const handleLeave = (socket, roomId) => {
   socket.emit("leave-room", { roomId: roomId }, handleStatus);
 };
 
+/**
+ * TODO:
+ * Returns to already made lobby
+ * @param {*} socket
+ * @param {*} roomId
+ */
 const handleReturnLobby = (socket, roomId) => {
   socket.emit("return-lobby", { roomId: roomId }, handleStatus);
 };
